@@ -1,0 +1,37 @@
+2018-10-01|00:09:43.078 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2018-10-01|00:09:43.148 [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer ~ 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/home/jozsef/.m2/repository/org/json/json/20080701/json-20080701.jar!/org/json/JSONObject.class
+	jar:file:/home/jozsef/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2018-10-01|00:09:43.163 [main] INFO  c.a.server.ServerApplicationTests ~ Starting ServerApplicationTests on jozsef-HP-Z620-Workstation with PID 7415 (started by jozsef in /home/jozsef/projects/aboutMeServer/server)
+2018-10-01|00:09:43.164 [main] INFO  c.a.server.ServerApplicationTests ~ No active profile set, falling back to default profiles: default
+2018-10-01|00:09:44.641 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2018-10-01|00:09:44.729 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2018-10-01|00:09:44.729 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2018-10-01|00:09:44.730 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2018-10-01|00:09:44.730 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2018-10-01|00:09:44.731 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2018-10-01|00:09:44.731 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2018-10-01|00:09:44.916 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1c5e39b7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-10-01|00:09:45.001 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2018-10-01|00:09:45.003 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2018-10-01|00:09:45.240 [main] INFO  c.u.j.encryptor.DefaultLazyEncryptor ~ Found Custom Encryptor Bean org.jasypt.encryption.pbe.PooledPBEStringEncryptor@23eff5d1 with name: jasyptStringEncryptor
+2018-10-01|00:09:45.826 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2018-10-01|00:09:46.061 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Start completed.
+2018-10-01|00:09:46.114 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-10-01|00:09:47.108 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-10-01|00:09:48.519 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2018-10-01|00:09:48.773 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-10-01|00:09:49.552 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2018-10-01|00:09:49.564 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2018-10-01|00:09:49.565 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2018-10-01|00:09:49.565 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-10-01|00:09:49.659 [main] INFO  c.a.server.ServerApplicationTests ~ Started ServerApplicationTests in 6.763 seconds (JVM running for 7.592)
+2018-10-01|00:09:49.833 [Thread-6] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-10-01|00:09:49.835 [Thread-6] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown initiated...
+2018-10-01|00:09:49.844 [Thread-6] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown completed.

@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+   db:
+     image: aboutmedb
+     volumes:
+       - /usr/data/oracle/aboutme/:/u01/app/oracle/
+     environment:
+       - DB_PORT=${DB_PORT}
+       - PASS_PORT=${PASS_PORT}
+     ports:
+       - "8082:8080"
+       - "${DB_PORT}:1521"
+volumes:
+  db_data:
