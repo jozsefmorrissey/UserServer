@@ -1,25 +1,25 @@
 
 --==========================  USERS  =====================--
 
-DROP USER UserSrvc CASCADE;
+DROP USER &2 CASCADE;
 
-CREATE USER UserSrvc
+CREATE USER &2
 IDENTIFIED BY &1
 DEFAULT TABLESPACE users
 TEMPORARY TABLESPACE temp;
 
-GRANT connect to UserSrvc;
-GRANT resource to UserSrvc;
-GRANT CREATE SESSION TO UserSrvc;
-GRANT CREATE TABLE TO UserSrvc;
-GRANT CREATE VIEW TO UserSrvc;
-GRANT CREATE MATERIALIZED VIEW TO UserSrvc;
-GRANT DEBUG CONNECT SESSION TO UserSrvc;
-GRANT DEBUG ANY PROCEDURE TO UserSrvc;
-GRANT create session to UserSrvc;
-ALTER USER UserSrvc QUOTA 10m ON users;
+GRANT connect to &2;
+GRANT resource to &2;
+GRANT CREATE SESSION TO &2;
+GRANT CREATE TABLE TO &2;
+GRANT CREATE VIEW TO &2;
+GRANT CREATE MATERIALIZED VIEW TO &2;
+GRANT DEBUG CONNECT SESSION TO &2;
+GRANT DEBUG ANY PROCEDURE TO &2;
+GRANT create session to &2;
+ALTER USER &2 QUOTA 10m ON users;
 
-conn UserSrvc/&1
+conn &2/&1
 
 --==========================  SEQUENCES  =====================--
 

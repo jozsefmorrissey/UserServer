@@ -5,9 +5,7 @@
 cat ./Oracle/*.sql > ./OracleDBSimpleSetup.sql
 cat ./OracleDBSimpleSetup.sql ./Oracle/PopulateData/*.sql > OracleDBPopulateData.sql
 
-sudo confidentalInfo.sh replace dbinfo UserSrvc ./OracleDBPopulateData.sql
-
-password=$(confidentalInfo.sh value dbinfo system)
-echo exit | sqlplus system/$password @./OracleDBPopulateData.sql
-
-sudo confidentalInfo.sh remove dbinfo UserSrvc ./OracleDBPopulateData.sql
+user=$(sudo confidentalInfo.sh value UserSrvc dbUser)
+password=$(sudo confidentalInfo.sh value UserSrvc dbPass)
+sysPassword=$(sudo confidentalInfo.sh value UserSrvc systemDbPass)
+echo exit | sqlplus system/$sysPassword@localhost:1521/xe @./OracleDBPopulateData.sql $password $user
