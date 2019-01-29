@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.userSrvc.server.entities.User;
-import com.userSrvc.server.entities.UserUrl;
+import com.userSrvc.server.entities.request.UserUrl;
 import com.userSrvc.server.service.UserSrvc;
 
 @CrossOrigin
 @RestController
 @RequestMapping("user")
-public class UserController {
+public class UserCtrl {
 	@Autowired
 	UserSrvc userSrvc;
 	

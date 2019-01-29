@@ -4,7 +4,7 @@
 DROP USER UserSrvc CASCADE;
 
 CREATE USER UserSrvc
-IDENTIFIED BY '&1'
+IDENTIFIED BY &1
 DEFAULT TABLESPACE users
 TEMPORARY TABLESPACE temp;
 
@@ -19,4 +19,4 @@ GRANT DEBUG ANY PROCEDURE TO UserSrvc;
 GRANT create session to UserSrvc;
 ALTER USER UserSrvc QUOTA 10m ON users;
 
-conn UserSrvc/'&1'
+conn UserSrvc/&1

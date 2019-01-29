@@ -18,4 +18,8 @@ public class StringUtils {
 	public static String replaceKeyValues(String str, HashMap<String, Object> keyValues) {
 		return replaceKeyValues(str, keyValues, "", "");
 	}
+	
+	public static String cleanHtml(String input) {
+		return input.replaceAll("<script>.*?</script>", "");
+	}
 }

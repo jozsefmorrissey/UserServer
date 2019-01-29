@@ -2,6 +2,7 @@ package com.userSrvc.server.entities;
 
 import javax.annotation.ManagedBean;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 
 import org.springframework.web.context.annotation.ApplicationScope;
 
+import com.userSrvc.server.converter.IntBoolConverter;
 import com.userSrvc.server.utils.ImageUtils;
 
 import lombok.Data;
@@ -44,6 +46,11 @@ public class User {
 
 	@Column
 	private String password;
+
+	
+	@Column
+	@Convert(converter = IntBoolConverter.class)
+	private Boolean cantModify;
 
 	@Column
 	private byte[] photo;

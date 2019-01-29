@@ -6,6 +6,7 @@
 # sudo confidentalInfo.sh replace dbinfo UserSrvc ./OracleDBSimpleSetup.sql
 
 # TODO: sqlplus will not let me switch users. Fix issue so that script will run
+cat ./Oracle/*.sql > ./OracleDBSimpleSetup.sql
 
 password=$(sudo confidentalInfo.sh value UserSrvc dbpass)
 # password=$(docker exec confidentialInfo bash -c "./confidentalInfo.sh value UserSrvc dbpass")

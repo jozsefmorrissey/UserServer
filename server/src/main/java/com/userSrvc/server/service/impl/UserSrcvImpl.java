@@ -66,6 +66,9 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	private User authinticate(User user, boolean external) throws Exception {
+		if (user.getUserToken() == null) {
+			throw new Exception("No user token provided");
+		}
 		validateEmail(user);
 		User u = userRepo.getByEmail(user.getEmail());
 		if (u != null && user != null && user.getUserToken().equals(u.getUserToken())) {
