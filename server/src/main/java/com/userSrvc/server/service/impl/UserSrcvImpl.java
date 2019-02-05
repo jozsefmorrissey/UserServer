@@ -44,9 +44,10 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 	
 	private String setToken(User user) {
+		User dbUser = userRepo.getByEmail(user.getEmail());
 		String token = GenUtils.randStringSecure(256);
-		user.setUserToken(token);
-		userRepo.save(user);
+		dbUser.setUserToken(token);
+		userRepo.save(dbUser);
 		return token;
 	}
 
@@ -113,7 +114,7 @@ public class UserSrcvImpl implements UserSrvc {
 
 			Transport.send(message);
 
-			System.out.println("Done");
+			System.out.println("Email Sent");
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

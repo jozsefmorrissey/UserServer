@@ -5,7 +5,20 @@
 cat ./Oracle/*.sql > ./OracleDBSimpleSetup.sql
 cat ./OracleDBSimpleSetup.sql ./Oracle/PopulateData/*.sql > OracleDBPopulateData.sql
 
-user=$(sudo confidentalInfo.sh value UserSrvc dbUser)
-password=$(sudo confidentalInfo.sh value UserSrvc dbPass)
+user=$1
+password=$2
+if [ -z $1 ]
+then
+  propFile=../../server/src/main/resources/application-test.properties
+  password=$(
+    grep "spring.datasource.password=.*" $propFile |
+    sed "s/.*=\(.*\)/\1/"
+  )
+  user=$(
+    grep "spring.datasource.username=.*" $propFile |
+    sed "s/.*=\(.*\)/\1/"
+  )
+fi
 sysPassword=$(sudo confidentalInfo.sh value UserSrvc systemDbPass)
-echo exit | sqlplus system/$sysPassword@localhost:1521/xe @./OracleDBPopulateData.sql $password $user
+dbUrl=$(sudo confidentalInfo.sh value UserSrvc dbUrl)
+echo exit | sqlplus system/$sysPassword@$dbUrl @./OracleDBPopulateData.sql $password $user

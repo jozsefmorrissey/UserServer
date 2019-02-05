@@ -8,7 +8,7 @@ import com.goebl.david.Webb;
 public class GenUtils {
 
 	public static void main(String...args) {
-		System.out.println("'" + getPassword("dbpass", "Chais6shinae6Ibeik6uam5ShahJa") + "'");
+		System.out.println("'" + getPassword("dbPass", "ohtaemouKiDeequohshiengoopae0o", "8040") + "'");
 	}
 
 	public static String randStringSecure(int length) {
@@ -19,9 +19,10 @@ public class GenUtils {
 		return token;
 	}
 
-	public static String getPassword(String identifier, String token) {
+	public static String getPassword(String identifier, String token, String port) {
+		System.out.println(identifier + ":" + token + ":" + port);
 		Webb webb = Webb.create();
-		Response<String> req = webb.post("http://localhost:8080/password/get")
+		Response<String> req = webb.post("http://localhost:" + port + "/password/get")
 		        .param("collectionIdentifier", "UserSrvc")
 		        .param("passwordIdentifier", identifier)
 		        .param("token", token)

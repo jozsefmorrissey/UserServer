@@ -1,5 +1,8 @@
 package com.userSrvc.server;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.springframework.boot.SpringApplication;
@@ -9,8 +12,6 @@ import com.userSrvc.server.utils.GenUtils;
 
 @SpringBootApplication
 public class ServerApplication {
-
-	private static String token = "ooC9phie4Gisie3iu4ahShaigei5p";
 
 //    @Bean("jasyptStringEncryptor")
 //    public StringEncryptor stringEncryptor() {
@@ -28,19 +29,30 @@ public class ServerApplication {
 //        return encryptor;
 //    }
 
-	public static void main(String[] args) {
-		if (args.length > 0) {
-			token = args[0];
-		}
-		
+	public static void main(String[] args) throws IOException {
         SpringApplication application = new SpringApplication(ServerApplication.class);
-
         Properties properties = new Properties();
-        String dbpass = GenUtils.getPassword("dbpass", token);
-//      properties.put("spring.datasource.password", "ENC(" + dbPassEnc + ")");
-        properties.put("spring.datasource.password", dbpass);
-        application.setDefaultProperties(properties);
 
+      if (args.length > 0) {
+				String token = args[0];
+				String configPort = args [1];
+				String dbpass = GenUtils.getPassword("dbPass", token, configPort);
+				String dbUrl = "jdbc:oracle:thin:@" + GenUtils.getPassword("dbUrl", token, configPort);
+				String dbUser = GenUtils.getPassword("dbUser", token, configPort);
+				String port = GenUtils.getPassword("port", token, configPort);
+				System.out.println(dbpass + ":" + dbUser + ":" + dbUrl);
+	//	      properties.put("spring.datasource.password", "ENC(" + dbPassEnc + ")");
+				properties.put("spring.datasource.password", dbpass);
+				properties.put("spring.datasource.url", dbUrl);
+				properties.put("spring.datasource.username", dbUser);
+				properties.put("server.port", port);
+		} else {
+			InputStream input = null;
+			input = new FileInputStream("./src/main/resources/application-test.properties");
+			properties.load(input);
+		}
+
+        application.setDefaultProperties(properties);
         application.run(args);
 	}
 }

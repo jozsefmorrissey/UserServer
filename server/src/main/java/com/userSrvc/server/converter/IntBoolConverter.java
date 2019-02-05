@@ -8,7 +8,7 @@ public class IntBoolConverter implements AttributeConverter<Boolean, Integer>{
 
 	@Override
 	public Integer convertToDatabaseColumn(Boolean arg0) {
-		return arg0 ? 1 : 0;
+		return arg0 != null && arg0  ? 1 : 0;
 	}
 
 	@Override
