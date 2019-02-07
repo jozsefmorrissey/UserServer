@@ -1,10 +1,911 @@
-2019-02-04|19:18:26.628 [http-nio-8010-exec-8] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] ~ Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+2019-02-06|20:33:21.755 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2019-02-06|20:33:21.834 [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer ~ 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/home/jozsef/.m2/repository/org/json/json/20080701/json-20080701.jar!/org/json/JSONObject.class
+	jar:file:/home/jozsef/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2019-02-06|20:33:21.854 [main] INFO  c.u.server.ServerApplicationTests ~ Starting ServerApplicationTests on jozsef-HP-Z620-Workstation with PID 19184 (started by jozsef in /home/jozsef/projects/hyperWiki/UserServer/server)
+2019-02-06|20:33:21.854 [main] INFO  c.u.server.ServerApplicationTests ~ The following profiles are active: test
+2019-02-06|20:33:23.539 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2019-02-06|20:33:23.648 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-02-06|20:33:23.648 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:23.648 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource test [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:23.649 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:23.649 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:23.649 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|20:33:23.650 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application-test.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:23.650 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:23.862 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$22a8b3dc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-06|20:33:23.959 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2019-02-06|20:33:23.962 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2019-02-06|20:33:24.447 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|20:33:24.451 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|20:33:24.985 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Start completed.
+2019-02-06|20:33:25.072 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:33:26.265 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:33:28.120 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-06|20:33:28.347 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-02-06|20:33:29.383 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-06|20:33:29.398 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|20:33:29.399 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|20:33:29.400 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-02-06|20:33:29.500 [main] INFO  c.u.server.ServerApplicationTests ~ Started ServerApplicationTests in 7.982 seconds (JVM running for 9.064)
+2019-02-06|20:33:29.671 [Thread-8] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:33:29.673 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown initiated...
+2019-02-06|20:33:29.690 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown completed.
+2019-02-06|20:33:55.968 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2019-02-06|20:33:56.092 [main] INFO  c.userSrvc.server.ServerApplication ~ Starting ServerApplication v0.0.1-SNAPSHOT on jozsef-HP-Z620-Workstation with PID 19433 (/home/jozsef/projects/hyperWiki/UserServer/server/target/server-0.0.1-SNAPSHOT.jar started by jozsef in /home/jozsef/projects/hyperWiki/UserServer/server)
+2019-02-06|20:33:56.093 [main] INFO  c.userSrvc.server.ServerApplication ~ No active profile set, falling back to default profiles: default
+2019-02-06|20:33:56.158 [main] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext ~ Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6f79caec: startup date [Wed Feb 06 20:33:56 EST 2019]; root of context hierarchy
+2019-02-06|20:33:57.821 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2019-02-06|20:33:57.914 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-02-06|20:33:57.915 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource commandLineArgs [org.springframework.core.env.SimpleCommandLinePropertySource] to EncryptableEnumerablePropertySourceWrapper
+2019-02-06|20:33:57.916 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|20:33:57.916 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|20:33:57.916 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:57.916 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:57.916 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|20:33:57.916 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:57.916 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:33:58.142 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$76ace13a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-06|20:33:58.298 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2019-02-06|20:33:58.300 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2019-02-06|20:33:59.069 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer ~ Tomcat initialized with port(s): 8080 (http)
+2019-02-06|20:33:59.127 [main] INFO  o.a.catalina.core.StandardService ~ Starting service [Tomcat]
+2019-02-06|20:33:59.128 [main] INFO  o.a.catalina.core.StandardEngine ~ Starting Servlet Engine: Apache Tomcat/8.5.32
+2019-02-06|20:33:59.143 [localhost-startStop-1] INFO  o.a.c.core.AprLifecycleListener ~ The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/u01/app/oracle/product/11.2.0/xe/lib:/u01/app/oracle/product/11.2.0/xe/lib::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]
+2019-02-06|20:33:59.235 [localhost-startStop-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] ~ Initializing Spring embedded WebApplicationContext
+2019-02-06|20:34:00.257 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-02-06|20:34:00.258 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'webMvcMetricsFilter' to: [/*]
+2019-02-06|20:34:00.258 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-02-06|20:34:00.258 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-02-06|20:34:00.259 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'requestContextFilter' to: [/*]
+2019-02-06|20:34:00.259 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'httpTraceFilter' to: [/*]
+2019-02-06|20:34:00.259 [localhost-startStop-1] INFO  o.s.b.w.s.ServletRegistrationBean ~ Servlet dispatcherServlet mapped to [/]
+2019-02-06|20:34:00.387 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|20:34:00.391 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|20:34:01.730 [main] ERROR com.zaxxer.hikari.pool.HikariPool ~ HikariPool-1 - Exception during pool initialization.
+java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:801)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:782)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:39)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:704)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:151)
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115)
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78)
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:319)
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:356)
+	at org.springframework.boot.autoconfigure.orm.jpa.DatabaseLookup.getDatabase(DatabaseLookup.java:72)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.determineDatabase(JpaProperties.java:166)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.jpaVendorAdapter(JpaBaseConfiguration.java:111)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9.CGLIB$jpaVendorAdapter$3(<generated>)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9$$FastClassBySpringCGLIB$$f5b74cb0.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:228)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:361)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9.jpaVendorAdapter(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:818)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:724)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:474)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:818)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:724)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:474)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at com.userSrvc.server.ServerApplication.main(ServerApplication.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: oracle.net.ns.NetException: Got minus one from a read call
+	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:546)
+	at oracle.net.ns.NIOPacket.readNIOPacket(NIOPacket.java:355)
+	at oracle.net.ns.NSProtocolNIO.negotiateConnection(NSProtocolNIO.java:124)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:318)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1481)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:540)
+	... 82 common frames omitted
+2019-02-06|20:34:01.733 [main] WARN  o.s.b.a.orm.jpa.DatabaseLookup ~ Unable to determine jdbc url from datasource
+org.springframework.jdbc.support.MetaDataAccessException: Could not get Connection for extracting meta-data; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:328)
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:356)
+	at org.springframework.boot.autoconfigure.orm.jpa.DatabaseLookup.getDatabase(DatabaseLookup.java:72)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.determineDatabase(JpaProperties.java:166)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.jpaVendorAdapter(JpaBaseConfiguration.java:111)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9.CGLIB$jpaVendorAdapter$3(<generated>)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9$$FastClassBySpringCGLIB$$f5b74cb0.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:228)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:361)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9.jpaVendorAdapter(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:818)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:724)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:474)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:818)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:724)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:474)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at com.userSrvc.server.ServerApplication.main(ServerApplication.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:81)
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:319)
+	... 67 common frames omitted
+Caused by: java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:801)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:782)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:39)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:704)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:151)
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115)
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78)
+	... 68 common frames omitted
+Caused by: oracle.net.ns.NetException: Got minus one from a read call
+	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:546)
+	at oracle.net.ns.NIOPacket.readNIOPacket(NIOPacket.java:355)
+	at oracle.net.ns.NSProtocolNIO.negotiateConnection(NSProtocolNIO.java:124)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:318)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1481)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:540)
+	... 82 common frames omitted
+2019-02-06|20:34:01.747 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|20:34:01.747 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|20:34:02.858 [main] ERROR com.zaxxer.hikari.pool.HikariPool ~ HikariPool-1 - Exception during pool initialization.
+java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:801)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:782)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:39)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:704)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:151)
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115)
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:324)
+	at org.springframework.boot.jdbc.EmbeddedDatabaseConnection.isEmbedded(EmbeddedDatabaseConnection.java:123)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateDefaultDdlAutoProvider.getDefaultDdlAuto(HibernateDefaultDdlAutoProvider.java:42)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration.lambda$getVendorProperties$0(HibernateJpaConfiguration.java:132)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings.getDdlAuto(HibernateSettings.java:53)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties$Hibernate.determineDdlAuto(JpaProperties.java:247)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties$Hibernate.getAdditionalProperties(JpaProperties.java:216)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties$Hibernate.access$000(JpaProperties.java:169)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.getHibernateProperties(JpaProperties.java:153)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration.getVendorProperties(HibernateJpaConfiguration.java:134)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.entityManagerFactory(JpaBaseConfiguration.java:135)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9.CGLIB$entityManagerFactory$4(<generated>)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9$$FastClassBySpringCGLIB$$f5b74cb0.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:228)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:361)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$9583a3a9.entityManagerFactory(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at com.userSrvc.server.ServerApplication.main(ServerApplication.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: oracle.net.ns.NetException: Got minus one from a read call
+	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:546)
+	at oracle.net.ns.NIOPacket.readNIOPacket(NIOPacket.java:355)
+	at oracle.net.ns.NSProtocolNIO.negotiateConnection(NSProtocolNIO.java:124)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:318)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1481)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:540)
+	... 60 common frames omitted
+2019-02-06|20:34:02.891 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:34:03.271 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|20:34:03.272 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|20:34:04.384 [main] ERROR com.zaxxer.hikari.pool.HikariPool ~ HikariPool-1 - Exception during pool initialization.
+java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:801)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:782)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:39)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:704)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:88)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:259)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:233)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:210)
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:51)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:94)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:242)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:210)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.handleTypes(MetadataBuildingProcess.java:352)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:111)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:861)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:888)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:57)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:377)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1758)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1695)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:573)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at com.userSrvc.server.ServerApplication.main(ServerApplication.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: oracle.net.ns.NetException: Got minus one from a read call
+	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:546)
+	at oracle.net.ns.NIOPacket.readNIOPacket(NIOPacket.java:355)
+	at oracle.net.ns.NSProtocolNIO.negotiateConnection(NSProtocolNIO.java:124)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:318)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1481)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:540)
+	... 56 common frames omitted
+2019-02-06|20:34:05.060 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|20:34:05.060 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|20:34:06.176 [main] ERROR com.zaxxer.hikari.pool.HikariPool ~ HikariPool-1 - Exception during pool initialization.
+java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:801)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:782)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:39)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:704)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
+	at org.hibernate.internal.SessionFactoryImpl$1.obtainConnection(SessionFactoryImpl.java:427)
+	at org.hibernate.hql.spi.id.IdTableHelper.executeIdTableCreationStatements(IdTableHelper.java:67)
+	at org.hibernate.hql.spi.id.global.GlobalTemporaryTableBulkIdStrategy.finishPreparation(GlobalTemporaryTableBulkIdStrategy.java:125)
+	at org.hibernate.hql.spi.id.global.GlobalTemporaryTableBulkIdStrategy.finishPreparation(GlobalTemporaryTableBulkIdStrategy.java:42)
+	at org.hibernate.hql.spi.id.AbstractMultiTableBulkIdStrategyImpl.prepare(AbstractMultiTableBulkIdStrategyImpl.java:88)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:305)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:462)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:892)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:57)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:377)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1758)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1695)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:573)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at com.userSrvc.server.ServerApplication.main(ServerApplication.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: oracle.net.ns.NetException: Got minus one from a read call
+	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:546)
+	at oracle.net.ns.NIOPacket.readNIOPacket(NIOPacket.java:355)
+	at oracle.net.ns.NSProtocolNIO.negotiateConnection(NSProtocolNIO.java:124)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:318)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1481)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:540)
+	... 49 common frames omitted
+2019-02-06|20:34:06.179 [main] ERROR o.hibernate.hql.spi.id.IdTableHelper ~ Unable obtain JDBC Connection
+java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:801)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:782)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:39)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:704)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
+	at org.hibernate.internal.SessionFactoryImpl$1.obtainConnection(SessionFactoryImpl.java:427)
+	at org.hibernate.hql.spi.id.IdTableHelper.executeIdTableCreationStatements(IdTableHelper.java:67)
+	at org.hibernate.hql.spi.id.global.GlobalTemporaryTableBulkIdStrategy.finishPreparation(GlobalTemporaryTableBulkIdStrategy.java:125)
+	at org.hibernate.hql.spi.id.global.GlobalTemporaryTableBulkIdStrategy.finishPreparation(GlobalTemporaryTableBulkIdStrategy.java:42)
+	at org.hibernate.hql.spi.id.AbstractMultiTableBulkIdStrategyImpl.prepare(AbstractMultiTableBulkIdStrategyImpl.java:88)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:305)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:462)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:892)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:57)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:377)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1758)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1695)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:573)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at com.userSrvc.server.ServerApplication.main(ServerApplication.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: oracle.net.ns.NetException: Got minus one from a read call
+	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:546)
+	at oracle.net.ns.NIOPacket.readNIOPacket(NIOPacket.java:355)
+	at oracle.net.ns.NSProtocolNIO.negotiateConnection(NSProtocolNIO.java:124)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:318)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1481)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:540)
+	... 49 common frames omitted
+2019-02-06|20:34:06.187 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:34:06.292 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|20:34:06.292 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|20:34:07.406 [main] ERROR com.zaxxer.hikari.pool.HikariPool ~ HikariPool-1 - Exception during pool initialization.
+java.sql.SQLRecoverableException: IO Error: Got minus one from a read call
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:801)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:782)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:39)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:704)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:151)
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115)
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:324)
+	at org.springframework.boot.jdbc.EmbeddedDatabaseConnection.isEmbedded(EmbeddedDatabaseConnection.java:123)
+	at org.springframework.boot.autoconfigure.orm.jpa.DataSourceInitializedPublisher.lambda$isInitializingDatabase$0(DataSourceInitializedPublisher.java:95)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings.getDdlAuto(HibernateSettings.java:53)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties$Hibernate.determineDdlAuto(JpaProperties.java:247)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties$Hibernate.getAdditionalProperties(JpaProperties.java:216)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties$Hibernate.access$000(JpaProperties.java:169)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.getHibernateProperties(JpaProperties.java:153)
+	at org.springframework.boot.autoconfigure.orm.jpa.DataSourceInitializedPublisher.isInitializingDatabase(DataSourceInitializedPublisher.java:97)
+	at org.springframework.boot.autoconfigure.orm.jpa.DataSourceInitializedPublisher.publishEventIfRequired(DataSourceInitializedPublisher.java:77)
+	at org.springframework.boot.autoconfigure.orm.jpa.DataSourceInitializedPublisher.postProcessAfterInitialization(DataSourceInitializedPublisher.java:70)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:431)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.postProcessObjectFromFactoryBean(AbstractAutowireCapableBeanFactory.java:1841)
+	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:116)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance(AbstractBeanFactory.java:1645)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getObjectForBeanInstance(AbstractAutowireCapableBeanFactory.java:1175)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:257)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:367)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:110)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:625)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:444)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveInnerBean(BeanDefinitionValueResolver.java:312)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:131)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1602)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1354)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:572)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:583)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:91)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:572)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:759)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at com.userSrvc.server.ServerApplication.main(ServerApplication.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: oracle.net.ns.NetException: Got minus one from a read call
+	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:546)
+	at oracle.net.ns.NIOPacket.readNIOPacket(NIOPacket.java:355)
+	at oracle.net.ns.NSProtocolNIO.negotiateConnection(NSProtocolNIO.java:124)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:318)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1481)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:540)
+	... 79 common frames omitted
+2019-02-06|20:34:08.834 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-06|20:34:09.045 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-02-06|20:34:10.001 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-06|20:34:10.035 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|20:34:10.037 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|20:34:10.039 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-02-06|20:34:10.151 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Registering beans for JMX exposure on startup
+2019-02-06|20:34:10.154 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-02-06|20:34:10.166 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2019-02-06|20:34:10.218 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer ~ Tomcat started on port(s): 8080 (http) with context path ''
+2019-02-06|20:34:10.222 [main] INFO  c.userSrvc.server.ServerApplication ~ Started ServerApplication in 14.631 seconds (JVM running for 16.152)
+2019-02-06|20:34:58.012 [Thread-7] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext ~ Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6f79caec: startup date [Wed Feb 06 20:33:56 EST 2019]; root of context hierarchy
+2019-02-06|20:34:58.019 [Thread-7] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Unregistering JMX-exposed beans on shutdown
+2019-02-06|20:34:58.021 [Thread-7] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Unregistering JMX-exposed beans
+2019-02-06|20:34:58.027 [Thread-7] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:35:10.864 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2019-02-06|20:35:10.926 [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer ~ 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/home/jozsef/.m2/repository/org/json/json/20080701/json-20080701.jar!/org/json/JSONObject.class
+	jar:file:/home/jozsef/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2019-02-06|20:35:10.942 [main] INFO  c.u.server.ServerApplicationTests ~ Starting ServerApplicationTests on jozsef-HP-Z620-Workstation with PID 19900 (started by jozsef in /home/jozsef/projects/hyperWiki/UserServer/server)
+2019-02-06|20:35:10.942 [main] INFO  c.u.server.ServerApplicationTests ~ The following profiles are active: test
+2019-02-06|20:35:12.518 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2019-02-06|20:35:12.634 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-02-06|20:35:12.635 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:12.635 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource test [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:12.635 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:12.635 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:12.636 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|20:35:12.636 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application-test.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:12.636 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:12.828 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4a75887d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-06|20:35:12.915 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2019-02-06|20:35:12.917 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2019-02-06|20:35:13.339 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|20:35:13.342 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|20:35:13.807 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Start completed.
+2019-02-06|20:35:13.872 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:35:14.962 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:35:16.693 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-06|20:35:16.899 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-02-06|20:35:18.119 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-06|20:35:18.133 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|20:35:18.134 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|20:35:18.136 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-02-06|20:35:18.227 [main] INFO  c.u.server.ServerApplicationTests ~ Started ServerApplicationTests in 7.573 seconds (JVM running for 8.472)
+2019-02-06|20:35:18.399 [Thread-8] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:35:18.400 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown initiated...
+2019-02-06|20:35:18.416 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown completed.
+2019-02-06|20:35:21.808 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2019-02-06|20:35:21.927 [main] INFO  c.userSrvc.server.ServerApplication ~ Starting ServerApplication v0.0.1-SNAPSHOT on jozsef-HP-Z620-Workstation with PID 20145 (/home/jozsef/projects/hyperWiki/UserServer/server/target/server-0.0.1-SNAPSHOT.jar started by jozsef in /home/jozsef/projects/hyperWiki/UserServer/server)
+2019-02-06|20:35:21.929 [main] INFO  c.userSrvc.server.ServerApplication ~ No active profile set, falling back to default profiles: default
+2019-02-06|20:35:21.992 [main] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext ~ Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5c0369c4: startup date [Wed Feb 06 20:35:21 EST 2019]; root of context hierarchy
+2019-02-06|20:35:23.672 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2019-02-06|20:35:23.769 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-02-06|20:35:23.771 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource commandLineArgs [org.springframework.core.env.SimpleCommandLinePropertySource] to EncryptableEnumerablePropertySourceWrapper
+2019-02-06|20:35:23.771 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|20:35:23.772 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|20:35:23.772 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:23.772 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:23.772 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|20:35:23.772 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:23.773 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|20:35:23.981 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$f24f52a5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-06|20:35:24.128 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2019-02-06|20:35:24.130 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2019-02-06|20:35:24.810 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer ~ Tomcat initialized with port(s): 8080 (http)
+2019-02-06|20:35:24.843 [main] INFO  o.a.catalina.core.StandardService ~ Starting service [Tomcat]
+2019-02-06|20:35:24.844 [main] INFO  o.a.catalina.core.StandardEngine ~ Starting Servlet Engine: Apache Tomcat/8.5.32
+2019-02-06|20:35:24.855 [localhost-startStop-1] INFO  o.a.c.core.AprLifecycleListener ~ The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/u01/app/oracle/product/11.2.0/xe/lib:/u01/app/oracle/product/11.2.0/xe/lib::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]
+2019-02-06|20:35:24.938 [localhost-startStop-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] ~ Initializing Spring embedded WebApplicationContext
+2019-02-06|20:35:25.906 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-02-06|20:35:25.906 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'webMvcMetricsFilter' to: [/*]
+2019-02-06|20:35:25.913 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-02-06|20:35:25.913 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-02-06|20:35:25.913 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'requestContextFilter' to: [/*]
+2019-02-06|20:35:25.913 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'httpTraceFilter' to: [/*]
+2019-02-06|20:35:25.913 [localhost-startStop-1] INFO  o.s.b.w.s.ServletRegistrationBean ~ Servlet dispatcherServlet mapped to [/]
+2019-02-06|20:35:26.066 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|20:35:26.069 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|20:35:26.591 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Start completed.
+2019-02-06|20:35:26.646 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:35:28.163 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|20:35:29.510 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-06|20:35:29.742 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-02-06|20:35:30.553 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-06|20:35:30.571 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|20:35:30.572 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|20:35:30.572 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-02-06|20:35:30.656 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Registering beans for JMX exposure on startup
+2019-02-06|20:35:30.659 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-02-06|20:35:30.669 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2019-02-06|20:35:30.724 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer ~ Tomcat started on port(s): 8080 (http) with context path ''
+2019-02-06|20:35:30.729 [main] INFO  c.userSrvc.server.ServerApplication ~ Started ServerApplication in 9.268 seconds (JVM running for 10.645)
+2019-02-06|21:18:13.813 [Thread-9] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext ~ Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5c0369c4: startup date [Wed Feb 06 20:35:21 EST 2019]; root of context hierarchy
+2019-02-06|21:18:13.821 [Thread-9] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Unregistering JMX-exposed beans on shutdown
+2019-02-06|21:18:13.822 [Thread-9] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Unregistering JMX-exposed beans
+2019-02-06|21:18:13.829 [Thread-9] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:18:13.831 [Thread-9] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown initiated...
+2019-02-06|21:18:13.839 [Thread-9] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown completed.
+2019-02-06|21:18:24.016 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2019-02-06|21:18:24.078 [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer ~ 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/home/jozsef/.m2/repository/org/json/json/20080701/json-20080701.jar!/org/json/JSONObject.class
+	jar:file:/home/jozsef/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2019-02-06|21:18:24.095 [main] INFO  c.u.server.ServerApplicationTests ~ Starting ServerApplicationTests on jozsef-HP-Z620-Workstation with PID 23425 (started by jozsef in /home/jozsef/projects/hyperWiki/UserServer/server)
+2019-02-06|21:18:24.095 [main] INFO  c.u.server.ServerApplicationTests ~ The following profiles are active: test
+2019-02-06|21:18:25.577 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2019-02-06|21:18:25.675 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-02-06|21:18:25.675 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:25.675 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource test [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:25.675 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:25.676 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:25.676 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|21:18:25.676 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application-test.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:25.676 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:25.848 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4a75887d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-06|21:18:25.931 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2019-02-06|21:18:25.934 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2019-02-06|21:18:26.318 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|21:18:26.322 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|21:18:26.786 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Start completed.
+2019-02-06|21:18:26.849 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:18:27.872 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:18:29.499 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-06|21:18:29.701 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-02-06|21:18:30.656 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-06|21:18:30.668 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|21:18:30.670 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|21:18:30.671 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-02-06|21:18:30.771 [main] INFO  c.u.server.ServerApplicationTests ~ Started ServerApplicationTests in 6.961 seconds (JVM running for 7.807)
+2019-02-06|21:18:30.921 [Thread-8] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:18:30.922 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown initiated...
+2019-02-06|21:18:30.934 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown completed.
+2019-02-06|21:18:38.233 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2019-02-06|21:18:38.361 [main] INFO  c.userSrvc.server.ServerApplication ~ Starting ServerApplication v0.0.1-SNAPSHOT on jozsef-HP-Z620-Workstation with PID 23673 (/home/jozsef/projects/hyperWiki/UserServer/server/target/server-0.0.1-SNAPSHOT.jar started by jozsef in /home/jozsef/projects/hyperWiki/UserServer/server)
+2019-02-06|21:18:38.362 [main] INFO  c.userSrvc.server.ServerApplication ~ No active profile set, falling back to default profiles: default
+2019-02-06|21:18:38.423 [main] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext ~ Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5fe5c6f: startup date [Wed Feb 06 21:18:38 EST 2019]; root of context hierarchy
+2019-02-06|21:18:39.981 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2019-02-06|21:18:40.056 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-02-06|21:18:40.057 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource commandLineArgs [org.springframework.core.env.SimpleCommandLinePropertySource] to EncryptableEnumerablePropertySourceWrapper
+2019-02-06|21:18:40.058 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|21:18:40.058 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|21:18:40.058 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:40.058 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:40.058 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|21:18:40.058 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:40.058 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:18:40.245 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d79faec3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-06|21:18:40.379 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2019-02-06|21:18:40.381 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2019-02-06|21:18:41.006 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer ~ Tomcat initialized with port(s): 8080 (http)
+2019-02-06|21:18:41.044 [main] INFO  o.a.catalina.core.StandardService ~ Starting service [Tomcat]
+2019-02-06|21:18:41.045 [main] INFO  o.a.catalina.core.StandardEngine ~ Starting Servlet Engine: Apache Tomcat/8.5.32
+2019-02-06|21:18:41.057 [localhost-startStop-1] INFO  o.a.c.core.AprLifecycleListener ~ The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/u01/app/oracle/product/11.2.0/xe/lib:/u01/app/oracle/product/11.2.0/xe/lib::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]
+2019-02-06|21:18:41.161 [localhost-startStop-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] ~ Initializing Spring embedded WebApplicationContext
+2019-02-06|21:18:42.054 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-02-06|21:18:42.055 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'webMvcMetricsFilter' to: [/*]
+2019-02-06|21:18:42.055 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-02-06|21:18:42.055 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-02-06|21:18:42.055 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'requestContextFilter' to: [/*]
+2019-02-06|21:18:42.055 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'httpTraceFilter' to: [/*]
+2019-02-06|21:18:42.056 [localhost-startStop-1] INFO  o.s.b.w.s.ServletRegistrationBean ~ Servlet dispatcherServlet mapped to [/]
+2019-02-06|21:18:42.168 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|21:18:42.171 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|21:18:42.657 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Start completed.
+2019-02-06|21:18:42.711 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:18:44.136 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:18:45.501 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-06|21:18:45.733 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-02-06|21:18:46.595 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-06|21:18:46.616 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|21:18:46.617 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|21:18:46.618 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-02-06|21:18:46.698 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Registering beans for JMX exposure on startup
+2019-02-06|21:18:46.700 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-02-06|21:18:46.708 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2019-02-06|21:18:46.747 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer ~ Tomcat started on port(s): 8080 (http) with context path ''
+2019-02-06|21:18:46.751 [main] INFO  c.userSrvc.server.ServerApplication ~ Started ServerApplication in 8.869 seconds (JVM running for 10.198)
+2019-02-06|21:24:07.783 [Thread-9] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext ~ Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5fe5c6f: startup date [Wed Feb 06 21:18:38 EST 2019]; root of context hierarchy
+2019-02-06|21:24:07.790 [Thread-9] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Unregistering JMX-exposed beans on shutdown
+2019-02-06|21:24:07.792 [Thread-9] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Unregistering JMX-exposed beans
+2019-02-06|21:24:07.798 [Thread-9] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:24:07.800 [Thread-9] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown initiated...
+2019-02-06|21:24:07.810 [Thread-9] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown completed.
+2019-02-06|21:38:26.513 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2019-02-06|21:38:26.576 [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer ~ 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/home/jozsef/.m2/repository/org/json/json/20080701/json-20080701.jar!/org/json/JSONObject.class
+	jar:file:/home/jozsef/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2019-02-06|21:38:26.596 [main] INFO  c.u.server.ServerApplicationTests ~ Starting ServerApplicationTests on jozsef-HP-Z620-Workstation with PID 26883 (started by jozsef in /home/jozsef/projects/hyperWiki/UserServer/server)
+2019-02-06|21:38:26.596 [main] INFO  c.u.server.ServerApplicationTests ~ The following profiles are active: test
+2019-02-06|21:38:28.095 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2019-02-06|21:38:28.208 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-02-06|21:38:28.209 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:28.209 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource test [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:28.209 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:28.209 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:28.210 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|21:38:28.210 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application-test.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:28.210 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:28.392 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4a75887d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-06|21:38:28.471 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2019-02-06|21:38:28.473 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2019-02-06|21:38:28.866 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|21:38:28.870 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|21:38:29.329 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Start completed.
+2019-02-06|21:38:29.389 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:38:30.435 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:38:32.028 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-06|21:38:32.229 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-02-06|21:38:33.132 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-06|21:38:33.148 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|21:38:33.149 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|21:38:33.150 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-02-06|21:38:33.274 [main] INFO  c.u.server.ServerApplicationTests ~ Started ServerApplicationTests in 6.958 seconds (JVM running for 7.779)
+2019-02-06|21:38:33.434 [Thread-8] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:38:33.435 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown initiated...
+2019-02-06|21:38:33.446 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Shutdown completed.
+2019-02-06|21:38:40.944 [main] ERROR o.s.b.c.l.LoggingApplicationListener ~ Cannot set level: ALL for 'null'
+2019-02-06|21:38:41.058 [main] INFO  c.userSrvc.server.ServerApplication ~ Starting ServerApplication v0.0.1-SNAPSHOT on jozsef-HP-Z620-Workstation with PID 27126 (/home/jozsef/projects/hyperWiki/UserServer/server/target/server-0.0.1-SNAPSHOT.jar started by jozsef in /home/jozsef/projects/hyperWiki/UserServer/server)
+2019-02-06|21:38:41.060 [main] INFO  c.userSrvc.server.ServerApplication ~ No active profile set, falling back to default profiles: default
+2019-02-06|21:38:41.131 [main] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext ~ Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@3ac42916: startup date [Wed Feb 06 21:38:41 EST 2019]; root of context hierarchy
+2019-02-06|21:38:42.672 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor ~ Post-processing PropertySource instances
+2019-02-06|21:38:42.750 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-02-06|21:38:42.752 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource commandLineArgs [org.springframework.core.env.SimpleCommandLinePropertySource] to EncryptableEnumerablePropertySourceWrapper
+2019-02-06|21:38:42.752 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|21:38:42.752 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|21:38:42.753 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:42.753 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:42.753 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-02-06|21:38:42.753 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:42.753 [main] INFO  c.u.j.EncryptablePropertySourceConverter ~ Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-02-06|21:38:42.955 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ~ Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$fc10a5b8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-06|21:38:43.094 [main] INFO  c.u.j.r.DefaultLazyPropertyResolver ~ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2019-02-06|21:38:43.096 [main] INFO  c.u.j.d.DefaultLazyPropertyDetector ~ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2019-02-06|21:38:43.728 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer ~ Tomcat initialized with port(s): 8010 (http)
+2019-02-06|21:38:43.762 [main] INFO  o.a.catalina.core.StandardService ~ Starting service [Tomcat]
+2019-02-06|21:38:43.762 [main] INFO  o.a.catalina.core.StandardEngine ~ Starting Servlet Engine: Apache Tomcat/8.5.32
+2019-02-06|21:38:43.774 [localhost-startStop-1] INFO  o.a.c.core.AprLifecycleListener ~ The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/u01/app/oracle/product/11.2.0/xe/lib:/u01/app/oracle/product/11.2.0/xe/lib::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]
+2019-02-06|21:38:43.855 [localhost-startStop-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] ~ Initializing Spring embedded WebApplicationContext
+2019-02-06|21:38:44.743 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-02-06|21:38:44.743 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'webMvcMetricsFilter' to: [/*]
+2019-02-06|21:38:44.743 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-02-06|21:38:44.743 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-02-06|21:38:44.744 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'requestContextFilter' to: [/*]
+2019-02-06|21:38:44.744 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean ~ Mapping filter: 'httpTraceFilter' to: [/*]
+2019-02-06|21:38:44.744 [localhost-startStop-1] INFO  o.s.b.w.s.ServletRegistrationBean ~ Servlet dispatcherServlet mapped to [/]
+2019-02-06|21:38:44.857 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Starting...
+2019-02-06|21:38:44.860 [main] WARN  c.z.hikari.util.DriverDataSource ~ Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2019-02-06|21:38:45.362 [main] INFO  com.zaxxer.hikari.HikariDataSource ~ HikariPool-1 - Start completed.
+2019-02-06|21:38:45.415 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:38:46.853 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean ~ Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-06|21:38:48.001 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration ~ spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-06|21:38:48.308 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration ~ Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-02-06|21:38:49.048 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver ~ Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-06|21:38:49.063 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|21:38:49.064 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2019-02-06|21:38:49.065 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping ~ Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-02-06|21:38:49.139 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Registering beans for JMX exposure on startup
+2019-02-06|21:38:49.142 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-02-06|21:38:49.151 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter ~ Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2019-02-06|21:38:49.196 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer ~ Tomcat started on port(s): 8010 (http) with context path ''
+2019-02-06|21:38:49.201 [main] INFO  c.userSrvc.server.ServerApplication ~ Started ServerApplication in 8.604 seconds (JVM running for 9.689)
+2019-02-06|21:39:18.437 [http-nio-8010-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] ~ Initializing Spring FrameworkServlet 'dispatcherServlet'
+2019-02-06|21:39:23.529 [http-nio-8010-exec-3] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] ~ Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
 java.lang.NullPointerException: null
 	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:663)
 	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:763)
-	at com.userSrvc.server.service.impl.UserSrcvImpl.loginUser(UserSrcvImpl.java:59)
+	at com.userSrvc.server.service.impl.UserSrcvImpl.loginUser(UserSrcvImpl.java:60)
 	at com.userSrvc.server.controller.UserCtrl.loginUser(UserCtrl.java:28)
-	at sun.reflect.GeneratedMethodAccessor90.invoke(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:209)
@@ -67,13 +968,13 @@ java.lang.NullPointerException: null
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
-2019-02-04|19:18:37.956 [http-nio-8010-exec-3] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] ~ Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
-java.lang.NullPointerException: null
-	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:663)
-	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:763)
-	at com.userSrvc.server.service.impl.UserSrcvImpl.loginUser(UserSrcvImpl.java:59)
-	at com.userSrvc.server.controller.UserCtrl.loginUser(UserCtrl.java:28)
-	at sun.reflect.GeneratedMethodAccessor90.invoke(Unknown Source)
+2019-02-06|21:47:27.870 [http-nio-8010-exec-10] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] ~ Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.Exception: Access Denied] with root cause
+java.lang.Exception: Access Denied
+	at com.userSrvc.server.service.impl.UserSrcvImpl.authinticate(UserSrcvImpl.java:82)
+	at com.userSrvc.server.service.impl.UserSrcvImpl.updatePassword(UserSrcvImpl.java:138)
+	at com.userSrvc.server.controller.UserCtrl.updatePassword(UserCtrl.java:43)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:209)

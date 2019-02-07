@@ -37,10 +37,11 @@ public class ServerApplication {
 				String token = args[0];
 				String configPort = args [1];
 				String dbpass = GenUtils.getPassword("dbPass", token, configPort);
-				String dbUrl = "jdbc:oracle:thin:@" + GenUtils.getPassword("dbUrl", token, configPort);
-				String dbUser = GenUtils.getPassword("dbUser", token, configPort);
-				String port = GenUtils.getPassword("port", token, configPort);
-				System.out.println(dbpass + ":" + dbUser + ":" + dbUrl);
+				String dbUrl = "jdbc:oracle:thin:@" + GenUtils.getPassword("DB_URL", token, configPort);
+				// dbUrl="jdbc:oracle:thin:@adb.us-ashburn-1.oraclecloud.com:1522/qfxvhm8okemwoc8_db201902042116_medium.adwc.oraclecloud.com?TNS_ADMIN=/home/jozsef/Downloads/Wallet_DB201902042116.zip";
+				String dbUser = GenUtils.getPassword("DB_USER", token, configPort);
+				String port = GenUtils.getPassword("PORT", token, configPort);
+				System.out.println(dbpass + ":" + dbUser + ":" + dbUrl + ":" + port);
 	//	      properties.put("spring.datasource.password", "ENC(" + dbPassEnc + ")");
 				properties.put("spring.datasource.password", dbpass);
 				properties.put("spring.datasource.url", dbUrl);
