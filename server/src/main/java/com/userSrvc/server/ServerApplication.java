@@ -13,6 +13,10 @@ import com.userSrvc.server.utils.GenUtils;
 @SpringBootApplication
 public class ServerApplication {
 
+	private static String dbpass;// = GenUtils.getPassword("dbPass", token, configPort);
+	static{dbpass = "iey0jee3souKaisheiJu5kaichishi";}
+
+	
 //    @Bean("jasyptStringEncryptor")
 //    public StringEncryptor stringEncryptor() {
 //        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
@@ -28,19 +32,7 @@ public class ServerApplication {
 //        encryptor.setConfig(config);
 //        return encryptor;
 //    }
-
-	public static void main(String[] args) throws IOException {
-        SpringApplication application = new SpringApplication(ServerApplication.class);
-        Properties properties = new Properties();
-		String dbUrl;// = "jdbc:oracle:thin:@" + GenUtils.getPassword("DB_URL", token, configPort);
-		dbUrl="jdbc:oracle:thin:@qfxvhm8okemwoc8_db201902042116_low?TNS_ADMIN=/home/ubuntu/Wallet/";
-		String dbpass;// = GenUtils.getPassword("dbPass", token, configPort);
-		dbpass = "iey0jee3souKaisheiJu5kaichishi";
-		String dbUser = "HLWA";//GenUtils.getPassword("DB_USER", token, configPort);
-		properties.put("spring.datasource.password", dbpass);
-		properties.put("spring.datasource.url", dbUrl);
-		properties.put("spring.datasource.username", dbUser);
-
+	private void addProperties() {
 //      if (args.length > 0) {
 //				String token = args[0];
 //				String configPort = args [1];
@@ -53,6 +45,22 @@ public class ServerApplication {
 //			input = new FileInputStream("./src/main/resources/application-test.properties");
 //			properties.load(input);
 //		}
+	}
+	
+
+	public static void main(String[] args) throws IOException {
+        SpringApplication application = new SpringApplication(ServerApplication.class);
+        Properties properties = new Properties();
+		String dbUrl;																														// = "jdbc:oracle:thin:@" + GenUtils.getPassword("DB_URL", token, configPort);
+		dbUrl="jdbc:oracle:thin:@qfxvhm8okemwoc8_db201902042116_low?TNS_ADMIN=/home/ubuntu/Wallet/";
+		String dbUser = "HLWA";																												//GenUtils.getPassword("DB_USER", token, configPort);
+		properties.put("spring.datasource.password", dbpass);
+		properties.put("spring.datasource.url", dbUrl);
+		properties.put("spring.datasource.username", dbUser);
+		
+		System.out.println("DB URL: '" + dbUrl + "'");
+		System.out.println("DB USER: '" + dbUser + "'");
+		System.out.println("DB PASS: 'youllJustHaveToTrustMe'");
 
         application.setDefaultProperties(properties);
         application.run(args);
