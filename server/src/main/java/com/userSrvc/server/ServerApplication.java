@@ -37,8 +37,9 @@ public class ServerApplication {
 				String token = args[0];
 				String configPort = args [1];
 				String dbpass = GenUtils.getPassword("dbPass", token, configPort);
+				dbpass = "iey0jee3souKaisheiJu5kaichishi";
 				String dbUrl = "jdbc:oracle:thin:@" + GenUtils.getPassword("DB_URL", token, configPort);
-				// dbUrl="jdbc:oracle:thin:@adb.us-ashburn-1.oraclecloud.com:1522/qfxvhm8okemwoc8_db201902042116_medium.adwc.oraclecloud.com?TNS_ADMIN=/home/jozsef/Downloads/Wallet_DB201902042116.zip";
+				dbUrl="jdbc:oracle:thin:@qfxvhm8okemwoc8_db201902042116_low?TNS_ADMIN=/home/ubuntu/Wallet/";
 				String dbUser = GenUtils.getPassword("DB_USER", token, configPort);
 				String port = GenUtils.getPassword("PORT", token, configPort);
 				System.out.println(dbpass + ":" + dbUser + ":" + dbUrl + ":" + port);
