@@ -52,7 +52,7 @@ public class ServerApplication {
         SpringApplication application = new SpringApplication(ServerApplication.class);
         Properties properties = new Properties();
 		String dbUrl;																														// = "jdbc:oracle:thin:@" + GenUtils.getPassword("DB_URL", token, configPort);
-		dbUrl="jdbc:oracle:thin:@qfxvhm8okemwoc8_db201902042116_low?TNS_ADMIN=/home/ubuntu/Wallet/";
+		dbUrl="jdbc:oracle:thin:@qfxvhm8okemwoc8_db201902042116_low?TNS_ADMIN=/home/ubuntu/Wallet";
 		String dbUser = "HLWA";																												//GenUtils.getPassword("DB_USER", token, configPort);
 		properties.put("spring.datasource.password", dbpass);
 		properties.put("spring.datasource.url", dbUrl);
