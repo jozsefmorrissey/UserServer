@@ -50,10 +50,10 @@ public class ServerApplication {
 		String dbUrl;																														// = "jdbc:oracle:thin:@" + GenUtils.getPassword("DB_URL", token, configPort);
 		dbUrl="jdbc:oracle:thin:@db201902042116_low?TNS_ADMIN=/home/ubuntu/Wallet";
 		String dbUser = "HLWA";																												//GenUtils.getPassword("DB_USER", token, configPort);
-//		properties.put("spring.datasource.password", dbpass);
+		String dbpass = "iey0jee3souKaisheiJu5kaichishi";
+		properties.put("spring.datasource.password", dbpass);
 		properties.put("spring.datasource.url", dbUrl);
 		properties.put("spring.datasource.username", dbUser);
-		String dbpass = "iey0jee3souKaisheiJu5kaichishi";
 
 		System.out.println("DB URL: '" + dbUrl + "'");
 		System.out.println("DB USER: '" + dbUser + "'");
