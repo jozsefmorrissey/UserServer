@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ../bashLib/properties.sh
+source ../BashScripts/properties.sh
 ENV_FILE=./.env
 
 DB_TAG=$(getValue DB_TAG $ENV_FILE)
