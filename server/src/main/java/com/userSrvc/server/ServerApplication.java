@@ -98,7 +98,7 @@ public class ServerApplication {
 
 
 	public static void main(String[] args) throws IOException {
-		cloudSetupHardCoded(args);
-		// setup(args);
+//		cloudSetupHardCoded(args);
+		 setup(args);
 	}
 }
