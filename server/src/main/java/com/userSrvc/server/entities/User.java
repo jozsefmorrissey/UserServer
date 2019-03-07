@@ -24,7 +24,7 @@ import lombok.Data;
  *
  */
 @Entity
-@Table(name = "AM_USER")
+@Table
 @ManagedBean
 @ApplicationScope
 @Data
@@ -40,14 +40,14 @@ public class User {
 
 	@Column
 	private String email;
-	
+
 	@Column
 	private String userToken;
 
 	@Column
 	private String password;
 
-	
+
 	@Column
 	@Convert(converter = IntBoolConverter.class)
 	private Boolean cantModify;
@@ -76,6 +76,6 @@ public class User {
 		this.password = password;
 		this.photo = photo;
 	}
-	
-	
+
+
 }

@@ -30,9 +30,9 @@ fi
 
 if [ "${booleans[primary]}" == "true" ]
 then
-  user=$(confidentalInfo.sh value UserSrvc dbUser)
+  user=$(confidentalInfo.sh value UserSrvc DB_USER)
   password=$(confidentalInfo.sh value UserSrvc dbPass)
-  dbUrl=$(confidentalInfo.sh value UserSrvc dbUrl)
+  dbUrl=$(confidentalInfo.sh value UserSrvc DB_URL)
 
   echo sqlplus system/$sysPassword@$dbUrl @./OracleDBSimpleSetup.sql $password $user
   echo exit | sqlplus system/$sysPassword@$dbUrl @./OracleDBSimpleSetup.sql $password $user
