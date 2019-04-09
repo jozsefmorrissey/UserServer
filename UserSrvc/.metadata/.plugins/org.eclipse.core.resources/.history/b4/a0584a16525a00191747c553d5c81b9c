@@ -1,7 +1,0 @@
-package com.userSrvc.client.error;
-
-public class RestResponseException extends Exception {
-	public RestResponseException(String errorMsg) {
-		super(errorMsg);
-	}
-}

@@ -1,7 +1,0 @@
-package com.userSrvc.server.controller;
-
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-public class staticCtrl implements WebMvcConfigurer {
-
-}

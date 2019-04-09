@@ -1,7 +1,0 @@
-package com.userSrvc.client.error;
-
-public interface ERROR_MSGS {
-	String EMAIL_ALREADY_REGISTERED = "Email address already registered.";
-	String INVALID_PASSWORD = "Invalid password";
-	String NO_TOKEN_PROVIDED = "No user token provided";
-}
