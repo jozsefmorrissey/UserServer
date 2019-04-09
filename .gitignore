@@ -2,3 +2,4 @@
 /.recommenders/
 server/bin/**/*
 server/logs/*
+*/target/*
