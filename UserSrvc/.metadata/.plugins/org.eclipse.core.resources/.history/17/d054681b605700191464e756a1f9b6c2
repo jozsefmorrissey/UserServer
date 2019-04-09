@@ -1,0 +1,19 @@
+package com.userSrvc.server.controller;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+@EnableWebMvc
+public class staticCtrl implements WebMvcConfigurer {
+	
+    @Override
+	public void addResourceHandlers(
+			ResourceHandlerRegistry registry) {
+        registry
+        .addResourceHandler("/resources/**")
+        .addResourceLocations("/resources/"); 
+		WebMvcConfigurer.super.addResourceHandlers(registry);
+	}
+}

@@ -1,0 +1,11 @@
+com.userSrvc.server
+com.userSrvc.server.controller
+com.userSrvc.server.converter
+com.userSrvc.server.entities
+com.userSrvc.server.entities.key
+com.userSrvc.server.entities.request
+com.userSrvc.server.repo
+com.userSrvc.server.service
+com.userSrvc.server.service.impl
+com.userSrvc.server.utils
+com.userSrvc.server.webSocket

@@ -1,0 +1,17 @@
+package com.userSrvc.client.services;
+
+import java.nio.file.AccessDeniedException;
+
+import org.hibernate.PropertyValueException;
+
+import com.userSrvc.client.entities.UUser;
+
+public interface UserSrvcExt {
+	public <U extends UUser> U loginUser(U user) throws PropertyValueException, AccessDeniedException;
+	public <U extends UUser> U getUser(U user);
+	public <U extends UUser> U update(U user) throws PropertyValueException, AccessDeniedException;
+	public <U extends UUser> U authinticateUser(U user) throws AccessDeniedException;
+	public <U extends UUser> void updatePassword(U user) throws PropertyValueException, AccessDeniedException;
+	public <U extends UUser> void resetPassword(U userUrl);
+	public <U extends UUser> U add(U user) throws ConstraintViolationException;
+}

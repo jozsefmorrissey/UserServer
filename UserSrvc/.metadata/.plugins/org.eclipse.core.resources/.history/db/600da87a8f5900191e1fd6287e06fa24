@@ -1,0 +1,66 @@
+package com.userSrvc.client;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.userSrvc.client.entities.UUser;
+import com.userSrvc.client.services.UserSrvcExt;
+import com.userSrvc.client.services.impl.UserSrvcExtImpl;
+import com.userSrvc.client.util.Util;
+
+@RunWith(SpringRunner.class)
+@SpringBootApplication(scanBasePackages = "com.userSrvc")
+public class NewTest
+{
+	@Autowired
+	private UserSrvcExt userSrvcExt;
+
+	String emailValid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
+	String emailInvalid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
+	String passwordValid = "garbally gook";
+	String passwordInvalid = "garbally gook2";
+	String nameOriginal = "Murray Rothbard";
+	String nameUpdated = "Freidric Engles";
+	UUser user = new UUser(0, nameOriginal, emailValid, passwordValid);
+	
+	@Test
+    public void testApp()
+    {
+    	add();
+    }
+    
+    public void add() {
+	    try {
+			userSrvcExt.add(user);
+			assertTrue(true);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
+
+    }
+    
+    public void login() {
+    	
+    }
+    
+    public void authinticate() {
+    	
+    }
+    
+    public void update() {
+    	
+    }
+    
+    public void get() {
+    	
+    }
+    
+    public void updatePass() {
+    	
+    }
+}

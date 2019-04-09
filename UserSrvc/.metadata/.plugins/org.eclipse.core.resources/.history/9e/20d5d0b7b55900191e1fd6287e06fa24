@@ -1,0 +1,30 @@
+server.servlet.context-path=/usvc
+spring.datasource.driverClassName=oracle.jdbc.OracleDriver
+# spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.jpa.database-platform=org.hibernate.dialect.Oracle10gDialect
+#spring.datasource.username=characterBuilder
+# spring.datasource.username=HLWA
+#spring.datasource.password=ENC(0YPs1D0/XVKJLYK9UYIk5FI76P1Sex9yldwpg6Nu8/E=)
+spring.jpa.show-sql=false
+spring.aop.auto=true
+spring.jpa.properties.hibernate.show_sql=false
+spring.jpa.properties.hibernate.use_sql_comments=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true
+#Runs the 'data.sql' file in your resources directory
+spring.datasource.initialize=false
+#Don't use this property it can mess up the database
+#spring.jpa.hibernate.ddl-auto=update
+#Logging
+logging.level.root=ALL
+logging.file=logs/myapplication.log
+logging.level.org.springframework.web=ERROR
+logging.level.org.hibernate=ERROR
+#logging.level.org.hibernate.SQL=DEBUG
+#logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+logging.level.characterBuilder=ERROR
+logging.pattern.console=%d{yyyy-MM-dd|HH:mm:ss.SSS} [%thread] %-5level %logger{36} ~ %msg%n
+logging.pattern.file=%d{yyyy-MM-dd|HH:mm:ss.SSS} [%thread] %-5level %logger{36} ~ %msg%n
+
+spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/javaDoc
+

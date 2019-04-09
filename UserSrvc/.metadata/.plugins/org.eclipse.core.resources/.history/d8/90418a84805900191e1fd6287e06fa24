@@ -1,0 +1,20 @@
+package com.userSrvc.client.util;
+
+import java.nio.charset.Charset;
+import java.util.Random;
+
+public class Util {
+	private static final String domain = "http://localhost:7001/usvc";
+	public static final String getUri(String endpoint) {
+		return domain + endpoint;
+	}
+	
+	public static String randomString(int length, String regEx) {
+	    byte[] array = new byte[length]; // length is bounded by 7
+	    new Random().nextBytes(array);
+	    String generatedString = new String(array, Charset.forName("UTF-8"));
+	 
+	    return generatedString;
+	}
+
+}

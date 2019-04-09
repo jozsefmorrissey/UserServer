@@ -1,0 +1,10 @@
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/entities/EmailToken.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/UserCtrl.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/Application.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/services/UserSrvcExt.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/entities/UUser.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/error/RestResponseException.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/util/Util.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/entities/UserUrl.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/error/ERROR_MSGS.java
+/home/jozsef/projects/UserSrvc/universal-user-client/src/main/java/com/userSrvc/client/services/impl/UserSrvcExtImpl.java

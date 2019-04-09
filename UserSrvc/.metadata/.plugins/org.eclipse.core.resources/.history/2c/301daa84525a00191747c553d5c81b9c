@@ -1,0 +1,19 @@
+package com.userSrvc.client.error;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class RestResponseException extends Exception {
+	public RestResponseException(String errorMsg) {
+	    super(errorMsg);
+	    JSONObject obj;
+		try {
+			obj = new JSONObject(errorMsg);
+		    obj.getJSONArray("geodata");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

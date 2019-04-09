@@ -1,0 +1,5 @@
+package com.userSrvc.client.util;
+
+public class Util {
+
+}

@@ -1,0 +1,5 @@
+package com.userSrvc.client.error;
+
+public interface ERROR_MSGS {
+	String EMAIL_ALREADY_REGISTERED = "Email address already registered.";
+}

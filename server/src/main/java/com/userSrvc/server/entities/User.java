@@ -46,12 +46,7 @@ public class User {
 
 	@Column
 	private String password;
-
 	
-	@Column
-	@Convert(converter = IntBoolConverter.class)
-	private Boolean cantModify;
-
 	@Column
 	private byte[] photo;
 
@@ -75,6 +70,14 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.photo = photo;
+	}
+
+	public void merge(User dbUser) {
+		this.id = dbUser.getId();
+		this.name = dbUser.getName();
+		this.userToken = dbUser.getUserToken();
+		this.email = dbUser.getEmail();
+		this.photo = dbUser.getPhoto();
 	}
 	
 	

@@ -1,0 +1,27 @@
+package com.userSrvc.client.util;
+
+import java.nio.charset.Charset;
+import java.util.Random;
+
+public class Util {
+	
+	public static void main(String...args) {
+		System.out.println(randomString(15, "[a-zA-Z]{1,}"));
+	}
+	
+	private static final String domain = "http://localhost:7001/usvc";
+	public static final String getUri(String endpoint) {
+		return domain + endpoint;
+	}
+	
+	public static String randomString(int length, String regEx) {
+		String generatedString = "";
+		while (!generatedString.matches(regEx)) {
+		    byte[] array = new byte[length]; // length is bounded by 7
+		    new Random().nextBytes(array);
+		    generatedString = new String(array, Charset.forName("US-ASCII"));
+		}	 
+	    return generatedString;
+	}
+
+}

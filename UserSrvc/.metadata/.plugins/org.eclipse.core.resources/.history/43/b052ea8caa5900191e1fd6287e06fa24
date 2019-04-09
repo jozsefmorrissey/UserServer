@@ -1,0 +1,5 @@
+package com.userSrvc.client.error;
+
+public class ErrorMsgs {
+
+}

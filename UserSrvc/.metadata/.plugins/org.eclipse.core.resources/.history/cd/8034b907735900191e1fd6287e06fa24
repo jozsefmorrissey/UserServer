@@ -1,0 +1,19 @@
+package com.userSrvc.client.services;
+
+import java.nio.file.AccessDeniedException;
+
+import org.hibernate.PropertyValueException;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.userSrvc.client.entities.UUser;
+import com.userSrvc.client.entities.UserUrl;
+
+public interface UserSrvcExt {
+	public UUser extLoginUser(UUser user) throws PropertyValueException, AccessDeniedException;
+	public UUser extGetUser(UUser user);
+	public UUser extUpdate(UUser user) throws PropertyValueException, AccessDeniedException;
+	public UUser extAuthinticateUser(UUser user) throws AccessDeniedException;
+	public void extUpdatePassword(UUser user) throws PropertyValueException, AccessDeniedException;
+	public void extResetPassword(UserUrl userUrl);
+}

@@ -1,0 +1,87 @@
+package com.userSrvc.client;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.userSrvc.client.entities.EmailToken;
+import com.userSrvc.client.entities.UUser;
+import com.userSrvc.client.services.UserSrvcExt;
+import com.userSrvc.client.util.Util;
+
+/**
+ * Unit test for simple App.
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class ClientTest
+{
+	@Autowired
+	private UserSrvcExt userSrvcExt;
+
+	String emailValid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
+	String emailInvalid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
+	String passwordValid = "garbally gook";
+	String passwordInvalid = "garbally gook2";
+	String nameOriginal = "Murray Rothbard";
+	String nameUpdated = "Freidric Engles";
+	UUser user = new UUser(0, nameOriginal, emailValid, passwordValid);
+	
+	{
+	
+
+		
+		String uri = Util.getUri("/user/get");
+	    EmailToken entity = new EmailToken("dapibus@in.net", "[B@d077e31");
+
+//		System.out.println(restCall(uri, entity, new UUser()));
+		
+//	    UUser user = new UUser(0, null, "jozsef.morrissey@gmail.com", "password");
+	    user.setUserToken("[B@d077e31");
+
+//		uri = getUri("/user/update/password");
+//		System.out.println(restCall(uri, user, new UUser()));
+
+		user.setUserToken(null);
+		uri = Util.getUri("/user/login");
+	}
+	
+	@Test
+    public void testApp()
+    {
+    	add();
+    }
+    
+    public void add() {
+	    try {
+			userSrvcExt.add(user);
+			assertTrue(true);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
+
+    }
+    
+    public void login() {
+    	
+    }
+    
+    public void authinticate() {
+    	
+    }
+    
+    public void update() {
+    	
+    }
+    
+    public void get() {
+    	
+    }
+    
+    public void updatePass() {
+    	
+    }
+}

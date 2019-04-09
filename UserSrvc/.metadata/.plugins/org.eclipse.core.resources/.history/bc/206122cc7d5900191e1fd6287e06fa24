@@ -1,0 +1,9 @@
+package com.userSrvc.client.util;
+
+public class Util {
+	private static final String domain = "http://localhost:7001/usvc";
+	private static final String getUri(String endpoint) {
+		return domain + endpoint;
+	}
+
+}

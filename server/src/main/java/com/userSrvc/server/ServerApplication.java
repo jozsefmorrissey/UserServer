@@ -87,6 +87,8 @@ public class ServerApplication {
 		properties.put("server.port", port);
 	} else {
 		InputStream input = null;
+		input = new FileInputStream("./src/main/resources/application.properties");
+		properties.load(input);
 		input = new FileInputStream("./src/main/resources/application-test.properties");
 		properties.load(input);
 	}

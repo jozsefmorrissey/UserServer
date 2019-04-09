@@ -1,0 +1,8 @@
+package com.userSrvc.client.entities;
+
+public class Snippet {
+	public static void main(String[] args) {
+		ConfigurationPropertySource
+	}
+}
+
