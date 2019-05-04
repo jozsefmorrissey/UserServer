@@ -30,7 +30,7 @@ public class Remark {
 	
 	@OneToOne
 	@JoinColumn(name = "POSTER_ID")
-	private User poster;
+	private UUser poster;
 	
 	@Column
 	private long conversationId;

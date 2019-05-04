@@ -1,10 +1,12 @@
 package com.userSrvc.server.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.userSrvc.server.entities.User;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface UserRepo extends JpaRepository<User, Long> {
-    User getByEmail(String email);
-    User getByEmailAndPassword(String email, String password);
+import com.userSrvc.client.repo.UserBaseRepository;
+import com.userSrvc.server.entities.UUser;
+
+@Transactional
+public interface UserRepo extends UserBaseRepository<UUser> {
 }
+

@@ -1,47 +1,36 @@
-package com.userSrvc.client;
+package com.userSrvc.client.test;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import java.util.HashMap;
 
-import com.userSrvc.client.entities.GenUser;
+import org.junit.Test;
+
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.ERROR_MSGS;
 import com.userSrvc.client.error.RestResponseException;
-import com.userSrvc.client.services.SrvcProps;
 import com.userSrvc.client.services.UserSrvcExt;
-import com.userSrvc.client.services.impl.UserSrvcExtImpl;
 import com.userSrvc.client.util.Util;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { UserSrvcExtImpl.class, SrvcProps.class })
-public class ClientTest
+import lombok.Data;
+
+@Data
+public abstract class ClientTest
 {
-	@Autowired
-	private UserSrvcExt userSrvcExt;
+	private String emailValid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
+	private String emailInvalid = "badFormat@email,com";
+	private String passwordValid = "garbally gook";
+	private String passwordUpdated = "You'll never get this";
+	private String passwordInvalid = "garbally gook2";
+	private String nameOriginal = "Murray Rothbard";
+	private String nameUpdated = "Freidric Engles";
+	private HashMap<String, String> validTokens = new HashMap<String, String>();
+	private String invalidToken = "shhhhhhh";
+	private long originalId;
+	private UUserAbs user = buildValidUser();
 
-	String emailValid;
-	String emailInvalid = "badFormat@email,com";
-	String passwordValid = "garbally gook";
-	String passwordUpdated = "You'll never get this";
-	String passwordInvalid = "garbally gook2";
-	String nameOriginal = "Murray Rothbard";
-	String nameUpdated = "Freidric Engles";
-	String validToken;
-	String invalidToken = "shhhhhhh";
-	long originalId;
-	UUserAbs user = buildValidUser();
-
-	private UUserAbs buildValidUser() {
-		emailValid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
-		UUserAbs u = new GenUser(0, nameOriginal, emailValid, passwordValid);
-		u.setUserToken(validToken);
-		return u;
-	}
+	protected abstract UUserAbs buildValidUser();
+	protected abstract void post();
 	
 	@Test
     public void testApp()
@@ -51,31 +40,32 @@ public class ClientTest
     	authinticate();
     	update();
     	updatePass();
+    	post();
     }
     
     public void add() {
-    	// Add valid credentails
+    	// Add valid credentials
     	try {
-			userSrvcExt.add(user);
+			getUserSrvcExt().add(user);
 			assertTrue(true);
 		} catch (RestResponseException e) {
 			System.out.println(e.getMessage());
 			assertTrue(false);
 		}
     	
-    	// Add valid credentails with existing email
+    	// Add valid credentials with existing email
     	try {
-    		userSrvcExt.add(user);
+    		getUserSrvcExt().add(user);
     		assertTrue(false);
     	} catch (RestResponseException e) {
     		assertTrue(Util.responseExceptContains(e, 
     				ERROR_MSGS.EMAIL_ALREADY_REGISTERED));
     	}
 
-    	// Try to add credentails with invalid email;
+    	// Try to add credentials with invalid email;
     	user.setEmail(emailInvalid);
     	try {
-    		userSrvcExt.add(user);
+    		getUserSrvcExt().add(user);
     		assertTrue(false);
     	} catch (RestResponseException e) {
     		assertTrue(Util.responseExceptContains(e, 
@@ -85,10 +75,12 @@ public class ClientTest
     	user.setEmail(emailValid);
     }
     
-    public void login() {
+    public abstract UserSrvcExt getUserSrvcExt();
+    
+	public void login() {
     	try {
-			UUserAbs tokenCarrier = userSrvcExt.loginUser(user);
-			this.validToken = tokenCarrier.getUserToken();
+			UUserAbs tokenCarrier = getUserSrvcExt().loginUser(user);
+			saveValidToken(tokenCarrier);
 			this.originalId = tokenCarrier.getId();
 			assertTrue(true);
 		} catch (RestResponseException e) {
@@ -97,7 +89,7 @@ public class ClientTest
     	
     	user.setEmail(emailInvalid);
     	try {
-			userSrvcExt.loginUser(user);
+			getUserSrvcExt().loginUser(user);
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
@@ -106,7 +98,7 @@ public class ClientTest
     	user.setPassword(passwordInvalid);
     	user.setEmail(emailValid);
     	try {
-			userSrvcExt.loginUser(user);
+			getUserSrvcExt().loginUser(user);
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
@@ -116,22 +108,22 @@ public class ClientTest
     
     public void authinticate() {
     	try {
-			userSrvcExt.authinticateUser(user);
+			getUserSrvcExt().authinticateUser(user);
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
 					ERROR_MSGS.NO_TOKEN_PROVIDED));
 		}
-    	user.setUserToken(validToken);
+    	setValidToken(user);
     	try {
-			userSrvcExt.authinticateUser(user);
+			getUserSrvcExt().authinticateUser(user);
 			assertTrue(true);
 		} catch (RestResponseException e) {
 			assertTrue(false);
 		}
     	user.setUserToken(invalidToken);
     	try {
-			userSrvcExt.authinticateUser(user);
+			getUserSrvcExt().authinticateUser(user);
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
@@ -141,10 +133,10 @@ public class ClientTest
     
     public void update() {
     	user.setName(nameUpdated);
-    	user.setUserToken(validToken);
+    	setValidToken(user);
     	try {
-			userSrvcExt.update(user);
-			user = userSrvcExt.getUser(user);
+			getUserSrvcExt().update(user);
+			user = getUserSrvcExt().getUser(user);
 			assertTrue(nameUpdated.equals(user.getName()));
 			assertTrue(user.getId() == originalId);
 		} catch (RestResponseException e) {
@@ -155,18 +147,29 @@ public class ClientTest
     public void updatePass() {
     	try {
 			user.setPassword(passwordUpdated);
-	    	user.setUserToken(validToken);
-			userSrvcExt.updatePassword(user);
+	    	setValidToken(user);
+			getUserSrvcExt().updatePassword(user);
 			assertTrue(true);
-			user = userSrvcExt.loginUser(user);
+			user = getUserSrvcExt().loginUser(user);
 			assertTrue(user.getId() == this.originalId);
 			user.setPassword(passwordValid);
-			userSrvcExt.loginUser(user);
+			getUserSrvcExt().loginUser(user);
 			assertTrue(false);
     	} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
 					ERROR_MSGS.INVALID_PASSWORD));
 		}
-    	
+    }
+    
+    public String getValidToken(UUserAbs user) {
+    	return this.validTokens.get(user.getEmail());
+    }
+    
+    public void saveValidToken(UUserAbs user) {
+    	this.validTokens.put(user.getEmail(), user.getUserToken());
+    }
+    
+    public void setValidToken(UUserAbs user) {
+    	user.setUserToken(getValidToken(user));
     }
 }

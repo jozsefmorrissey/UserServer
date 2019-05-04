@@ -1,17 +1,18 @@
 package com.userSrvc.server;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.userSrvc.server.utils.GenUtils;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.userSrvc"})
 public class ServerApplication {
 
 //    @Bean("jasyptStringEncryptor")

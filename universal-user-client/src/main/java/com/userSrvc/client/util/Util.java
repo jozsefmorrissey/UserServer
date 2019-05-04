@@ -1,24 +1,30 @@
 package com.userSrvc.client.util;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Random;
 
-import com.userSrvc.client.error.RestResponseException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 
+import org.springframework.stereotype.Component;
+
+import com.userSrvc.client.error.RestResponseException;
+import com.userSrvc.client.services.SrvcProps;
+
+@Component
 public class Util {
-	
-	public static void main(String...args) {
-		System.out.println(randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}"));
+	public static void main(String...args) throws IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 	}
+		
 	
-	private static final String domain = "http://localhost:7001/usvc";
 	public static final String getUri(String endpoint) {
-		return domain + endpoint;
+		return SrvcProps.getProperties().get("domain") + endpoint;
 	}
 	
 	public static String randomString(int length, String characterSetRegEx, String regEx) {
 		String generatedString = "";
-		while (!generatedString.matches(regEx)) {
+		while (!generatedString.matches(regEx) || "".equals(generatedString)) {
 			generatedString = "";
 			for (int i = 0; i < length; i ++) {
 				String character = "";

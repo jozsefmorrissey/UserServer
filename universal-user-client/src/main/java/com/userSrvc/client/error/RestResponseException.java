@@ -12,6 +12,10 @@ import lombok.Data;
 @ApplicationScope
 @Data
 public class RestResponseException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7217711572643816415L;
 	String timestamp;
 	String status;
 	String error;

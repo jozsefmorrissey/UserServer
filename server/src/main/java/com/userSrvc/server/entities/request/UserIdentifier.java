@@ -4,7 +4,7 @@ import javax.annotation.ManagedBean;
 
 import org.springframework.web.context.annotation.ApplicationScope;
 
-import com.userSrvc.server.entities.User;
+import com.userSrvc.server.entities.UUser;
 
 import lombok.Data;
 
@@ -13,5 +13,5 @@ import lombok.Data;
 @Data
 public class UserIdentifier {
 	private String identifier;
-	private User user;
+	private UUser user;
 }

@@ -1,30 +1,33 @@
 package com.userSrvc.server.service;
 
 import java.nio.file.AccessDeniedException;
+import java.util.List;
 
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 
-import com.userSrvc.server.entities.User;
+import com.userSrvc.exceptions.StatisticallyImpossible;
+import com.userSrvc.server.entities.UUser;
 
 public interface UserSrvc {
-	public void addUser(User user) throws ConstraintViolationException, PropertyValueException;
+	public UUser addUser(UUser user) throws ConstraintViolationException, PropertyValueException, StatisticallyImpossible;
 	
-	public User loginUser(User user) throws PropertyValueException, DataException;
+	public UUser loginUser(UUser user) throws PropertyValueException, DataException;
 	
-	public User authinticate(User user) throws AccessDeniedException;
+	public UUser authinticate(UUser user) throws AccessDeniedException;
 	
-	public User getUser(String email) throws PropertyValueException;
-	
-	
-	public void updatePassword(User user) throws PropertyValueException, AccessDeniedException;
-	
-	
-	public void updateEmail(User user, String newEmail) throws PropertyValueException, AccessDeniedException;
+	public UUser getUser(UUser user) throws PropertyValueException;
+
+	public void updatePassword(UUser user) throws PropertyValueException, AccessDeniedException;
 	
 	
-	public void resetPassword(User user, String url) throws PropertyValueException;
+	public void updateEmail(UUser user, String newEmail) throws PropertyValueException, AccessDeniedException;
 	
-	public void update(User user) throws PropertyValueException, AccessDeniedException;
+	
+	public void resetPassword(UUser user, String url) throws PropertyValueException;
+	
+	public void update(UUser user) throws PropertyValueException, AccessDeniedException;
+	
+	public List<Byte[]> photo(long id);
 }

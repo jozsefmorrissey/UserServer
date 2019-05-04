@@ -3,3 +3,7 @@
 server/bin/**/*
 server/logs/*
 */target/*
+universal-user-client/src/main/resources/static/logs/*
+universal-user-client/src/main/resources/static/javadoc/*
+server/src/main/resources/static/logs/*
+server/src/main/resources/static/javadoc/*
