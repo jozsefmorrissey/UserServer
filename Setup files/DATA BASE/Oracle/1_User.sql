@@ -1,22 +1,22 @@
 
 --==========================  USERS  =====================--
 
-DROP USER &2 CASCADE;
+DROP USER ${user} CASCADE;
 
-CREATE USER &2
-IDENTIFIED BY &1
+CREATE USER ${user}
+IDENTIFIED BY ${password}
 DEFAULT TABLESPACE users
 TEMPORARY TABLESPACE temp;
 
-GRANT connect to &2;
-GRANT resource to &2;
-GRANT CREATE SESSION TO &2;
-GRANT CREATE TABLE TO &2;
-GRANT CREATE VIEW TO &2;
-GRANT CREATE MATERIALIZED VIEW TO &2;
-GRANT DEBUG CONNECT SESSION TO &2;
-GRANT DEBUG ANY PROCEDURE TO &2;
-GRANT create session to &2;
-ALTER USER &2 QUOTA 10m ON users;
+GRANT connect to ${user};
+GRANT resource to ${user};
+GRANT CREATE SESSION TO ${user};
+GRANT CREATE TABLE TO ${user};
+GRANT CREATE VIEW TO ${user};
+GRANT CREATE MATERIALIZED VIEW TO ${user};
+GRANT DEBUG CONNECT SESSION TO ${user};
+GRANT DEBUG ANY PROCEDURE TO ${user};
+GRANT create session to ${user};
+ALTER USER ${user} QUOTA 10m ON users;
 
-conn &2/&1
+conn ${user}/${password}
