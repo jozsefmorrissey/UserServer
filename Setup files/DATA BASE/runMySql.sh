@@ -12,7 +12,6 @@ propFile=../../server/src/main/resources/application.properties
 host=$(getValue host $propFile)
 database=$(getValue database $propFile)
 rootPassword=$(sudo confidentalInfo.sh value UserSrvc systemDbPass)
-dbUrl=$(sudo confidentalInfo.sh value UserSrvc DB_URL)
 
 if [ -z $user ]
 then
@@ -21,6 +20,6 @@ then
   user=$(getValue spring.datasource.username $testPropFile)
 fi
 
-echo password $password
+echo -e "user $user\npassword $password"
 ./run.sh -type mySql -host $host -database $database -user $user \
           -password $password -rootPassword $rootPassword  $(boolStr) $(flagStr)

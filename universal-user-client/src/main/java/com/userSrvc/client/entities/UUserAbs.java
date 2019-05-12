@@ -22,7 +22,7 @@ import lombok.Data;
 @Inheritance
 public abstract class UUserAbs {
 	@Id
-	private long id;
+	private Long id;
 	
 	@Column
 	private String name;
