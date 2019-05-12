@@ -77,51 +77,6 @@
 			<artifactId>spring-boot-admin-starter-server</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>simplefan</artifactId>
-			<version>0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>oraclepki</artifactId>
-			<version>0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ucp</artifactId>
-			<version>0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>orsdt_cert</artifactId>
-			<version>0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>xdb6</artifactId>
-			<version>0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ons</artifactId>
-			<version>0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<version>0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>orsdt_core</artifactId>
-			<version>0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>orai18n</artifactId>
-			<version>0.0.0</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
