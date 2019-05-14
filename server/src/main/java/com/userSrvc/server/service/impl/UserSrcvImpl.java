@@ -59,7 +59,7 @@ public class UserSrcvImpl implements UserSrvc {
 		user.setPassword(hashed);
 		for (int i = 0; i < ADD_ATTEMPTS; i ++) {
 			user.setId(new Random().nextLong());
-			if (user.getId() != 0) {
+			if (user.getId() != null) {
 				try {
 					UUser u = userRepo.save(user);
 					u.setPassword(null);
@@ -152,7 +152,7 @@ public class UserSrcvImpl implements UserSrvc {
 	@Override
 	public UUser getUser(UUser user) throws PropertyValueException {
 		UUser dbUser;
-		if (user.getId() > 0) {
+		if (user.getId() != null) {
 			dbUser = (UUser) userRepo.getOne(user.getId());
 			if (dbUser == null) {
 				throw new PropertyValueException(ERROR_MSGS.INVALID_ID, "user", "email");

@@ -20,7 +20,7 @@ import com.userSrvc.client.error.RestResponseException;
 
 @Service
 public class SrvcProps {
-	@Value("${uu.propery.url:https://github.com/jozsefmorrissey/UserServer/raw/timeTrackerUserSrvc/Setup%20files/service-properties.json}")
+	@Value("${uu.propery.url:https://github.com/jozsefmorrissey/UserServer/raw/master/Setup%20files/service-properties.json}")
 	private String propertyUrl;
 
 	private static Properties prop = new Properties();
