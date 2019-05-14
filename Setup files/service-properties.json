@@ -1,3 +1,3 @@
 {
-  "domain": "http://localhost:7001/usvc"
+  "serviceRootUrl": "http://localhost:7001/usvc"
 }

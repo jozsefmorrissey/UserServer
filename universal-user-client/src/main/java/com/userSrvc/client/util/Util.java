@@ -19,7 +19,7 @@ public class Util {
 		
 	
 	public static final String getUri(String endpoint) {
-		return SrvcProps.getProperties().get("domain") + endpoint;
+		return SrvcProps.getProperties().get("serviceRootUrl") + endpoint;
 	}
 	
 	public static String randomString(int length, String characterSetRegEx, String regEx) {
