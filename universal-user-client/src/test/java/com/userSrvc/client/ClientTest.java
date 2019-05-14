@@ -146,7 +146,7 @@ public class ClientTest
 			userSrvcExt.update(user);
 			user = userSrvcExt.getUser(user);
 			assertTrue(nameUpdated.equals(user.getName()));
-			assertTrue(user.getId() == originalId);
+			assertTrue(user.getId().equals(originalId));
 		} catch (RestResponseException e) {
 			assertTrue(false);
 		}
