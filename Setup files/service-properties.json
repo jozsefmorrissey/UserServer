@@ -1,3 +1,7 @@
 {
-  "serviceRootUrl": "http://192.168.254.27:7001/usvc"
+  "serviceRootUrl": "http://localhost:7001/usvc",
+  "urls": {
+    "login": "/login",
+    "update": ["/add", "remove"]
+  }
 }
