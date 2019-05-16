@@ -58,7 +58,6 @@ public class JSONMap {
 	public List<String> getKeys(String regex) {
 		List<String> keys = new ArrayList<String>();
 		Set<String> keySet = hashMap.keySet();
-		keys.add("urls.update[100]");
 		for (String key : keySet) {
 			if (key.matches(regex)) {
 				keys.add(key);
