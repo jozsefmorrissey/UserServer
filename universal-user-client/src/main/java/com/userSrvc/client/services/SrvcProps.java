@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -14,41 +17,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpStatusCodeException;
 
 import com.userSrvc.client.error.RestResponseException;
+import com.userSrvc.client.util.JSONMap;
+
+import org.json.JSONArray;
 
 @Service
 public class SrvcProps {
 	@Value("${uu.propery.url:https://github.com/jozsefmorrissey/UserServer/raw/master/Setup%20files/service-properties.json}")
 	private String propertyUrl;
-
-	private static Properties prop = new Properties();
-
+	
+	private static JSONMap jsonMap;
+	
 	@PostConstruct
-	public void setServiceProperties () throws RestResponseException {
-	    try {
-	   		JSONObject obj = new JSONObject(IOUtils.toString(new URL(propertyUrl), Charset.forName("UTF-8")));
-	   		Iterator<?> it = obj.keys();
-	   		while (it.hasNext()) {
-	   			String key = it.next().toString();
-	   			prop.setProperty(key, obj.getString(key));
-	   			key = obj.keys().next().toString();
-	   		}
-	    } catch (HttpStatusCodeException e) {
-	    	throw new RestResponseException(e.getResponseBodyAsString());
-	    } catch (JSONException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void setServiceProperties () throws RestResponseException, MalformedURLException, IOException, JSONException {
+		String obj = IOUtils.toString(new URL(propertyUrl), Charset.forName("UTF-8"));
+		jsonMap = new JSONMap(obj);
 	}
 
-	public static Properties getProperties() {
-		return prop;
+	public static JSONMap getJsonMap() {
+		return jsonMap;
 	}
 }
