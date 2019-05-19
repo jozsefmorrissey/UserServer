@@ -19,7 +19,6 @@ import com.userSrvc.client.services.SrvcProps;
 import com.userSrvc.client.util.AES;
 import com.userSrvc.exceptions.StatisticallyImpossible;
 import com.userSrvc.server.entities.UUser;
-import com.userSrvc.server.entities.UserPhoto;
 import com.userSrvc.server.service.UserSrvc;
 
 @CrossOrigin
@@ -50,6 +49,11 @@ public class UserCtrl {
 	public UUser getUser(@RequestBody UUser user) {
 		user = userSrvc.getUser(user);
 		return user;
+	}
+
+	@PostMapping("/get/all")
+	public List<UUser> getUser(@RequestBody List<Long> ids) {
+		return userSrvc.getUsers(ids);
 	}
 
 	@PostMapping("/update")

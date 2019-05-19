@@ -1,6 +1,8 @@
 package com.userSrvc.client.services.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -57,5 +59,10 @@ public class UserSrvcExtImpl implements UserSrvcExt {
 
 	public <U extends UUserAbs> void resetPassword(UserUrl<U> userUrl) throws RestResponseException {
 		restCall(Util.getUri("/user/reset/password"), userUrl, "");
+	}
+
+
+	public <U extends UUserAbs> List<U> getUsers(List<Long> ids) throws RestResponseException {
+		return restCall(Util.getUri("/user/get/all"), ids, new ArrayList());
 	}
 }

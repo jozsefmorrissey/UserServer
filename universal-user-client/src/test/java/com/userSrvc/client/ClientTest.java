@@ -140,12 +140,12 @@ public class ClientTest
     }
     
     public void update() {
-    	user.setName(nameUpdated);
+    	user.setFullName(nameUpdated);
     	user.setUserToken(validToken);
     	try {
 			userSrvcExt.update(user);
 			user = userSrvcExt.getUser(user);
-			assertTrue(nameUpdated.equals(user.getName()));
+			assertTrue(nameUpdated.equals(user.getFullName()));
 			assertTrue(user.getId().equals(originalId));
 		} catch (RestResponseException e) {
 			assertTrue(false);

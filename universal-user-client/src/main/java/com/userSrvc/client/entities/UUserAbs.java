@@ -25,7 +25,7 @@ public abstract class UUserAbs {
 	private Long id;
 	
 	@Column
-	private String name;
+	private String fullName;
 
 	@Column
 	private String email;
@@ -43,23 +43,23 @@ public abstract class UUserAbs {
 	public UUserAbs(long id, String name, String email, String password, byte[] photo) {
 		super();
 		this.setId(id);
-		this.setName(name);
+		this.setFullName(name);
 		this.setEmail(email);
 		this.setPassword(password);
 	}
 
 	public void merge(UUserAbs dbUser) {
 		this.setId(dbUser.getId());
-		this.setName(dbUser.getName());
+		this.setFullName(dbUser.getFullName());
 		this.setUserToken(dbUser.getUserToken());
 		this.setEmail(dbUser.getEmail());
 	}
 	
 	public String getName(int i) {
-		if (name == null) {
+		if (fullName == null) {
 			return null;
 		}
-		String[] names = name.split(" ");
+		String[] names = fullName.split(" ");
 		if (i >= names.length - 1) {
 			return names[names.length - 1];
 		}

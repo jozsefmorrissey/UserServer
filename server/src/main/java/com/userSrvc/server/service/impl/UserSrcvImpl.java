@@ -24,13 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.userSrvc.client.error.ERROR_MSGS;
+import com.userSrvc.client.util.GenUtils;
 import com.userSrvc.exceptions.StatisticallyImpossible;
 import com.userSrvc.server.entities.UUser;
 import com.userSrvc.server.entities.UserPhoto;
 import com.userSrvc.server.repo.UserPhotoRepo;
 import com.userSrvc.server.repo.UserRepo;
 import com.userSrvc.server.service.UserSrvc;
-import com.userSrvc.server.utils.GenUtils;
 import com.userSrvc.server.utils.HtmlString;
 
 @Service
@@ -198,7 +198,7 @@ public class UserSrcvImpl implements UserSrvc {
 
 		String token = setToken(dbUser);
 		String email = dbUser.getEmail();
-		scope.put("name", dbUser.getName());
+		scope.put("name", dbUser.getFullName());
 		scope.put("url", url + email + "/" + token);
 		scope.put("token", token);
 		HtmlString htmlString = new HtmlString(scope, "./src/main/resources/static/emailTemplates/password-reset.html");
@@ -223,7 +223,7 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 	
 	private boolean validateUsername(UUser user) throws PropertyValueException {
-		String name = user.getName();
+		String name = user.getFullName();
 		if (name == null || name.equals("")) {
 			throw new PropertyValueException (ERROR_MSGS.USERNAME_NOT_DEFINED, "user", "username");
 		}
@@ -245,5 +245,19 @@ public class UserSrcvImpl implements UserSrvc {
 			photos.add(upo.getPhoto());
 		}
 		return photos;
+	}
+
+	@Override
+	public List<UUser> getUsers(List<Long> ids) {
+		return null;
+	}
+	
+	@Override
+	public List<UUser> cleanUsers(List<UUser> users) {
+		for(UUser user : users) {
+			user.setPassword(null);
+			user.setUserToken(null);
+		}
+		return users;
 	}
 }

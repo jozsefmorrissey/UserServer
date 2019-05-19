@@ -30,4 +30,8 @@ public interface UserSrvc {
 	public void update(UUser user) throws PropertyValueException, AccessDeniedException;
 	
 	public List<Byte[]> photo(long id);
+
+	public List<UUser> getUsers(List<Long> ids);
+
+	List<UUser> cleanUsers(List<UUser> users);
 }

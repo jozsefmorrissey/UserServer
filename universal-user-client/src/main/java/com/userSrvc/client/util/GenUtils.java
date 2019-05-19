@@ -1,14 +1,15 @@
-package com.userSrvc.server.utils;
+package com.userSrvc.client.util;
 
 import java.security.SecureRandom;
 
 import com.goebl.david.Response;
 import com.goebl.david.Webb;
+import com.userSrvc.client.marker.HasId;
 
 public class GenUtils {
 
 	public static void main(String...args) {
-		System.out.println("'" + getPassword("dbPass", "ohtaemouKiDeequohshiengoopae0o", "8040") + "'");
+		System.out.println(HasId.class.getName());
 	}
 
 	public static String randStringSecure(int length) {
@@ -35,4 +36,18 @@ public class GenUtils {
 		return password;
 	}
 
+	public static long hash(String str) {
+		long hash = 7;
+		for (int i = 0; i < str.length(); i++) {
+		    hash = hash*31 + str.charAt(i);
+		}		
+		return hash;
+	}
+	
+	public static long hash(HasId object) {
+		return hash(object.getClass().getName() + ":" + object.getId());
+	}
+	public static long hash(String className, Long id) {
+		return hash(className + ":" + id);
+	}
 }

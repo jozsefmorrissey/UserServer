@@ -39,7 +39,7 @@ public class UUser extends UUserAbs {
 	public UUser(long id, String name, String email, String password) {
 		super(id, name, email, password, null);
 		this.setId(id);
-		this.setName(name);
+		this.setFullName(name);
 		this.setEmail(email);
 		this.setPassword(password);
 //		this.setPhoto(ImageUtils.convertToBytes("src/main/resources/static/images/default-image.jpg"));

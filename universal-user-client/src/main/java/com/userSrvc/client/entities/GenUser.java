@@ -9,7 +9,7 @@ public class GenUser extends UUserAbs {
 
 	public GenUser(long id, String name, String email, String password, byte[] photo) {
 		super();
-		this.setName(name);
+		this.setFullName(name);
 		this.setEmail(email);
 		this.setPassword(password);
 //		this.setPhoto(photo);//ImageUtils.convertToBytes("src/main/resources/static/images/default-image.jpg");
