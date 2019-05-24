@@ -2,6 +2,7 @@ package com.userSrvc.client.services.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.http.HttpHeaders;
@@ -15,7 +16,7 @@ import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.services.UserSrvcExt;
 import com.userSrvc.client.util.Util;
 
-public class UserSrvcExtImpl implements UserSrvcExt {
+public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 
 	private static <E,R> R restCall(String uri, E entity, R returned) throws RestResponseException {
 	     
@@ -33,36 +34,36 @@ public class UserSrvcExtImpl implements UserSrvcExt {
 	}
 
 
-	public <U extends UUserAbs> U loginUser(U user) throws RestResponseException {
+	public U loginUser(U user) throws RestResponseException {
 		return restCall(Util.getUri("/user/login"), user, user);
 	}
 
-	public <U extends UUserAbs> U getUser(U user) throws RestResponseException {
+	public U get(U user) throws RestResponseException {
 		return restCall(Util.getUri("/user/get"), user, user);
 	}
 
-	public <U extends UUserAbs> U update(U user) throws RestResponseException {
+	public U update(U user) throws RestResponseException {
 		return restCall(Util.getUri("/user/update"), user, user);
 	}
 
-	public <U extends UUserAbs> U add(U user) throws RestResponseException {
+	public U add(U user) throws RestResponseException {
 		return restCall(Util.getUri("/user/add"), user, user);
 	}
 
-	public <U extends UUserAbs> U authinticateUser(U user) throws RestResponseException {
+	public U authinticateUser(U user) throws RestResponseException {
 		return restCall(Util.getUri("/user/authinticate"), user, user);
 	}
 
-	public <U extends UUserAbs> void updatePassword(U user) throws RestResponseException {
+	public void updatePassword(U user) throws RestResponseException {
 		restCall(Util.getUri("/user/update/password"), user, "");
 	}
 
-	public <U extends UUserAbs> void resetPassword(UserUrl<U> userUrl) throws RestResponseException {
+	public void resetPassword(UserUrl<U> userUrl) throws RestResponseException {
 		restCall(Util.getUri("/user/reset/password"), userUrl, "");
 	}
 
 
-	public <U extends UUserAbs> List<U> getUsers(List<Long> ids) throws RestResponseException {
+	public List<U> getAll(Collection<Long> ids) throws RestResponseException {
 		return restCall(Util.getUri("/user/get/all"), ids, new ArrayList());
 	}
 }

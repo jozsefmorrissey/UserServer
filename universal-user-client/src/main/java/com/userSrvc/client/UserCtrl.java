@@ -11,11 +11,11 @@ import com.userSrvc.client.services.UserSrvcExt;
 
 public class UserCtrl <U extends UUserAbs>{
 	@Autowired
-	UserSrvcExt userSrvc;
+	UserSrvcExt<U> userSrvc;
 
 	@PostMapping("/get")
 	public U get(@RequestBody U user) throws RestResponseException {
-		return userSrvc.getUser(user);
+		return userSrvc.get(user);
 	}
 
 

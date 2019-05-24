@@ -249,7 +249,7 @@ public class UserSrcvImpl implements UserSrvc {
 
 	@Override
 	public List<UUser> getUsers(List<Long> ids) {
-		return null;
+		return userRepo.findAllById(ids);
 	}
 	
 	@Override
