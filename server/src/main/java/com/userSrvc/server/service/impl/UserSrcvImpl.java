@@ -96,6 +96,7 @@ public class UserSrcvImpl implements UserSrvc {
 
 	private UUser authinticate(UUser user, boolean external) throws AccessDeniedException {
 		if (user.getUserToken() == null) {
+			user = loginUser(user);
 			throw new AccessDeniedException(ERROR_MSGS.NO_TOKEN_PROVIDED);
 		}
 		validateEmail(user);
@@ -150,18 +151,23 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public UUser getUser(UUser user) throws PropertyValueException {
+	public UUser getUser(long id) throws PropertyValueException {
 		UUser dbUser;
-		if (user.getId() != null) {
-			dbUser = (UUser) userRepo.getOne(user.getId());
-			if (dbUser == null) {
-				throw new PropertyValueException(ERROR_MSGS.INVALID_ID, "user", "email");
-			}
-		} else {
-			dbUser = (UUser) userRepo.getByEmail(user.getEmail());
-			if (dbUser == null) {
-				throw new PropertyValueException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, "user", "email");
-			}
+		dbUser = (UUser) userRepo.getOne(id);
+		if (dbUser == null) {
+			throw new PropertyValueException(ERROR_MSGS.INVALID_ID, "user", "email");
+		}
+		
+		dbUser.setPassword(null);
+		dbUser.setUserToken(null);
+		return dbUser;
+	}
+	
+	@Override
+	public UUser getUser(String email) throws PropertyValueException {
+		UUser dbUser = (UUser) userRepo.getByEmail(email);
+		if (dbUser == null) {
+			throw new PropertyValueException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, "user", "email");
 		}
 
 		dbUser.setPassword(null);

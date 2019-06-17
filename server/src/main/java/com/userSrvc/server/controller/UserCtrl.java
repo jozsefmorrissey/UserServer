@@ -45,9 +45,12 @@ public class UserCtrl {
 		return user;
 	}
 
-	@PostMapping("/get")
-	public UUser getUser(@RequestBody UUser user) {
-		user = userSrvc.getUser(user);
+	@GetMapping("/{id}")
+	public UUser getUser(@PathVariable String id) {
+		if (id.matches("^(-|)[0-9]*$")) {
+			return userSrvc.getUser(Long.parseLong(id));
+		}
+		UUser user = userSrvc.getUser(id);
 		return user;
 	}
 

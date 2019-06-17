@@ -20,7 +20,7 @@ import lombok.Data;
 @ApplicationScope
 @Data
 @Inheritance
-public abstract class UUserAbs {
+public class UUserAbs {
 	@Id
 	private Long id;
 	

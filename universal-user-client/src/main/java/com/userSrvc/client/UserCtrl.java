@@ -1,6 +1,7 @@
 package com.userSrvc.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,11 +14,10 @@ public class UserCtrl <U extends UUserAbs>{
 	@Autowired
 	UserSrvcExt<U> userSrvc;
 
-	@PostMapping("/get")
-	public U get(@RequestBody U user) throws RestResponseException {
-		return userSrvc.get(user);
+	@PostMapping("/get/{emailOid}")
+	public U get(@PathVariable String emailOid) throws RestResponseException {
+		return userSrvc.get(emailOid);
 	}
-
 
 	@PostMapping("/update")
 	public void update(@RequestBody U user) throws RestResponseException {

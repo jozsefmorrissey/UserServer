@@ -144,7 +144,7 @@ public class ClientTest
     	user.setUserToken(validToken);
     	try {
 			userSrvcExt.update(user);
-			user = userSrvcExt.get(user);
+			user = userSrvcExt.get(user.getEmail());
 			assertTrue(nameUpdated.equals(user.getFullName()));
 			assertTrue(user.getId().equals(originalId));
 		} catch (RestResponseException e) {

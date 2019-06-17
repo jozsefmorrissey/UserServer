@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import com.userSrvc.client.entities.DefaultUUser;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.entities.UserUrl;
 import com.userSrvc.client.error.RestResponseException;
@@ -18,7 +19,24 @@ import com.userSrvc.client.util.Util;
 
 public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 
-	private static <E,R> R restCall(String uri, E entity, R returned) throws RestResponseException {
+	private DefaultUUser UUser = new DefaultUUser();
+	
+	private Class<U> clazz = (Class<U>) UUserAbs.class;
+	
+	private <R> R restGetCall(String uri, Class<R> returnedClass) throws RestResponseException {
+		RestTemplate rt= new RestTemplate();
+	     
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+	    try {
+	    	return rt.getForObject(uri, returnedClass);
+	    } catch (HttpStatusCodeException e) {
+	    	throw new RestResponseException(e.getResponseBodyAsString());
+	    }
+	}
+	
+	private <R> R restPostCall(String uri, Object entity, Class<R> returnedClass) throws RestResponseException {
 	     
 	    RestTemplate restTemplate = new RestTemplate();
 	     
@@ -26,7 +44,7 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
 	    try {
-	   		R result = (R) restTemplate.postForObject(uri, entity, returned.getClass());	    	
+	   		R result = restTemplate.postForObject(uri, entity, returnedClass);	    	
 		    return result;
 	    } catch (HttpStatusCodeException e) {
 	    	throw new RestResponseException(e.getResponseBodyAsString());
@@ -35,35 +53,41 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 
 
 	public U loginUser(U user) throws RestResponseException {
-		return restCall(Util.getUri("/user/login"), user, user);
+		return restPostCall(Util.getUri("/user/login"), user, clazz);
 	}
 
-	public U get(U user) throws RestResponseException {
-		return restCall(Util.getUri("/user/get"), user, user);
+	@SuppressWarnings("unchecked")
+	public U get(String emailOid) throws RestResponseException {
+		UUserAbs uu = restGetCall(Util.getUri("/user/" + emailOid), clazz);
+		return (U) uu;
 	}
 
 	public U update(U user) throws RestResponseException {
-		return restCall(Util.getUri("/user/update"), user, user);
+		return restPostCall(Util.getUri("/user/update"), user, clazz);
 	}
 
 	public U add(U user) throws RestResponseException {
-		return restCall(Util.getUri("/user/add"), user, user);
+		return restPostCall(Util.getUri("/user/add"), user, clazz);
 	}
 
 	public U authinticateUser(U user) throws RestResponseException {
-		return restCall(Util.getUri("/user/authinticate"), user, user);
+		return restPostCall(Util.getUri("/user/authinticate"), user, clazz);
 	}
 
 	public void updatePassword(U user) throws RestResponseException {
-		restCall(Util.getUri("/user/update/password"), user, "");
+		restPostCall(Util.getUri("/user/update/password"), user, String.class);
 	}
 
 	public void resetPassword(UserUrl<U> userUrl) throws RestResponseException {
-		restCall(Util.getUri("/user/reset/password"), userUrl, "");
+		restPostCall(Util.getUri("/user/reset/password"), userUrl, String.class);
 	}
 
 
-	public List<U> getAll(Collection<Long> ids) throws RestResponseException {
-		return restCall(Util.getUri("/user/get/all"), ids, new ArrayList());
+	public List<U> get(Collection<Long> ids) throws RestResponseException {
+		return restPostCall(Util.getUri("/user/get/all"), ids, ArrayList.class);
+	}
+
+	public U get(long id) throws Exception {
+		return get(id);
 	}
 }

@@ -64,19 +64,19 @@ public class ServerApplication {
 		SpringApplication application = new SpringApplication(ServerApplication.class);
 		Properties properties = new Properties();
 
-		if (args.length > 0) {
-			String token = args[0];
-			String configPort = args [1];
-			retrieveConfig(token, configPort, properties);
-		} else {
-			InputStream input = null;
-			input = new FileInputStream("./src/main/resources/application.properties");
-			properties.load(input);
-			input = new FileInputStream("./src/main/resources/application-test.properties");
-			properties.load(input);
-		}
-	
-		properties.put("spring.datasource.url", properties.get("mySql.url"));
+//		if (args.length > 0) {
+//			String token = args[0];
+//			String configPort = args [1];
+//			retrieveConfig(token, configPort, properties);
+//		} else {
+//			InputStream input = null;
+//			input = new FileInputStream("./src/main/resources/application.properties");
+//			properties.load(input);
+//			input = new FileInputStream("./src/main/resources/application-test.properties");
+//			properties.load(input);
+//		}
+//	
+//		properties.put("spring.datasource.url", properties.get("mySql.url"));
 		
 		application.setDefaultProperties(properties);
 		application.run(args);

@@ -17,7 +17,8 @@ public interface UserSrvc {
 	
 	public UUser authinticate(UUser user) throws AccessDeniedException;
 	
-	public UUser getUser(UUser user) throws PropertyValueException;
+	public UUser getUser(long id) throws PropertyValueException;
+	public UUser getUser(String email) throws PropertyValueException;
 
 	public void updatePassword(UUser user) throws PropertyValueException, AccessDeniedException;
 	
