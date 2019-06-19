@@ -6,5 +6,5 @@ import java.util.List;
 public interface Service<T> {
 	public T get(long id) throws Exception;
 	public List<T> get(Collection<Long> ids) throws Exception;
-	public T update(Object obj) throws Exception;
+	public T update(T obj) throws Exception;
 }
