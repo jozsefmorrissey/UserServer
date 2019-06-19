@@ -1,8 +1,5 @@
 package com.userSrvc.client.services;
 
-import java.util.Collection;
-import java.util.List;
-
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.entities.UserUrl;
 import com.userSrvc.client.error.RestResponseException;

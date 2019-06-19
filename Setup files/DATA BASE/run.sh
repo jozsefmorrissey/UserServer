@@ -23,6 +23,7 @@ array[password]=${flags[password]}
 array[host]=${flags[host]}
 array[database]=${flags[database]}
 
+mkdir -p ./sql 2</dev/null
 cat ./${flags[type]}/*.sql | replace -array array > ./sql/temp.sql
 cat ./sql/temp.sql ./${flags[type]}/PopulateData/*.sql | replace -array array > ./sql/tempPopulate.sql
 

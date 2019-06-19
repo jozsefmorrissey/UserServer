@@ -90,4 +90,9 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 	public U get(long id) throws Exception {
 		return get(id);
 	}
+
+	@Override
+	public U update(Object obj) throws Exception {
+		return update((U)obj);
+	}
 }
