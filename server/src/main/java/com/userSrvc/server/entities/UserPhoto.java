@@ -11,22 +11,43 @@ import javax.persistence.Table;
 
 import org.springframework.web.context.annotation.ApplicationScope;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
 @ManagedBean
 @ApplicationScope
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class UserPhoto {
+public class UserPhoto implements Comparable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PHOTO_ID_SEQ")
-	@SequenceGenerator(name = "PHOTO_ID_SEQ", sequenceName = "PHOTO_ID_SEQ")
 	private long id;
 	
 	@Column
-	private long userId;
-	
+	private String ext;
+
+	@Column
+	private Long userId;
+
+	@Column
+	private Long appUserId;
+
+	@Column
+	private Short position;
+
 	@Column
 	private Byte[] photo;
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		if (!(o instanceof UserPhoto)) {
+			return -1;
+		}
+		
+		return this.position - ((UserPhoto)o).position;
+	}
 }

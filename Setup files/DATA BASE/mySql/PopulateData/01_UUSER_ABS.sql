@@ -1,3 +1,4 @@
+
 insert into UUSER_ABS (ID, FULL_NAME, EMAIL) values (16, 'Casey Deshon', 'cdeshonf@mapy.cz');
 insert into UUSER_ABS (ID, FULL_NAME, EMAIL) values (17, 'Ailis Mayworth', 'amayworthg@xing.com');
 insert into UUSER_ABS (ID, FULL_NAME, EMAIL) values (18, 'Frederique Kingham', 'fkinghamh@hexun.com');

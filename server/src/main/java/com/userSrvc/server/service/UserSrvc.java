@@ -7,32 +7,30 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 
+import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.exceptions.StatisticallyImpossible;
-import com.userSrvc.server.entities.UUser;
 
 public interface UserSrvc {
-	public UUser addUser(UUser user) throws ConstraintViolationException, PropertyValueException, StatisticallyImpossible;
+	public UUserAbs addUser(UUserAbs user) throws ConstraintViolationException, PropertyValueException, StatisticallyImpossible;
 	
-	public UUser loginUser(UUser user) throws PropertyValueException, DataException;
+	public UUserAbs loginUser(UUserAbs user) throws PropertyValueException, DataException;
 	
-	public UUser authinticate(UUser user) throws AccessDeniedException;
+	public UUserAbs authinticate(UUserAbs user) throws AccessDeniedException;
 	
-	public UUser getUser(long id) throws PropertyValueException;
-	public UUser getUser(String email) throws PropertyValueException;
+	public UUserAbs getUser(long id) throws PropertyValueException;
+	public UUserAbs getUser(String email) throws PropertyValueException;
 
-	public void updatePassword(UUser user) throws PropertyValueException, AccessDeniedException;
+	public void updatePassword(UUserAbs user) throws PropertyValueException, AccessDeniedException;
 	
 	
-	public void updateEmail(UUser user, String newEmail) throws PropertyValueException, AccessDeniedException;
+	public void updateEmail(UUserAbs user, String newEmail) throws PropertyValueException, AccessDeniedException;
 	
 	
-	public void resetPassword(UUser user, String url) throws PropertyValueException;
+	public void resetPassword(UUserAbs user, String url) throws PropertyValueException;
 	
-	public void update(UUser user) throws PropertyValueException, AccessDeniedException;
+	public void update(UUserAbs user) throws PropertyValueException, AccessDeniedException;
 	
-	public List<Byte[]> photo(long id);
+	public List<UUserAbs> getUsers(List<Long> ids);
 
-	public List<UUser> getUsers(List<Long> ids);
-
-	List<UUser> cleanUsers(List<UUser> users);
+	List<UUserAbs> cleanUsers(List<UUserAbs> users);
 }

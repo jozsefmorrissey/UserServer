@@ -1,10 +1,14 @@
 package com.userSrvc.client.entities;
 
+import java.util.List;
+
 import javax.annotation.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.OneToMany;
 
 import org.springframework.web.context.annotation.ApplicationScope;
 
@@ -35,6 +39,9 @@ public class UUserAbs {
 
 	@Column
 	private String password;
+	
+	@OneToMany(targetEntity=Permission.class, fetch = FetchType.LAZY, mappedBy = "userId")
+	private List<Permission> permissions;
 
 	public UUserAbs() {
 		super();

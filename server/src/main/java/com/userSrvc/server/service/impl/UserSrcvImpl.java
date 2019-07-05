@@ -2,7 +2,6 @@ package com.userSrvc.server.service.impl;
 
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -23,12 +22,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.ERROR_MSGS;
 import com.userSrvc.client.util.GenUtils;
 import com.userSrvc.exceptions.StatisticallyImpossible;
-import com.userSrvc.server.entities.UUser;
-import com.userSrvc.server.entities.UserPhoto;
-import com.userSrvc.server.repo.UserPhotoRepo;
 import com.userSrvc.server.repo.UserRepo;
 import com.userSrvc.server.service.UserSrvc;
 import com.userSrvc.server.utils.HtmlString;
@@ -40,13 +37,10 @@ public class UserSrcvImpl implements UserSrvc {
 	@Autowired
 	UserRepo userRepo;
 	
-	@Autowired
-	UserPhotoRepo userPhotoRepo;
-
 	@Override
-	public UUser addUser(UUser user) throws ConstraintViolationException, PropertyValueException, StatisticallyImpossible {
+	public UUserAbs addUser(UUserAbs user) throws ConstraintViolationException, PropertyValueException, StatisticallyImpossible {
 		validateEmail(user);
-		UUser dbUser = (UUser) userRepo.getByEmail(user.getEmail());
+		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (dbUser != null) {
 			throw new ConstraintViolationException(
 					ERROR_MSGS.EMAIL_ALREADY_REGISTERED.toString(), new SQLIntegrityConstraintViolationException(), 
@@ -61,7 +55,7 @@ public class UserSrcvImpl implements UserSrvc {
 			user.setId(new Random().nextLong());
 			if (user.getId() != null) {
 				try {
-					UUser u = userRepo.save(user);
+					UUserAbs u = userRepo.save(user);
 					u.setPassword(null);
 					return u;
 				} catch (Exception e) {}
@@ -70,8 +64,8 @@ public class UserSrcvImpl implements UserSrvc {
 		throw new StatisticallyImpossible("If you see this error there are far to many users on this system. Try again, sorry for the inconvienance.");
 	}
 	
-	private String setToken(UUser user) {
-		UUser dbUser = (UUser) userRepo.getByEmail(user.getEmail());
+	private String setToken(UUserAbs user) {
+		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		String token = GenUtils.randStringSecure(256);
 		dbUser.setUserToken(token);
 		userRepo.save(dbUser);
@@ -79,8 +73,8 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public UUser loginUser(UUser user) throws PropertyValueException, DataException {
-		UUser dbUser = (UUser) userRepo.getByEmail(user.getEmail());
+	public UUserAbs loginUser(UUserAbs user) throws PropertyValueException, DataException {
+		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (dbUser == null) {
 			throw new DataException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, null);
 		}
@@ -94,13 +88,13 @@ public class UserSrcvImpl implements UserSrvc {
 		return user;
 	}
 
-	private UUser authinticate(UUser user, boolean external) throws AccessDeniedException {
+	private UUserAbs authinticate(UUserAbs user, boolean external) throws AccessDeniedException {
 		if (user.getUserToken() == null) {
-			user = loginUser(user);
+			try { user = loginUser(user); } catch (Exception e) {}
 			throw new AccessDeniedException(ERROR_MSGS.NO_TOKEN_PROVIDED);
 		}
 		validateEmail(user);
-		UUser u = (UUser) userRepo.getByEmail(user.getEmail());
+		UUserAbs u = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (u != null && user != null && user.getUserToken().equals(u.getUserToken())) {
 			if (external) {
 				u.setPassword(null);
@@ -112,7 +106,7 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public UUser authinticate(UUser user) throws AccessDeniedException {
+	public UUserAbs authinticate(UUserAbs user) throws AccessDeniedException {
 		return authinticate(user, true);
 	}
 	
@@ -151,9 +145,9 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public UUser getUser(long id) throws PropertyValueException {
-		UUser dbUser;
-		dbUser = (UUser) userRepo.getOne(id);
+	public UUserAbs getUser(long id) throws PropertyValueException {
+		UUserAbs dbUser;
+		dbUser = (UUserAbs) userRepo.getOne(id);
 		if (dbUser == null) {
 			throw new PropertyValueException(ERROR_MSGS.INVALID_ID, "user", "email");
 		}
@@ -164,8 +158,8 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 	
 	@Override
-	public UUser getUser(String email) throws PropertyValueException {
-		UUser dbUser = (UUser) userRepo.getByEmail(email);
+	public UUserAbs getUser(String email) throws PropertyValueException {
+		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(email);
 		if (dbUser == null) {
 			throw new PropertyValueException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, "user", "email");
 		}
@@ -176,8 +170,8 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public void updatePassword(UUser user) throws PropertyValueException, AccessDeniedException {
-		UUser dbUser = authinticate(user, false);
+	public void updatePassword(UUserAbs user) throws PropertyValueException, AccessDeniedException {
+		UUserAbs dbUser = authinticate(user, false);
 		validatePassword(user);
 		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		dbUser.setPassword(hashed);
@@ -186,17 +180,17 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public void updateEmail(UUser user, String newEmail) throws PropertyValueException, AccessDeniedException {
+	public void updateEmail(UUserAbs user, String newEmail) throws PropertyValueException, AccessDeniedException {
 		validateEmail(newEmail);
-		UUser dbUser = authinticate(user, false);
+		UUserAbs dbUser = authinticate(user, false);
 		dbUser.setEmail(newEmail);
 		userRepo.save(dbUser);
 	}
 
 	@Override
-	public void resetPassword(UUser user, String url) throws PropertyValueException {
+	public void resetPassword(UUserAbs user, String url) throws PropertyValueException {
 		validateEmail(user);
-		UUser dbUser = (UUser) userRepo.getByEmail(user.getEmail());
+		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		HashMap<String, Object> scope = new HashMap<String, Object>();
 		if(dbUser == null) {
 			throw new PropertyValueException(ERROR_MSGS.EMAIL_NOT_REGISTERED, "user", "email");
@@ -211,7 +205,7 @@ public class UserSrcvImpl implements UserSrvc {
 		sendEmail(email, "Password Reset", htmlString.toString());
 	}
 	
-	private boolean validateEmail(UUser user) throws PropertyValueException {
+	private boolean validateEmail(UUserAbs user) throws PropertyValueException {
 		return validateEmail(user.getEmail());
 	}
 
@@ -224,11 +218,11 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 	
 	// TODO: do to hashing on the ui level we cannot insure the length of the password.
-	private boolean validatePassword(UUser user) {
+	private boolean validatePassword(UUserAbs user) {
 		return true;
 	}
 	
-	private boolean validateUsername(UUser user) throws PropertyValueException {
+	private boolean validateUsername(UUserAbs user) throws PropertyValueException {
 		String name = user.getFullName();
 		if (name == null || name.equals("")) {
 			throw new PropertyValueException (ERROR_MSGS.USERNAME_NOT_DEFINED, "user", "username");
@@ -237,30 +231,20 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public void update(UUser user) throws PropertyValueException, AccessDeniedException {
-		UUser dbUser = authinticate(user, false);
+	public void update(UUserAbs user) throws PropertyValueException, AccessDeniedException {
+		UUserAbs dbUser = authinticate(user, false);
 		user.setId(dbUser.getId());
 		userRepo.save(user);
 	}
 
 	@Override
-	public List<Byte[]> photo(long id) {
-		List<UserPhoto> photoObjs = userPhotoRepo.getByUserId(id);
-		List<Byte[]> photos = new ArrayList<Byte[]>();
-		for (UserPhoto upo : photoObjs) {
-			photos.add(upo.getPhoto());
-		}
-		return photos;
-	}
-
-	@Override
-	public List<UUser> getUsers(List<Long> ids) {
+	public List<UUserAbs> getUsers(List<Long> ids) {
 		return userRepo.findAllById(ids);
 	}
 	
 	@Override
-	public List<UUser> cleanUsers(List<UUser> users) {
-		for(UUser user : users) {
+	public List<UUserAbs> cleanUsers(List<UUserAbs> users) {
+		for(UUserAbs user : users) {
 			user.setPassword(null);
 			user.setUserToken(null);
 		}

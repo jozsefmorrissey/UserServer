@@ -10,5 +10,7 @@ import com.userSrvc.server.entities.UserPhoto;
 public interface UserPhotoRepo extends JpaRepository<UserPhoto, Long> {
 
 	List<UserPhoto> getByUserId(long id);
+	List<UserPhoto> getByUserIdAndAppUserIdOrderByPosition(long userId, long appId);
+	UserPhoto getByUserIdAndAppUserIdAndIdAndExt(long userId, Long appId, long id, String ext);
 }
 

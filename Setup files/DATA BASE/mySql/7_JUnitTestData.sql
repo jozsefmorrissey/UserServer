@@ -1,5 +1,6 @@
 
 -- ==========================  JUnit Test Data  =====================--
+INSERT INTO UUSER_ABS (ID,FULL_NAME,EMAIL,PASSWORD,USER_TOKEN) VALUES (-1,'ADMIN','jozsef.morrissey@yahoo.com', '$2a$10$z8aWZRFkRjPkg4dmC6.jfeWKmFslrY95tN8RgdHy0JtSCXZhQnf4e','[B@d077e31');
 
 INSERT INTO UUSER_ABS (ID,FULL_NAME,EMAIL,PASSWORD,USER_TOKEN) VALUES (1,'Jozsef Morrissey','jozsef.morrissey@gmail.com', '$2a$10$z8aWZRFkRjPkg4dmC6.jfeWKmFslrY95tN8RgdHy0JtSCXZhQnf4e','[B@d077e31');
 INSERT INTO UUSER_ABS (ID,FULL_NAME,EMAIL,PASSWORD,USER_TOKEN) VALUES (2,'Jerad Morrissey','red3091@gmail.com','$2a$10$z8aWZRFkRjPkg4dmC6.jfeWKmFslrY95tN8RgdHy0JtSCXZhQnf4e','[B@d077e31');
@@ -29,3 +30,8 @@ INSERT INTO REMARK (ID,POSTER_ID, CONVERSATION_ID, CONTENT, TIME_STAMP) VALUES (
 INSERT INTO REMARK (ID,POSTER_ID, CONVERSATION_ID, CONTENT, TIME_STAMP) VALUES (6,2,124,'I think this is a powerful tool that is worth the trouble. ',STR_TO_DATE('10-SEP-0214:10:14','%d-%b-%y%T'));
 INSERT INTO REMARK (ID,POSTER_ID, CONVERSATION_ID, CONTENT, TIME_STAMP) VALUES (7,2,124,'Now users can provide as much or as little information as they want. ',STR_TO_DATE('10-SEP-0214:16:10','%d-%b-%y%T'));
 INSERT INTO REMARK (ID,POSTER_ID, CONVERSATION_ID, CONTENT, TIME_STAMP) VALUES (8,2,124,'Without harsh memory costs to the system... Enjoy!',STR_TO_DATE('10-SEP-0214:15:10','%d-%b-%y%T'));
+
+INSERT INTO PERMISSION (ID, USER_ID, REF_TYPE, REF_ID, TYPE, ORIGIN_USER_ID) VALUES (-1, -1, '__admin__', -1, 'oao', null);
+INSERT INTO PERMISSION (ID, USER_ID, REF_TYPE, REF_ID, TYPE, ORIGIN_USER_ID, APP_USER_ID) VALUES (1, 2, 'object', 3, 'oao', null,1);
+INSERT INTO PERMISSION (ID, USER_ID, REF_TYPE, REF_ID, TYPE, ORIGIN_USER_ID, APP_USER_ID) VALUES (2, 4, 'object', 3, 'psuedo', null,1);
+INSERT INTO PERMISSION (ID, USER_ID, REF_TYPE, REF_ID, TYPE, ORIGIN_USER_ID, APP_USER_ID) VALUES (3, 7, 'object', 3, 'validation', 4,1);

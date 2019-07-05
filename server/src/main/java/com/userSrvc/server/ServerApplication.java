@@ -7,12 +7,14 @@ import java.util.Properties;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.userSrvc.client.util.GenUtils;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.userSrvc"})
+@EntityScan(basePackages = {"com.userSrvc"})
 public class ServerApplication {
 
 	private static void cloudSetupHardCoded(String...args) {

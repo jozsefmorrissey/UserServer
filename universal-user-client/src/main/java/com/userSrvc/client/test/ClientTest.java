@@ -31,7 +31,9 @@ public abstract class ClientTest
 
 	protected abstract UUserAbs buildValidUser();
 	protected abstract void post();
-	
+    public abstract UserSrvcExt<UUserAbs> getUserSrvcExt();
+
+    
 	@Test
     public void testApp()
     {
@@ -75,8 +77,6 @@ public abstract class ClientTest
     	user.setEmail(emailValid);
     }
     
-    public abstract UserSrvcExt getUserSrvcExt();
-    
 	public void login() {
     	try {
 			UUserAbs tokenCarrier = getUserSrvcExt().loginUser(user);
@@ -108,6 +108,7 @@ public abstract class ClientTest
     
     public void authinticate() {
     	try {
+    		user.setPassword(null);
 			getUserSrvcExt().authinticateUser(user);
 			assertTrue(false);
 		} catch (RestResponseException e) {
