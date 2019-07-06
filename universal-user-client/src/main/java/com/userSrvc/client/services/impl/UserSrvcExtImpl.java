@@ -15,6 +15,7 @@ import com.userSrvc.client.constant.URI;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.entities.UserUrl;
 import com.userSrvc.client.error.RestResponseException;
+import com.userSrvc.client.repo.UserBaseRepository;
 import com.userSrvc.client.services.UserSrvcExt;
 import com.userSrvc.client.util.Util;
 
@@ -25,10 +26,18 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 	@Qualifier("UUser")
 	U user;
 	
+	UserBaseRepository<U> localRepo;
 	Class<U> clazz;
 	
 	public U loginUser(U user) throws RestResponseException {
-		return Util.restPostCall(Util.getUri(URI.USER_LOGIN), user, clazz);
+		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_LOGIN), user, clazz);
+		if (localRepo != null) {
+			U localUser = localRepo.getByEmail(srvcUser.getEmail());
+			localUser.merge(srvcUser);
+			return localUser;
+		}
+
+		return srvcUser;
 	}
 	
 	@PostConstruct
@@ -36,6 +45,7 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 		String classStr = this.user.getClass().getCanonicalName().replaceAll("(.*?)\\$.*", "$1");
 		clazz = (Class<U>) Class.forName(classStr);
 		System.out.println("\n\n\nClass: " + clazz.getCanonicalName());
+		localRepo = getRepo();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,12 +54,26 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 		return (U) uu;
 	}
 
-	public U update(U user) throws RestResponseException {
-		return Util.restPostCall(Util.getUri(URI.USER_UPDATE), user, clazz);
+	public U updateSrvc(U user) throws RestResponseException {
+		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_UPDATE), user, clazz);
+		if (localRepo != null) {
+			U localUser = localRepo.getByEmail(srvcUser.getEmail());
+			localUser.merge(srvcUser);
+			return localRepo.saveAndFlush(localUser);
+		}
+
+		return srvcUser;
 	}
 
 	public U add(U user) throws RestResponseException {
-		return Util.restPostCall(Util.getUri(URI.USER_ADD), user, clazz);
+		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_ADD), user, clazz);
+		if (localRepo != null) {
+			user.merge(srvcUser);
+			U localUser = localRepo.saveAndFlush(user);
+			return localUser;
+		}
+		
+		return srvcUser;
 	}
 
 	public U authinticateUser(U user) throws RestResponseException {
@@ -67,10 +91,39 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 
 	public List<U> get(Collection<Long> ids) throws RestResponseException {
 		List<Map> maps = Util.restPostCall(Util.getUri(URI.USER_ALL), ids, ArrayList.class);
-		return Util.convertMapListToObjects(maps, clazz);
+		List<U> srvcUsers = Util.convertMapListToObjects(maps, clazz);
+		
+		if (localRepo != null) {
+			List<U> localUsers = localRepo.findAllById(ids);
+			UUserAbs.merg(localUsers, srvcUsers);
+			return localUsers;
+		}
+
+		return srvcUsers;
 	}
 
 	public U get(long id) throws Exception {
-		return get(new Long(id).toString());
+		U srvcUser = get(new Long(id).toString());
+		
+		if (localRepo != null) {
+			U localUser = localRepo.getOne(id);
+			localUser.merge(srvcUser);
+			return localUser;
+		}
+		
+		return srvcUser;
+	}
+
+	@Override
+	public U update(U user) throws RestResponseException {
+		if (localRepo != null) {
+			return localRepo.saveAndFlush(user);
+		}
+		return user;
+	}
+
+	@Override
+	public UserBaseRepository<U> getRepo() {
+		return null;
 	}
 }

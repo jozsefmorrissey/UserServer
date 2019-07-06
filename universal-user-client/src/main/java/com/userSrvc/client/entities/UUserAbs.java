@@ -1,5 +1,6 @@
 package com.userSrvc.client.entities;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
@@ -24,7 +25,7 @@ import lombok.Data;
 @ApplicationScope
 @Data
 @Inheritance
-public class UUserAbs {
+public class UUserAbs implements Comparable {
 	@Id
 	private Long id;
 	
@@ -63,6 +64,29 @@ public class UUserAbs {
 		this.setFullName(dbUser.getFullName());
 		this.setUserToken(dbUser.getUserToken());
 		this.setEmail(dbUser.getEmail());
+		this.setPermissionTypes(dbUser.getPermissionTypes());
+		this.setImageUrls(dbUser.getImageUrls());
+	}
+	
+	public static <U extends UUserAbs> void merg(List<U> localUsers, List<U> srvcUsers) {
+		Collections.sort(localUsers);
+		Collections.sort(srvcUsers);
+		int size = localUsers.size();
+		int srvcIndex = 0;
+		for (int index = 0; index < size; index += 1) {
+			int next = index > size - 1 ? index : size - 1;
+			UUserAbs local = localUsers.get(index);
+			UUserAbs nextLocal = localUsers.get(next);
+			UUserAbs srvc = srvcUsers.get(srvcIndex);
+			while (!srvc.getId().equals(local.getId()) && local.getId() < srvc.getId()) {
+				srvcIndex += 1;
+				srvc = srvcUsers.get(srvcIndex);
+			}
+			
+			if (srvc.getId().equals(local.getId())) {
+				local.merge(srvc);
+			}
+		}
 	}
 	
 	public String getName(int i) {
@@ -85,5 +109,18 @@ public class UUserAbs {
 	
 	public List<String> getImageUrls() {
 		return this.imageUrls;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (!(o instanceof UUserAbs)) {
+			return -1;
+		}
+		
+		UUserAbs u = ((UUserAbs)o);
+		long uId = u.getId();
+		long id = this.id;
+		
+		return uId == id ? 0 : uId > id ? -1 : 1;
 	}
 }

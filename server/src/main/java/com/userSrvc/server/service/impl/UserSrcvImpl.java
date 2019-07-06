@@ -254,7 +254,8 @@ public class UserSrcvImpl implements UserSrvc {
 	public void update(UUserAbs user) throws PropertyValueException, AccessDeniedException {
 		UUserAbs dbUser = authinticate(user, false);
 		user.setId(dbUser.getId());
-		userRepo.save(user);
+		dbUser.merge(user);
+		userRepo.save(dbUser);
 	}
 
 	@Override
