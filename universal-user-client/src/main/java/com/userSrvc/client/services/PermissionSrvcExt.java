@@ -9,6 +9,8 @@ import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.marker.HasType;
 
 public interface PermissionSrvcExt <U extends UUserAbs> {
+	public List<Permission> get(U user);
+	
 	public void add(U user, HasType hasType, Permission parent) throws DatabaseIntegrityException, RestResponseException;
 	public void grant(U from, U to, List<Permission> permission) throws RestResponseException, Exception;
 	public void remove(U admin, U from, List<Permission> permissions) throws RestResponseException, Exception;

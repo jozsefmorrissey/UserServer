@@ -69,7 +69,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 	public void clone(U admin, U from, U to) throws Exception {
 		admin = userSrvc.authinticateUser(admin);
 		U dbUser = userSrvc.get(from.getId());
-		Collection<ApplicationPermissionRequest> permReqs = clonePermissions(admin, dbUser.getPermissions(), to);
+		Collection<ApplicationPermissionRequest> permReqs = clonePermissions(admin, get(dbUser), to);
 		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), permReqs, String.class);
 	}
 	
@@ -88,7 +88,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 
 	@Override
 	public void isAuthorized(UUserAbs user, HasType hasType) {
-		List<Permission> permissions = user.getPermissions();
+		List<Permission> permissions = get(user);
 		for (Permission perm : permissions) {
 			if (perm.getRefType().equals(hasType.getObjectType())) {
 				if (perm.getType().equals(Permission.ADMIN) ||
@@ -105,8 +105,17 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 		}
 	}
 
+	@Override
+	public List<Permission> get(UUserAbs user) {
+		try {
+		return Util.restGetCall(Util.getUri(URI.PERMISSION_ADD_ALL), List.class);
+		} catch (Exception e) {
+			return new ArrayList<Permission>();
+		}
+	}
+
 	protected Collection<ApplicationPermissionRequest> grantPermissions(U dbUser, Collection<Permission> perms, U to) {
-		List<Permission> userPerms = dbUser.getPermissions();
+		List<Permission> userPerms = get(dbUser);
 		List<ApplicationPermissionRequest> permReqs = new ArrayList<ApplicationPermissionRequest>();
 		for (Permission perm : perms) {
 			boolean found = false;
@@ -137,7 +146,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 	}
 
 	protected Collection<ApplicationPermissionRequest> removePermissions(U dbUser, Collection<Permission> perms) {
-		List<Permission> userPerms = dbUser.getPermissions();
+		List<Permission> userPerms = get(dbUser);
 		List<ApplicationPermissionRequest> permReqs = new ArrayList<ApplicationPermissionRequest>();
 		for (Permission perm : perms) {
 			boolean found = false;
@@ -175,7 +184,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 	}
 	
 	protected Collection<ApplicationPermissionRequest> transferPermissions(U dbUser, Collection<Permission> perms, U to) {
-		List<Permission> userPerms = dbUser.getPermissions();
+		List<Permission> userPerms = get(dbUser);
 		Collection<ApplicationPermissionRequest> permReqs = new ArrayList<ApplicationPermissionRequest>();
 		for (Permission perm : perms) {
 			boolean found = false;
@@ -204,7 +213,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 	}
 	
 	protected Collection<ApplicationPermissionRequest> clonePermissions(U dbUser, Collection<Permission> perms, U to) {
-		List<Permission> userPerms = dbUser.getPermissions();
+		List<Permission> userPerms = get(dbUser);
 		List<ApplicationPermissionRequest> permReqs = new ArrayList<ApplicationPermissionRequest>();
 		for (Permission perm : perms) {
 			boolean found = false;

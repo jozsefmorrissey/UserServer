@@ -1,7 +1,9 @@
 package com.userSrvc.server.service.impl;
 
 import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,5 +68,21 @@ public class PermissionSrvcImpl
 	private void garunteeApplicationOwnership(ApplicationPermissionRequest pr) throws AccessDeniedException {
 		userSrvc.authinticate((UUserAbs) pr.getApplication());
 		pr.getPermission().setAppUserId(pr.getApplication().getId());
+	}
+
+	@Override
+	public List<Permission> get(long userId, long appId) {
+		return permissionRepo.getAllByUserIdAndAppUserId(userId, appId);
+	}
+
+	@Override
+	public List<String> getTypes(long userId, long appId) {
+		List<String> types = new ArrayList<String>();
+		List<Permission> perms = permissionRepo.findDistinct(userId, appId);
+		for (Permission perm : perms) {
+			types.add(perm.getRefType());
+			System.out.println(perm);
+		}
+		return types;
 	}
 }

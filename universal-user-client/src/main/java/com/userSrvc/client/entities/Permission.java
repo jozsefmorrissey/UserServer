@@ -13,6 +13,7 @@ import org.springframework.web.context.annotation.ApplicationScope;
 import com.userSrvc.client.util.Util;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 @ApplicationScope
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Permission {
 	// trasitive types
 

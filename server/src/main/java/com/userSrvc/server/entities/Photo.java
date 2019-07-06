@@ -16,21 +16,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
+@Table(name = "USER_PHOTO")
 @ManagedBean
 @ApplicationScope
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserPhoto implements Comparable {
+public class Photo implements Comparable {
 	@Id
 	private long id;
-	
-	@Column
-	private String ext;
 
-	@Column
-	private Long userId;
+	@Column(name = "USER_ID")
+	private Long objectId;
 
 	@Column
 	private Long appUserId;
@@ -39,15 +36,15 @@ public class UserPhoto implements Comparable {
 	private Short position;
 
 	@Column
-	private Byte[] photo;
+	private String url;
 
 	@Override
 	public int compareTo(Object o) {
 		// TODO Auto-generated method stub
-		if (!(o instanceof UserPhoto)) {
+		if (!(o instanceof Photo)) {
 			return -1;
 		}
 		
-		return this.position - ((UserPhoto)o).position;
+		return this.position - ((Photo)o).position;
 	}
 }

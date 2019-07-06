@@ -83,7 +83,7 @@ public abstract class PermissionClientTest
     	pl1.add(p2);
     	pl2.add(p3);
     	pl2.add(p4);
-		u1.setPermissions(pl1);
+		//u1.setPermissions(pl1);
 		try {
 			clientTest.getUserSrvcExt().add(appUser);
 			clientTest.getUserSrvcExt().add(u0);
@@ -116,7 +116,7 @@ public abstract class PermissionClientTest
 	public void verifyNoCascade() {
 		try {
 			UUserAbs u1FromDb = clientTest.getUserSrvcExt().get(u1.getEmail());
-			assertTrue(u1FromDb.getPermissions().size() == 0);
+			assertTrue(u1FromDb.getPermissionTypes().size() == 0);
 		} catch (RestResponseException e) {
 			fail("Failed to retrieve u1 from db");
 		}
@@ -136,10 +136,10 @@ public abstract class PermissionClientTest
 	    	permSrvc.add(u1, new Type2(3l), permSrvc.build(new Type1(3l)));
 	    	
 	    	UUserAbs u0db = this.clientTest.getUserSrvcExt().get(u0.getEmail());
-	    	assertTrue(u0db.getPermissions().size() == 6);
+	    	assertTrue(u0db.getPermissionTypes().size() == 6);
 	    	
 	    	UUserAbs u1db = this.clientTest.getUserSrvcExt().get(u1.getEmail());
-	    	assertTrue(u1db.getPermissions().size() == 3);
+	    	assertTrue(u1db.getPermissionTypes().size() == 3);
 		} catch (DatabaseIntegrityException | RestResponseException e) {
 			fail("Failed to add permissions to initial user");
 		}
@@ -149,19 +149,19 @@ public abstract class PermissionClientTest
     	try {
 			UUserAbs u0db = this.clientTest.getUserSrvcExt().get(u0.getEmail());
 
-        	List<Permission> transfers = u0db.getPermissions().subList(2, 4);
+        	List<Permission> transfers = null;// = u0db.getPermissionTypes().subList(2, 4);
 			permSrvc.transfer(u0, u0, u2, transfers);
 
 			u0db = this.clientTest.getUserSrvcExt().get(u0.getEmail());
-			assertTrue(u0db.getPermissions().size() == 4);
+			assertTrue(u0db.getPermissionTypes().size() == 4);
 
 			UUserAbs u2db = this.clientTest.getUserSrvcExt().get(u2.getEmail());
-			assertTrue(u2db.getPermissions().size() == 5);
+			assertTrue(u2db.getPermissionTypes().size() == 5);
 			
 			permSrvc.transfer(u2, u2, u0, transfers);
 
 			u0db = this.clientTest.getUserSrvcExt().get(u0.getEmail());
-			assertTrue(u0db.getPermissions().size() == 6);
+			assertTrue(u0db.getPermissionTypes().size() == 6);
 
 		} catch (Exception e) {
 			fail("Failed to transfer permissions");
@@ -171,7 +171,7 @@ public abstract class PermissionClientTest
     public void grantAll() {
     	try {
 			UUserAbs u1db = this.clientTest.getUserSrvcExt().get(u1.getEmail());
-			List<Permission> grants = u1db.getPermissions();
+			List<Permission> grants = null;// = u1db.getPermissionTypes();
 			grants.get(0).setType(Permission.PSUEDO);
 			grants.get(1).setType(Permission.VALIDATION);
 			grants.get(2).setType(Permission.NO);
@@ -179,7 +179,7 @@ public abstract class PermissionClientTest
 			permSrvc.grant(u0, u2, grants);
 			
 			UUserAbs u2db = this.clientTest.getUserSrvcExt().get(u2.getEmail());
-			assertTrue(u2db.getPermissions().size() == 3);
+			assertTrue(u2db.getPermissionTypes().size() == 3);
 			
     	} catch (Exception e) {
 			fail("Failed to grant permissions");
@@ -190,12 +190,12 @@ public abstract class PermissionClientTest
     public void cloneAll() {
 		try {
 			UUserAbs u2db = this.clientTest.getUserSrvcExt().get(u2.getEmail());
-			List<Permission> clones = u2db.getPermissions();
+			List<Permission> clones = null;// = u2db.getPermissionTypes();
 			
 			permSrvc.clone(u0, u2, u1);
 			
 			UUserAbs u1db = this.clientTest.getUserSrvcExt().get(u1.getEmail());
-			assertTrue(u1db.getPermissions().size() == 6);
+			assertTrue(u1db.getPermissionTypes().size() == 6);
 		} catch (Exception e) {
 			fail("Failed to clone permissions");
 		}
@@ -204,14 +204,14 @@ public abstract class PermissionClientTest
     public void removeAll() {
 		try {
 			UUserAbs u2db = this.clientTest.getUserSrvcExt().get(u2.getEmail());
-			List<Permission> removes = u2db.getPermissions();
+			List<String> removes = u2db.getPermissionTypes();
 			UUserAbs u0db = this.clientTest.getUserSrvcExt().get(u0.getEmail());
 
 			
-			permSrvc.remove(u0, u2, removes);
+//			permSrvc.remove(u0, u2, removes);
 			
 			u2db = this.clientTest.getUserSrvcExt().get(u2.getEmail());
-			assertTrue(u2db.getPermissions().size() == 0);
+			assertTrue(u2db.getPermissionTypes().size() == 0);
 		} catch (Exception e) {
 			fail("Failed to clone permissions");
 		}

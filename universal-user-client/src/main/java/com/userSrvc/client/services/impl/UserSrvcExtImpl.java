@@ -3,7 +3,12 @@ package com.userSrvc.client.services.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.userSrvc.client.constant.URI;
@@ -16,10 +21,21 @@ import com.userSrvc.client.util.Util;
 @Service
 public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 
-	private Class<U> clazz = (Class<U>) UUserAbs.class;
-
+	@Autowired
+	@Qualifier("UUser")
+	U user;
+	
+	Class<U> clazz;
+	
 	public U loginUser(U user) throws RestResponseException {
 		return Util.restPostCall(Util.getUri(URI.USER_LOGIN), user, clazz);
+	}
+	
+	@PostConstruct
+	public void init() throws ClassNotFoundException {
+		String classStr = this.user.getClass().getCanonicalName().replaceAll("(.*?)\\$.*", "$1");
+		clazz = (Class<U>) Class.forName(classStr);
+		System.out.println("\n\n\nClass: " + clazz.getCanonicalName());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -50,7 +66,8 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 
 
 	public List<U> get(Collection<Long> ids) throws RestResponseException {
-		return Util.restPostCall(Util.getUri(URI.USER_ALL), ids, ArrayList.class);
+		List<Map> maps = Util.restPostCall(Util.getUri(URI.USER_ALL), ids, ArrayList.class);
+		return Util.convertMapListToObjects(maps, clazz);
 	}
 
 	public U get(long id) throws Exception {

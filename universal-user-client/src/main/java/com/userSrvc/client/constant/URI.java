@@ -20,6 +20,7 @@ public class URI extends ToJson{
 	public static final String USER_PHOTO_URIS_USER_APP = USER + "/photo/uris/{userId}/{appId}";
 	
 	public static final String PERMISSION = "/permission";
+	public static final String PERMISSION_GET_USER_ID = PERMISSION + "/{userId}";
 	public static final String PERMISSION_ADD = PERMISSION + "/add";;
 	public static final String PERMISSION_ADD_ALL = PERMISSION_ADD + ALL;
 	public static final String PERMISSION_REMOVE = PERMISSION + "/remove";

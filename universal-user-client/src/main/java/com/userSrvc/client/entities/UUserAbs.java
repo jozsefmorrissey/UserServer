@@ -5,10 +5,9 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.springframework.web.context.annotation.ApplicationScope;
 
@@ -19,6 +18,7 @@ import lombok.Data;
  * @author jozse
  *
  */
+
 @Entity
 @ManagedBean
 @ApplicationScope
@@ -40,8 +40,11 @@ public class UUserAbs {
 	@Column
 	private String password;
 	
-	@OneToMany(targetEntity=Permission.class, fetch = FetchType.LAZY, mappedBy = "userId")
-	private List<Permission> permissions;
+	@Transient
+	private List<String> imageUrls;
+	
+	@Transient
+	private List<String> permissionTypes;
 
 	public UUserAbs() {
 		super();
@@ -74,5 +77,13 @@ public class UUserAbs {
 			return names[0];
 		}
 		return names[i];
+	}
+
+	public void setImageUrls(List<String> imageUrls) {
+		this.imageUrls = imageUrls;
+	}
+	
+	public List<String> getImageUrls() {
+		return this.imageUrls;
 	}
 }

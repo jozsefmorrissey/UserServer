@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.userSrvc.server.entities.UserPhoto;
+import com.userSrvc.server.entities.Photo;
 
-public interface UserPhotoRepo extends JpaRepository<UserPhoto, Long> {
+public interface UserPhotoRepo extends JpaRepository<Photo, Long> {
 
-	List<UserPhoto> getByUserId(long id);
-	List<UserPhoto> getByUserIdAndAppUserIdOrderByPosition(long userId, long appId);
-	UserPhoto getByUserIdAndAppUserIdAndIdAndExt(long userId, Long appId, long id, String ext);
+	public List<Photo> getByObjectId(long id);
+	public List<Photo> getByObjectIdAndAppUserIdOrderByPosition(long userId, long appId);
+	public Photo getByObjectIdAndAppUserIdAndId(long userId, Long appId, long id);
 }
 

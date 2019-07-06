@@ -24,9 +24,11 @@ import org.springframework.stereotype.Service;
 
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.ERROR_MSGS;
+import com.userSrvc.client.services.PermissionSrvc;
 import com.userSrvc.client.util.GenUtils;
 import com.userSrvc.exceptions.StatisticallyImpossible;
 import com.userSrvc.server.repo.UserRepo;
+import com.userSrvc.server.service.UserPhotoSrvc;
 import com.userSrvc.server.service.UserSrvc;
 import com.userSrvc.server.utils.HtmlString;
 
@@ -35,7 +37,13 @@ public class UserSrcvImpl implements UserSrvc {
 	private static final short ADD_ATTEMPTS = 3;
 
 	@Autowired
+	UserPhotoSrvc userPhotoSrvc;
+
+	@Autowired
 	UserRepo userRepo;
+
+	@Autowired
+	PermissionSrvc permSrvc;
 	
 	@Override
 	public UUserAbs addUser(UUserAbs user) throws ConstraintViolationException, PropertyValueException, StatisticallyImpossible {
@@ -154,6 +162,7 @@ public class UserSrcvImpl implements UserSrvc {
 		
 		dbUser.setPassword(null);
 		dbUser.setUserToken(null);
+		setLists(dbUser);
 		return dbUser;
 	}
 	
@@ -166,7 +175,20 @@ public class UserSrcvImpl implements UserSrvc {
 
 		dbUser.setPassword(null);
 		dbUser.setUserToken(null);
+		setLists(dbUser);
 		return dbUser;
+	}
+	
+	private void setLists(List<UUserAbs> users) {
+		for (UUserAbs user : users) {
+			setLists(user);
+		}
+	}
+
+	private void setLists(UUserAbs dbUser) {
+		// TODO: add generalize for all apps.
+		dbUser.setImageUrls(userPhotoSrvc.getUris(1l, 1l));
+		dbUser.setPermissionTypes(permSrvc.getTypes(dbUser.getId(), 1l));
 	}
 
 	@Override
@@ -239,7 +261,9 @@ public class UserSrcvImpl implements UserSrvc {
 
 	@Override
 	public List<UUserAbs> getUsers(List<Long> ids) {
-		return userRepo.findAllById(ids);
+		List<UUserAbs> list = userRepo.findAllById(ids);
+		setLists(list);
+		return list;
 	}
 	
 	@Override

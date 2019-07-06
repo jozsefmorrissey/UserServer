@@ -2,7 +2,10 @@ package com.userSrvc.client.util;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.crypto.BadPaddingException;
@@ -14,11 +17,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.services.SrvcProps;
 
 @Component
 public class Util {
+	private final static ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+
 	public static void main(String...args) throws IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 	}
 		
@@ -79,4 +85,13 @@ public class Util {
 	public static boolean notNullAndEqualOrBothNull(Object obj1, Object obj2) {
 		return (obj1 != null && obj1.equals(obj2)) || (obj1 == null && obj2 == null);
 	}
+	
+	public static <U> List<U> convertMapListToObjects(List<Map> maps, Class<U> clazz) {
+		List<U> list = new ArrayList<U>();
+		for (Map map : maps) {
+			list.add(mapper.convertValue(map, clazz));
+		}
+		return list;
+	}
+
 }

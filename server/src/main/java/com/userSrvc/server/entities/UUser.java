@@ -21,7 +21,7 @@ import lombok.Data;
  * @author jozse
  *
  */
-@Entity
+@Entity(name = "UUser")
 @Table
 @ManagedBean
 @ApplicationScope
