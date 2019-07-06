@@ -185,7 +185,7 @@ public class UserSrcvImpl implements UserSrvc {
 		dbUser.setPassword(null);
 		dbUser.setUserToken(null);
 		// TODO: add generalize for all apps.
-		dbUser.setImageUrls(userPhotoSrvc.getUris(1l, 1l));
+		dbUser.setImageUrls(userPhotoSrvc.getUris(dbUser.getId(), 1l));
 		dbUser.setPermissionTypes(permSrvc.getTypes(dbUser.getId(), 1l));
 	}
 
