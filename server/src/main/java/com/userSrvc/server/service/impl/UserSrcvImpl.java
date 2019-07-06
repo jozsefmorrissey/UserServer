@@ -160,8 +160,6 @@ public class UserSrcvImpl implements UserSrvc {
 			throw new PropertyValueException(ERROR_MSGS.INVALID_ID, "user", "email");
 		}
 		
-		dbUser.setPassword(null);
-		dbUser.setUserToken(null);
 		setLists(dbUser);
 		return dbUser;
 	}
@@ -173,8 +171,6 @@ public class UserSrcvImpl implements UserSrvc {
 			throw new PropertyValueException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, "user", "email");
 		}
 
-		dbUser.setPassword(null);
-		dbUser.setUserToken(null);
 		setLists(dbUser);
 		return dbUser;
 	}
@@ -186,6 +182,8 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	private void setLists(UUserAbs dbUser) {
+		dbUser.setPassword(null);
+		dbUser.setUserToken(null);
 		// TODO: add generalize for all apps.
 		dbUser.setImageUrls(userPhotoSrvc.getUris(1l, 1l));
 		dbUser.setPermissionTypes(permSrvc.getTypes(dbUser.getId(), 1l));
