@@ -12,6 +12,8 @@ import javax.persistence.Transient;
 
 import org.springframework.web.context.annotation.ApplicationScope;
 
+import com.userSrvc.client.aop.AopSecure;
+
 import lombok.Data;
 
 /**
@@ -25,7 +27,7 @@ import lombok.Data;
 @ApplicationScope
 @Data
 @Inheritance
-public class UUserAbs implements Comparable {
+public class UUserAbs extends AopSecure implements Comparable {
 	@Id
 	private Long id;
 	
@@ -46,7 +48,7 @@ public class UUserAbs implements Comparable {
 	
 	@Transient
 	private List<String> permissionTypes;
-
+	
 	public UUserAbs() {
 		super();
 	}
@@ -123,4 +125,10 @@ public class UUserAbs implements Comparable {
 		
 		return uId == id ? 0 : uId > id ? -1 : 1;
 	}
+
+	@Override
+	public String getObjectType() {
+		return "User";
+	}
+	
 }

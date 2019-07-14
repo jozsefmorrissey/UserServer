@@ -44,13 +44,19 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 	public void init() throws ClassNotFoundException {
 		String classStr = this.user.getClass().getCanonicalName().replaceAll("(.*?)\\$.*", "$1");
 		clazz = (Class<U>) Class.forName(classStr);
-		System.out.println("\n\n\nClass: " + clazz.getCanonicalName());
 		localRepo = getRepo();
 	}
 
 	@SuppressWarnings("unchecked")
 	public U get(String emailOid) throws RestResponseException {
 		UUserAbs uu = Util.restGetCall(Util.getUri("/user/" + emailOid), clazz);
+		
+		if (localRepo != null) {
+			U localUser = localRepo.getOne(uu.getId());
+			localUser.merge(uu);
+			return localUser;
+		}
+		
 		return (U) uu;
 	}
 
@@ -104,13 +110,6 @@ public class UserSrvcExtImpl<U extends UUserAbs> implements UserSrvcExt<U> {
 
 	public U get(long id) throws Exception {
 		U srvcUser = get(new Long(id).toString());
-		
-		if (localRepo != null) {
-			U localUser = localRepo.getOne(id);
-			localUser.merge(srvcUser);
-			return localUser;
-		}
-		
 		return srvcUser;
 	}
 

@@ -233,6 +233,9 @@ public abstract class PermissionClientTest
     	private Long id;
 		public Long getId() {return this.id;}
 		public String getObjectType() {return "type1";}
+		public boolean lockdown() {
+			return false;
+		}
     }
 
     @AllArgsConstructor
@@ -240,5 +243,8 @@ public abstract class PermissionClientTest
     	private Long id;
 		public Long getId() {return this.id;}
 		public String getObjectType() {return "type2";}
+		public boolean lockdown() {
+			return false;
+		}
     }
 }

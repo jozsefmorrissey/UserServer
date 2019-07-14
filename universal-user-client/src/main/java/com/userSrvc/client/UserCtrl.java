@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.entities.UserUrl;
 import com.userSrvc.client.error.RestResponseException;
@@ -30,8 +31,8 @@ public class UserCtrl <U extends UUserAbs>{
 	}
 
 	@PostMapping("/authinticate")
-	public void authinticate(@RequestBody U user) throws RestResponseException {
-		userSrvc.authinticateUser(user);
+	public void authinticate() throws RestResponseException {
+		userSrvc.authinticateUser(AopAuth.getCurrentUser());
 	}
 
 	@PostMapping("/update/password")
@@ -46,7 +47,7 @@ public class UserCtrl <U extends UUserAbs>{
 
 
 	@PostMapping("/login")
-	public U login(@RequestBody U user) throws RestResponseException {
-		return userSrvc.loginUser(user);
+	public U login() throws RestResponseException {
+		return userSrvc.loginUser(AopAuth.getCurrentUser());
 	}
 }
