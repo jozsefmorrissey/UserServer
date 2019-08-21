@@ -2,6 +2,7 @@ package com.userSrvc.server.service.impl;
 
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -22,20 +23,24 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.ERROR_MSGS;
 import com.userSrvc.client.services.PermissionSrvc;
+import com.userSrvc.client.services.UserSrvc;
 import com.userSrvc.client.util.GenUtils;
 import com.userSrvc.exceptions.StatisticallyImpossible;
 import com.userSrvc.server.repo.UserRepo;
 import com.userSrvc.server.service.UserPhotoSrvc;
-import com.userSrvc.server.service.UserSrvc;
 import com.userSrvc.server.utils.HtmlString;
 
 @Service
-public class UserSrcvImpl implements UserSrvc {
+public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	private static final short ADD_ATTEMPTS = 3;
 
+	@Autowired
+	AopAuth<UUserAbs> aopAuth;
+	
 	@Autowired
 	UserPhotoSrvc userPhotoSrvc;
 
@@ -43,10 +48,10 @@ public class UserSrcvImpl implements UserSrvc {
 	UserRepo userRepo;
 
 	@Autowired
-	PermissionSrvc permSrvc;
+	PermissionSrvc<UUserAbs> permSrvc;
 	
 	@Override
-	public UUserAbs addUser(UUserAbs user) throws ConstraintViolationException, PropertyValueException, StatisticallyImpossible {
+	public UUserAbs add(UUserAbs user) throws Exception {
 		validateEmail(user);
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (dbUser != null) {
@@ -59,6 +64,7 @@ public class UserSrcvImpl implements UserSrvc {
 		
 		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashed);
+		System.out.println("H:" + hashed);
 		for (int i = 0; i < ADD_ATTEMPTS; i ++) {
 			user.setId(new Random().nextLong());
 			if (user.getId() != null) {
@@ -66,7 +72,9 @@ public class UserSrcvImpl implements UserSrvc {
 					UUserAbs u = userRepo.save(user);
 					u.setPassword(null);
 					return u;
-				} catch (Exception e) {}
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 			}
 		}
 		throw new StatisticallyImpossible("If you see this error there are far to many users on this system. Try again, sorry for the inconvienance.");
@@ -74,18 +82,24 @@ public class UserSrcvImpl implements UserSrvc {
 	
 	private String setToken(UUserAbs user) {
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
-		String token = GenUtils.randStringSecure(256);
+		String token = GenUtils.randStringSecure(32);
 		dbUser.setUserToken(token);
 		userRepo.save(dbUser);
 		return token;
 	}
 
 	@Override
-	public UUserAbs loginUser(UUserAbs user) throws PropertyValueException, DataException {
+	public UUserAbs login() throws Exception {
+		UUserAbs user = aopAuth.getCurrentUser();
+		if (user == null) {
+			throw new PropertyValueException(ERROR_MSGS.INCORRECT_CREDENTIALS, "user", "password");
+		}
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (dbUser == null) {
 			throw new DataException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, null);
 		}
+		System.out.println("P:" + user.getPassword());
+		System.out.println("DBP:" + dbUser.getPassword());
 		if (!BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
 			throw new PropertyValueException(ERROR_MSGS.INVALID_PASSWORD, "user", "password");
 		}
@@ -93,12 +107,13 @@ public class UserSrcvImpl implements UserSrvc {
 		user.merge(dbUser);
 		user.setUserToken(setToken(dbUser));
 		user.setPassword(null);
-		return user;
+		dbUser.merge(user);
+		return dbUser;
 	}
 
 	private UUserAbs authinticate(UUserAbs user, boolean external) throws AccessDeniedException {
 		if (user.getUserToken() == null) {
-			try { user = loginUser(user); } catch (Exception e) {}
+			try { user = login(); } catch (Exception e) {}
 			throw new AccessDeniedException(ERROR_MSGS.NO_TOKEN_PROVIDED);
 		}
 		validateEmail(user);
@@ -113,9 +128,13 @@ public class UserSrcvImpl implements UserSrvc {
 		throw new AccessDeniedException(ERROR_MSGS.INCORRECT_CREDENTIALS);
 	}
 
-	@Override
 	public UUserAbs authinticate(UUserAbs user) throws AccessDeniedException {
 		return authinticate(user, true);
+	}
+
+	@Override
+	public UUserAbs authinticate() throws AccessDeniedException {
+		return authinticate(aopAuth.getCurrentUser(), true);
 	}
 	
 	public static void sendEmail(String to, String subject, String htmlContent) {
@@ -153,7 +172,7 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public UUserAbs getUser(long id) throws PropertyValueException {
+	public UUserAbs get(long id) throws PropertyValueException {
 		UUserAbs dbUser;
 		dbUser = (UUserAbs) userRepo.getOne(id);
 		if (dbUser == null) {
@@ -165,7 +184,7 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 	
 	@Override
-	public UUserAbs getUser(String email) throws PropertyValueException {
+	public UUserAbs get(String email) throws PropertyValueException {
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(email);
 		if (dbUser == null) {
 			throw new PropertyValueException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, "user", "email");
@@ -190,7 +209,8 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public void updatePassword(UUserAbs user) throws PropertyValueException, AccessDeniedException {
+	public void updatePassword() throws PropertyValueException, AccessDeniedException {
+		UUserAbs user = aopAuth.getCurrentUser();
 		UUserAbs dbUser = authinticate(user, false);
 		validatePassword(user);
 		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
@@ -200,22 +220,23 @@ public class UserSrcvImpl implements UserSrvc {
 	}
 
 	@Override
-	public void updateEmail(UUserAbs user, String newEmail) throws PropertyValueException, AccessDeniedException {
+	public void updateEmail(String newEmail) throws Exception {
 		validateEmail(newEmail);
-		UUserAbs dbUser = authinticate(user, false);
+		UUserAbs dbUser = authinticate(aopAuth.getCurrentUser(), false);
 		dbUser.setEmail(newEmail);
 		userRepo.save(dbUser);
 	}
 
 	@Override
-	public void resetPassword(UUserAbs user, String url) throws PropertyValueException {
+	public void resetPassword(String url) throws PropertyValueException {
+		UUserAbs user = aopAuth.getCurrentUser();
 		validateEmail(user);
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
-		HashMap<String, Object> scope = new HashMap<String, Object>();
 		if(dbUser == null) {
 			throw new PropertyValueException(ERROR_MSGS.EMAIL_NOT_REGISTERED, "user", "email");
 		}
 
+		HashMap<String, Object> scope = new HashMap<String, Object>();
 		String token = setToken(dbUser);
 		String email = dbUser.getEmail();
 		scope.put("name", dbUser.getFullName());
@@ -244,33 +265,40 @@ public class UserSrcvImpl implements UserSrvc {
 	
 	private boolean validateUsername(UUserAbs user) throws PropertyValueException {
 		String name = user.getFullName();
-		if (name == null || name.equals("")) {
-			throw new PropertyValueException (ERROR_MSGS.USERNAME_NOT_DEFINED, "user", "username");
-		}
+//		if (name == null || name.equals("")) {
+//			throw new PropertyValueException (ERROR_MSGS.USERNAME_NOT_DEFINED, "user", "username");
+//		}
 		return true;
 	}
 
 	@Override
-	public void update(UUserAbs user) throws PropertyValueException, AccessDeniedException {
-		UUserAbs dbUser = authinticate(user, false);
+	public UUserAbs update(UUserAbs user) throws AccessDeniedException {
+		UUserAbs dbUser = aopAuth.requriredUser();
 		user.setId(dbUser.getId());
+		user.setPassword(dbUser.getPassword());
 		dbUser.merge(user);
-		userRepo.save(dbUser);
+		return userRepo.save(dbUser);
 	}
 
 	@Override
-	public List<UUserAbs> getUsers(List<Long> ids) {
+	public List<UUserAbs> get(Collection<Long> ids) {
 		List<UUserAbs> list = userRepo.findAllById(ids);
 		setLists(list);
 		return list;
 	}
 	
 	@Override
-	public List<UUserAbs> cleanUsers(List<UUserAbs> users) {
+	public List<UUserAbs> clean(List<UUserAbs> users) {
 		for(UUserAbs user : users) {
 			user.setPassword(null);
 			user.setUserToken(null);
 		}
 		return users;
+	}
+
+
+	@Override
+	public UUserAbs updateSrvc(UUserAbs user) throws Exception {
+		return update(user);
 	}
 }

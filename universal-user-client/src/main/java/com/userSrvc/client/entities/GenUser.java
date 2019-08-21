@@ -1,5 +1,11 @@
 package com.userSrvc.client.entities;
 
+import javax.persistence.Entity;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+
+@Qualifier(value = "UUser")
+@Entity
 public class GenUser extends UUserAbs {
 	public GenUser() {}
 	

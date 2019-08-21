@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,8 +19,8 @@ import lombok.Data;
 
 @Data
 public abstract class AopSecure implements HasType {
-	@JsonIgnore 
-	private Logger log = LogManager.getLogger();
+	
+	private static Logger log = LogManager.getLogger();
 
 	@JsonIgnore 
 	private List<String> requiredFields = new ArrayList<String>();
@@ -58,9 +60,20 @@ public abstract class AopSecure implements HasType {
 		}
 	}
 
-	public AopSecure() {
-		if (!AopAuth.isReturning())
-			AopAuth.addObject(this);
+	public AopSecure() {}
+	
+	public AopSecure(AopSecure aopSecure) {
+		this.setRequiredFields(aopSecure.getRequiredFields());
+		this.setPrivateFields(aopSecure.getPrivateFields());
+		this.setProtectedFields(aopSecure.getProtectedFields());
+		this.associate = aopSecure.isAssociate();
+	}
+
+	@PostConstruct
+	public void init() {
+		if(!AopAuth.getBean().isReturning()) {
+			AopAuth.getBean().addObject(this);
+		}
 	}
 	
 	public boolean lockdown() {
@@ -101,7 +114,7 @@ public abstract class AopSecure implements HasType {
 		targetList.addAll(this.privateFields);
 		targetList.addAll(this.protectedFields);
 		for (String target : targetList) {
-			if (this.requiredFields.contains(target)) {
+			if (!target.equals("") && this.requiredFields.contains(target)) {
 				throw new TryingToProtectRequiredFieldError("Field '" + target + "' is required.");
 			}
 		}

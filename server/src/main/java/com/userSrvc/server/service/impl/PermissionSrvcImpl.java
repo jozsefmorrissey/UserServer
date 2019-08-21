@@ -1,6 +1,5 @@
 package com.userSrvc.server.service.impl;
 
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,46 +12,45 @@ import com.userSrvc.client.entities.Permission;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.services.PermissionSrvc;
 import com.userSrvc.server.repo.PermissionRepo;
-import com.userSrvc.server.service.UserSrvc;
 
 @Service
 public class PermissionSrvcImpl
-		implements PermissionSrvc {
+		implements PermissionSrvc<UUserAbs> {
 
 	@Autowired
-	UserSrvc userSrvc;
+	UserSrvcImpl userSrvc;
 	
 	@Autowired
 	PermissionRepo permissionRepo;
 	
 	@Override
-	public void add(ApplicationPermissionRequest pr) throws AccessDeniedException {
-		garunteeApplicationOwnership(pr);
+	public void add(ApplicationPermissionRequest<UUserAbs> pr) throws Exception {
+		guaranteeApplicationOwnership(pr);
 		cascade(pr);
 		permissionRepo.save(pr.getPermission());
 	}
 	
 	@Override
-	public void addAll(Collection<ApplicationPermissionRequest> prs) throws AccessDeniedException {
-		for (ApplicationPermissionRequest pr : prs) {
+	public void addAll(Collection<ApplicationPermissionRequest<UUserAbs>> prs) throws Exception {
+		for (ApplicationPermissionRequest<UUserAbs> pr : prs) {
 			add(pr);
 		}
 	}
 
 	@Override
-	public void removeAll(Collection<ApplicationPermissionRequest> prs) throws AccessDeniedException {
-		for (ApplicationPermissionRequest pr : prs) {
+	public void removeAll(Collection<ApplicationPermissionRequest<UUserAbs>> prs) throws Exception {
+		for (ApplicationPermissionRequest<UUserAbs> pr : prs) {
 			remove(pr);
 		}
 	}
 
 	@Override
-	public void remove(ApplicationPermissionRequest pr) throws AccessDeniedException {
-		garunteeApplicationOwnership(pr);
+	public void remove(ApplicationPermissionRequest<UUserAbs> pr) throws Exception {
+		guaranteeApplicationOwnership(pr);
 		permissionRepo.delete(pr.getPermission());
 	}
 
-	private void cascade(ApplicationPermissionRequest pr) {
+	private void cascade(ApplicationPermissionRequest<UUserAbs> pr) {
 		if (pr.getParent() != null) {
 			Permission neu = pr.getPermission();
 			Permission old = pr.getParent();
@@ -65,7 +63,7 @@ public class PermissionSrvcImpl
 		}
 	}
 	
-	private void garunteeApplicationOwnership(ApplicationPermissionRequest pr) throws AccessDeniedException {
+	private void guaranteeApplicationOwnership(ApplicationPermissionRequest<UUserAbs> pr) throws Exception {
 		userSrvc.authinticate((UUserAbs) pr.getApplication());
 		pr.getPermission().setAppUserId(pr.getApplication().getId());
 	}

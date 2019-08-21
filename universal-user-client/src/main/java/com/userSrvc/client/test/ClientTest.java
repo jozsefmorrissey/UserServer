@@ -35,7 +35,7 @@ public abstract class ClientTest
 
     
 	@Test
-    public void testApp()
+    public void testApp() throws Exception
     {
     	add();
     	login();
@@ -45,7 +45,7 @@ public abstract class ClientTest
     	post();
     }
     
-    public void add() {
+    public void add() throws Exception {
     	// Add valid credentials
     	try {
 			getUserSrvcExt().add(user);
@@ -77,9 +77,9 @@ public abstract class ClientTest
     	user.setEmail(emailValid);
     }
     
-	public void login() {
+	public void login() throws Exception {
     	try {
-			UUserAbs tokenCarrier = getUserSrvcExt().loginUser(user);
+			UUserAbs tokenCarrier = getUserSrvcExt().login();
 			saveValidToken(tokenCarrier);
 			this.originalId = tokenCarrier.getId();
 			assertTrue(true);
@@ -89,7 +89,7 @@ public abstract class ClientTest
     	
     	user.setEmail(emailInvalid);
     	try {
-			getUserSrvcExt().loginUser(user);
+			getUserSrvcExt().login();
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
@@ -98,7 +98,7 @@ public abstract class ClientTest
     	user.setPassword(passwordInvalid);
     	user.setEmail(emailValid);
     	try {
-			getUserSrvcExt().loginUser(user);
+			getUserSrvcExt().login();
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
@@ -106,10 +106,10 @@ public abstract class ClientTest
 		}
     }
     
-    public void authinticate() {
+    public void authinticate() throws Exception {
     	try {
     		user.setPassword(null);
-			getUserSrvcExt().authinticateUser(user);
+			getUserSrvcExt().authinticate();
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
@@ -117,14 +117,14 @@ public abstract class ClientTest
 		}
     	setValidToken(user);
     	try {
-			getUserSrvcExt().authinticateUser(user);
+			getUserSrvcExt().authinticate();
 			assertTrue(true);
 		} catch (RestResponseException e) {
 			assertTrue(false);
 		}
     	user.setUserToken(invalidToken);
     	try {
-			getUserSrvcExt().authinticateUser(user);
+			getUserSrvcExt().authinticate();
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
@@ -132,7 +132,7 @@ public abstract class ClientTest
 		}
     }
     
-    public void update() {
+    public void update() throws Exception {
     	user.setFullName(nameUpdated);
     	setValidToken(user);
     	try {
@@ -145,16 +145,16 @@ public abstract class ClientTest
 		}
     }
     
-    public void updatePass() {
+    public void updatePass() throws Exception {
     	try {
 			user.setPassword(passwordUpdated);
 	    	setValidToken(user);
-			getUserSrvcExt().updatePassword(user);
+			getUserSrvcExt().updatePassword();
 			assertTrue(true);
-			user = getUserSrvcExt().loginUser(user);
+			user = getUserSrvcExt().login();
 			assertTrue(user.getId() == this.originalId);
 			user.setPassword(passwordValid);
-			getUserSrvcExt().loginUser(user);
+			getUserSrvcExt().login();
 			assertTrue(false);
     	} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 

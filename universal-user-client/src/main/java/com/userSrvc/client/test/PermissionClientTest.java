@@ -90,18 +90,18 @@ public abstract class PermissionClientTest
 			clientTest.getUserSrvcExt().add(u1);
 			clientTest.getUserSrvcExt().add(u2);
 			
-			appUser = this.getClientTest().getUserSrvcExt().loginUser(appUser);
-			u0 = this.getClientTest().getUserSrvcExt().loginUser(u0);
-			u1 = this.getClientTest().getUserSrvcExt().loginUser(u1);
-			u2 = this.getClientTest().getUserSrvcExt().loginUser(u2);
-		} catch (RestResponseException e) {
+			appUser = this.getClientTest().getUserSrvcExt().login();
+			u0 = this.getClientTest().getUserSrvcExt().login();
+			u1 = this.getClientTest().getUserSrvcExt().login();
+			u2 = this.getClientTest().getUserSrvcExt().login();
+		} catch (Exception e) {
 			fail("Unable to add Users");
 		}
     }
     	
 	@Test
     @Rollback(true)
-	public void testApp()
+	public void testApp() throws Exception
     {
 		verifyNoCascade();
 		addAll();
@@ -117,12 +117,12 @@ public abstract class PermissionClientTest
 		try {
 			UUserAbs u1FromDb = clientTest.getUserSrvcExt().get(u1.getEmail());
 			assertTrue(u1FromDb.getPermissionTypes().size() == 0);
-		} catch (RestResponseException e) {
+		} catch (Exception e) {
 			fail("Failed to retrieve u1 from db");
 		}
 	}
     
-    public void addAll() {
+    public void addAll() throws Exception {
     	try {
 			permSrvc.add(u0, new Type1(1l), null);
 	    	permSrvc.add(u0, new Type1(2l), null);
@@ -150,7 +150,7 @@ public abstract class PermissionClientTest
 			UUserAbs u0db = this.clientTest.getUserSrvcExt().get(u0.getEmail());
 
         	List<Permission> transfers = null;// = u0db.getPermissionTypes().subList(2, 4);
-			permSrvc.transfer(u0, u0, u2, transfers);
+			permSrvc.transfer(u0, u2, transfers);
 
 			u0db = this.clientTest.getUserSrvcExt().get(u0.getEmail());
 			assertTrue(u0db.getPermissionTypes().size() == 4);
@@ -158,7 +158,7 @@ public abstract class PermissionClientTest
 			UUserAbs u2db = this.clientTest.getUserSrvcExt().get(u2.getEmail());
 			assertTrue(u2db.getPermissionTypes().size() == 5);
 			
-			permSrvc.transfer(u2, u2, u0, transfers);
+			permSrvc.transfer(u2, u0, transfers);
 
 			u0db = this.clientTest.getUserSrvcExt().get(u0.getEmail());
 			assertTrue(u0db.getPermissionTypes().size() == 6);
@@ -176,7 +176,7 @@ public abstract class PermissionClientTest
 			grants.get(1).setType(Permission.VALIDATION);
 			grants.get(2).setType(Permission.NO);
 
-			permSrvc.grant(u0, u2, grants);
+			permSrvc.grant(u2, grants);
 			
 			UUserAbs u2db = this.clientTest.getUserSrvcExt().get(u2.getEmail());
 			assertTrue(u2db.getPermissionTypes().size() == 3);
@@ -192,7 +192,7 @@ public abstract class PermissionClientTest
 			UUserAbs u2db = this.clientTest.getUserSrvcExt().get(u2.getEmail());
 			List<Permission> clones = null;// = u2db.getPermissionTypes();
 			
-			permSrvc.clone(u0, u2, u1);
+			permSrvc.clone(u2, u1);
 			
 			UUserAbs u1db = this.clientTest.getUserSrvcExt().get(u1.getEmail());
 			assertTrue(u1db.getPermissionTypes().size() == 6);

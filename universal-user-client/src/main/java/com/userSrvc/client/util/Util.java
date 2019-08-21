@@ -11,9 +11,14 @@ import java.util.Random;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
@@ -54,28 +59,36 @@ public class Util {
 		return e.getMessage().indexOf(text) > -1;
 	}
 	
-	public static <R> R restGetCall(String uri, Class<R> returnedClass) throws RestResponseException {
+	public static <R> R restGetCall(String uri, Class<R> returnedClass,
+			MultiValueMap<String, String> headers) throws RestResponseException {
 		RestTemplate rt= new RestTemplate();
 	     
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    httpHeaders.addAll(headers);
 
+	    HttpEntity<Object> request = new HttpEntity<Object>(null, httpHeaders);
 	    try {
-	    	return rt.getForObject(uri, returnedClass);
+	    	ResponseEntity<R> respEntity = rt.exchange(uri, HttpMethod.GET, request, returnedClass);
+	    	return respEntity.getBody();
 	    } catch (HttpStatusCodeException e) {
 	    	throw new RestResponseException(e.getResponseBodyAsString());
 	    }
 	}
 	
-	public static <R> R restPostCall(String uri, Object entity, Class<R> returnedClass) throws RestResponseException {
+	public static <R> R restPostCall(String uri, Object obj, Class<R> returnedClass,
+			MultiValueMap<String, String> headers) throws RestResponseException {
 	     
 	    RestTemplate restTemplate = new RestTemplate();
-	     
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    httpHeaders.addAll(headers);
 
+	    HttpEntity<Object> request = new HttpEntity<Object>(obj, httpHeaders);
 	    try {
-	   		R result = restTemplate.postForObject(uri, entity, returnedClass);	    	
+	   		R result = restTemplate.postForObject(uri, request, returnedClass);	    	
 		    return result;
 	    } catch (HttpStatusCodeException e) {
 	    	throw new RestResponseException(e.getResponseBodyAsString());

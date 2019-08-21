@@ -1,7 +1,7 @@
 package com.userSrvc.client.entities;
 
-public class ApplicationPermissionRequest {
-	private UUserAbs application;
+public class ApplicationPermissionRequest <U extends UUserAbs> {
+	private U application;
 	private Permission permission;
 	private Permission parent;
 	
@@ -17,10 +17,10 @@ public class ApplicationPermissionRequest {
 	public void setParent(Permission parent) {
 		this.parent = parent;
 	}
-	public UUserAbs getApplication() {
+	public U getApplication() {
 		return application;
 	}
-	public void setApplication(UUserAbs application) {
+	public void setApplication(U application) {
 		this.application = application;
 	}
 }

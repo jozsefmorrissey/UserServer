@@ -1,4 +1,4 @@
-package com.userSrvc.client.services.impl;
+package com.userSrvc.client.services.abs;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +8,10 @@ import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.util.MultiValueMap;
 
+import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.constant.URI;
 import com.userSrvc.client.entities.ApplicationPermissionRequest;
 import com.userSrvc.client.entities.Permission;
@@ -20,10 +23,12 @@ import com.userSrvc.client.services.PermissionSrvcExt;
 import com.userSrvc.client.services.UserSrvcExt;
 import com.userSrvc.client.util.Util;
 
-public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements PermissionSrvcExt<U> {
+public abstract class PermissionSrvcExtAbs <U extends UUserAbs> implements PermissionSrvcExt<U> {
 
 	@Autowired
-	private UserSrvcExt<U> userSrvc;
+	AopAuth<U> aopAuth;
+	
+	public abstract UserSrvcExt<U> getUserSrvc();
 	
 	@Override
 	public void add(U user, HasType hasType, Permission parent) throws DatabaseIntegrityException, RestResponseException {
@@ -34,43 +39,47 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 		Permission perm = new Permission(null, this.getApplicationUser().getId(), 
 					user.getId(), hasType.getObjectType(), hasType.getId(), Permission.OAO, null, null);
 		
-		ApplicationPermissionRequest pq = new ApplicationPermissionRequest();
+		ApplicationPermissionRequest<U> pq = new ApplicationPermissionRequest<U>();
 		pq.setApplication(getApplicationUser());
 		pq.setPermission(perm);
 		pq.setParent(parent);
-		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD), pq, String.class);
+		
+		MultiValueMap<String, String> headers = new HttpHeaders();
+		headers.add(AopAuth.EMAIL, aopAuth.getCurrentUser().getEmail());
+		headers.add(AopAuth.TOKEN, aopAuth.getCurrentUser().getUserToken());
+		headers.add(AopAuth.PASSWORD, aopAuth.getCurrentUser().getPassword());
+		
+		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD), pq, String.class, aopAuth.getHeaders());
 	}
 
 	@Override
-	public void grant(U from, U to, List<Permission> permissions) throws Exception {
-		userSrvc.authinticateUser(from);
-		U dbUser = userSrvc.get(from.getId());
-		Collection<ApplicationPermissionRequest> permReqs = grantPermissions(dbUser, permissions, to);
-		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), permReqs, String.class);
+	public void grant(U to, List<Permission> permissions) throws Exception {
+		U from = getUserSrvc().authinticate();
+		U dbUser = getUserSrvc().get(from.getId());
+		Collection<ApplicationPermissionRequest<U>> permReqs = grantPermissions(dbUser, permissions, to);
+		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), permReqs, String.class, aopAuth.getHeaders());
 	}
 
 	@Override
-	public void remove(U admin, U from, List<Permission> permissions) throws Exception {
-		admin = userSrvc.authinticateUser(admin);
-		U dbUser = userSrvc.get(from.getId());
-		Collection<ApplicationPermissionRequest> permReqs = removePermissions(admin, permissions);
-		Util.restPostCall(Util.getUri(URI.PERMISSION_REMOVE_ALL), permReqs, String.class);
+	public void remove(U from, List<Permission> permissions) throws Exception {
+		U admin = getUserSrvc().authinticate();
+		Collection<ApplicationPermissionRequest<U>> permReqs = removePermissions(admin, permissions);
+		Util.restPostCall(Util.getUri(URI.PERMISSION_REMOVE_ALL), permReqs, String.class, aopAuth.getHeaders());
 	}
 
 	@Override
-	public void transfer(U admin, U from, U to, List<Permission> permissions) throws Exception {
-		userSrvc.authinticateUser(from);
-		U dbUser = userSrvc.get(from.getId());
-		Collection<ApplicationPermissionRequest> transReqs = transferPermissions(dbUser, permissions, to);
-		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), transReqs, String.class);
+	public void transfer(U from, U to, List<Permission> permissions) throws Exception {
+		U dbUser = getUserSrvc().get(from.getId());
+		Collection<ApplicationPermissionRequest<U>> transReqs = transferPermissions(dbUser, permissions, to);
+		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), transReqs, String.class, aopAuth.getHeaders());
 	}
 	
 	@Override
-	public void clone(U admin, U from, U to) throws Exception {
-		admin = userSrvc.authinticateUser(admin);
-		U dbUser = userSrvc.get(from.getId());
-		Collection<ApplicationPermissionRequest> permReqs = clonePermissions(admin, get(dbUser), to);
-		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), permReqs, String.class);
+	public void clone(U from, U to) throws Exception {
+		U admin = getUserSrvc().authinticate();
+		U dbUser = getUserSrvc().get(from.getId());
+		Collection<ApplicationPermissionRequest<U>> permReqs = clonePermissions(admin, get(dbUser), to);
+		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), permReqs, String.class, aopAuth.getHeaders());
 	}
 	
 	@Override
@@ -108,15 +117,15 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 	@Override
 	public List<Permission> get(UUserAbs user) {
 		try {
-		return Util.restGetCall(Util.getUri(URI.PERMISSION_ADD_ALL), List.class);
+			return Util.restGetCall(Util.getUri(URI.PERMISSION_ADD_ALL), List.class, aopAuth.getHeaders());
 		} catch (Exception e) {
 			return new ArrayList<Permission>();
 		}
 	}
 
-	protected Collection<ApplicationPermissionRequest> grantPermissions(U dbUser, Collection<Permission> perms, U to) {
+	protected Collection<ApplicationPermissionRequest<U>> grantPermissions(U dbUser, Collection<Permission> perms, U to) {
 		List<Permission> userPerms = get(dbUser);
-		List<ApplicationPermissionRequest> permReqs = new ArrayList<ApplicationPermissionRequest>();
+		List<ApplicationPermissionRequest<U>> permReqs = new ArrayList<ApplicationPermissionRequest<U>>();
 		for (Permission perm : perms) {
 			boolean found = false;
 			for (Permission uPerm : userPerms) {
@@ -127,7 +136,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 					found = true;
 
 					perm.setGrantedFromUserId(dbUser.getId());
-					ApplicationPermissionRequest apq = createNewRequest(dbUser, to, perm, false);
+					ApplicationPermissionRequest<U> apq = createNewRequest(dbUser, to, perm, false);
 					permReqs.add(apq);
 					
 					break;
@@ -145,9 +154,9 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 		return permReqs;
 	}
 
-	protected Collection<ApplicationPermissionRequest> removePermissions(U dbUser, Collection<Permission> perms) {
+	protected Collection<ApplicationPermissionRequest<U>> removePermissions(U dbUser, Collection<Permission> perms) {
 		List<Permission> userPerms = get(dbUser);
-		List<ApplicationPermissionRequest> permReqs = new ArrayList<ApplicationPermissionRequest>();
+		List<ApplicationPermissionRequest<U>> permReqs = new ArrayList<ApplicationPermissionRequest<U>>();
 		for (Permission perm : perms) {
 			boolean found = false;
 			for (Permission uPerm : userPerms) {
@@ -163,7 +172,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 				if ( eq && originOpsudeoAndOtherNot) {
 					found = true;
 					
-					ApplicationPermissionRequest apq = new ApplicationPermissionRequest();
+					ApplicationPermissionRequest<U> apq = new ApplicationPermissionRequest<U>();
 					apq.setApplication(getApplicationUser());
 					apq.setPermission(perm);
 					permReqs.add(apq);
@@ -183,9 +192,9 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 		return permReqs;
 	}
 	
-	protected Collection<ApplicationPermissionRequest> transferPermissions(U dbUser, Collection<Permission> perms, U to) {
+	protected Collection<ApplicationPermissionRequest<U>> transferPermissions(U dbUser, Collection<Permission> perms, U to) {
 		List<Permission> userPerms = get(dbUser);
-		Collection<ApplicationPermissionRequest> permReqs = new ArrayList<ApplicationPermissionRequest>();
+		Collection<ApplicationPermissionRequest<U>> permReqs = new ArrayList<ApplicationPermissionRequest<U>>();
 		for (Permission perm : perms) {
 			boolean found = false;
 			for (Permission uPerm : userPerms) {
@@ -198,7 +207,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 				if (eq && isAdminOoao) {
 					found = true;
 					
-					ApplicationPermissionRequest apq = createNewRequest(dbUser, to, uPerm, true);
+					ApplicationPermissionRequest<U> apq = createNewRequest(dbUser, to, uPerm, true);
 					permReqs.add(apq);
 
 					break;
@@ -212,9 +221,9 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 		return permReqs;
 	}
 	
-	protected Collection<ApplicationPermissionRequest> clonePermissions(U dbUser, Collection<Permission> perms, U to) {
+	protected Collection<ApplicationPermissionRequest<U>> clonePermissions(U dbUser, Collection<Permission> perms, U to) {
 		List<Permission> userPerms = get(dbUser);
-		List<ApplicationPermissionRequest> permReqs = new ArrayList<ApplicationPermissionRequest>();
+		List<ApplicationPermissionRequest<U>> permReqs = new ArrayList<ApplicationPermissionRequest<U>>();
 		for (Permission perm : perms) {
 			boolean found = false;
 			for (Permission uPerm : userPerms) {
@@ -225,7 +234,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 				if (uPerm.equals(perm)) {
 					found = true;
 					
-					ApplicationPermissionRequest apq = createNewRequest(dbUser, to, perm, false);
+					ApplicationPermissionRequest<U> apq = createNewRequest(dbUser, to, perm, false);
 					permReqs.add(apq);
 					
 					break;
@@ -239,7 +248,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 		return permReqs;
 	}
 	
-	protected ApplicationPermissionRequest createNewRequest(U from, U to, Permission perm, boolean isTransfer) {
+	protected ApplicationPermissionRequest<U> createNewRequest(U from, U to, Permission perm, boolean isTransfer) {
 		perm.setUserId(to.getId());
 		if (!isTransfer) {
 			perm.setId(null);
@@ -248,7 +257,7 @@ public abstract class PermissionSrvcExtImpl <U extends UUserAbs> implements Perm
 			}
 		}
 		
-		ApplicationPermissionRequest apq = new ApplicationPermissionRequest();
+		ApplicationPermissionRequest<U> apq = new ApplicationPermissionRequest<U>();
 		apq.setApplication(getApplicationUser());
 		apq.setPermission(perm);
 	

@@ -1,6 +1,5 @@
 package com.userSrvc.server.controller;
 
-import java.nio.file.AccessDeniedException;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.userSrvc.client.constant.URI;
 import com.userSrvc.client.entities.ApplicationPermissionRequest;
 import com.userSrvc.client.entities.Permission;
+import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.services.PermissionSrvc;
 
 @CrossOrigin
@@ -23,7 +23,7 @@ import com.userSrvc.client.services.PermissionSrvc;
 @RequestMapping
 public class PermissionCtrl {
 	@Autowired
-	PermissionSrvc permSrvc;
+	PermissionSrvc<UUserAbs> permSrvc;
 	
 	@GetMapping(URI.PERMISSION_GET_USER_ID)
 	public List<Permission> get(@PathVariable long userId) {
@@ -31,22 +31,22 @@ public class PermissionCtrl {
 	}
 	
 	@PostMapping(URI.PERMISSION_ADD)
-	public void add(@RequestBody ApplicationPermissionRequest pr) throws AccessDeniedException {
+	public void add(@RequestBody ApplicationPermissionRequest<UUserAbs> pr) throws Exception {
 		permSrvc.add(pr);
 	}
 
 	@PostMapping(URI.PERMISSION_ADD_ALL)
-	public void add(@RequestBody Collection<ApplicationPermissionRequest> prs) throws AccessDeniedException {
+	public void add(@RequestBody Collection<ApplicationPermissionRequest<UUserAbs>> prs) throws Exception {
 		permSrvc.addAll(prs);
 	}
 
 	@PostMapping(URI.PERMISSION_REMOVE)
-	public void remove(@RequestBody ApplicationPermissionRequest pr) throws AccessDeniedException {
+	public void remove(@RequestBody ApplicationPermissionRequest<UUserAbs> pr) throws Exception {
 		permSrvc.remove(pr);
 	}
 
 	@PostMapping(URI.PERMISSION_REMOVE_ALL)
-	public void remove(@RequestBody Collection<ApplicationPermissionRequest> prs) throws AccessDeniedException {
+	public void remove(@RequestBody Collection<ApplicationPermissionRequest<UUserAbs>> prs) throws Exception {
 		permSrvc.removeAll(prs);
 	}
 }

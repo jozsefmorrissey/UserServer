@@ -1,8 +1,11 @@
 package com.userSrvc.client.aop;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,26 +19,33 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.userSrvc.client.constant.ToJson;
 import com.userSrvc.client.entities.UUserAbs;
-import com.userSrvc.client.error.RestResponseException;
-import com.userSrvc.client.services.UserSrvcExt;
+import com.userSrvc.client.error.ERROR_MSGS;
+import com.userSrvc.client.services.UserSrvc;
 
-@Component
 @Aspect
-public abstract class  AopAuth <U extends UUserAbs> {
+public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
+	
+	private static AopAuth<?> instance;
 	
 	@Autowired
 	ApplicationContext appContext;
+		
+	protected abstract UserSrvc<U> getUserSrvc();
+	
+	public static AopAuth<?> getBean() {
+		return instance;
+	}
+	
+	public AopAuth () {instance = this;}
 
-	protected abstract UserSrvcExt<U> getUserSrvc();
-
-	@Pointcut("execution(* *.controller..*(..))")
+	@Pointcut("execution(* com..*.controller..*(..))")
 	public void allControllers() {}
-
 	
 	public static final String NOT_STARTED = "not started";
 	public static final String PROCESSING = "processing";
@@ -43,10 +53,10 @@ public abstract class  AopAuth <U extends UUserAbs> {
 	private static final String REQUEST_ID = "requestId";
 	
 	public static final String TOKEN = "Token";
-	public static final String Password = "Password";
-	public static final String Email = "Email";
+	public static final String PASSWORD = "Password";
+	public static final String EMAIL = "Email";
 	
-	private static class RequestState <U extends UUserAbs> {
+	private class RequestState {
 		private U user;
 		private String state = NOT_STARTED;
 		private List<AopSecure> objects = new ArrayList<AopSecure>();
@@ -54,11 +64,10 @@ public abstract class  AopAuth <U extends UUserAbs> {
 
 	Logger log = LogManager.getLogger();
 
-	private static Long threadCount = 0l;
-	private static HashMap<String, RequestState> userInfoMap = new HashMap<String, RequestState>();
+	private Long threadCount = 0l;
+	private HashMap<String, RequestState> userInfoMap = new HashMap<String, RequestState>();
 		
-	private static RequestState getState() {
-		System.out.println("Get: " + MDC.get(REQUEST_ID));
+	private RequestState getState() {
 		if (userInfoMap.get(MDC.get(REQUEST_ID)) == null)  {
 			MDC.put(REQUEST_ID, threadCount.toString());
 			userInfoMap.put(threadCount.toString(), new RequestState());
@@ -67,41 +76,54 @@ public abstract class  AopAuth <U extends UUserAbs> {
 		return userInfoMap.get(MDC.get(REQUEST_ID));
 	}
 	
-	public static boolean isReturning() {
+	public boolean isReturning() {
 		if (getState() == null) return true;
 		return RETURNING.equals(getState().state);
 	}
 
-	public static void addObject(AopSecure obj) {
+	public void addObject(AopSecure obj) {
 		getState().objects.add(obj);
 	}
+	
+	public U requriredUser() throws AccessDeniedException {
+		U user = getCurrentUser();
+		if (user != null) {
+			return user;
+		}
+		throw new AccessDeniedException(ERROR_MSGS.INCORRECT_CREDENTIALS);
+	}
+	
+	public U getCurrentUser() {
+		return getState().user;
+	}
 
-	public static <U extends UUserAbs>  U getCurrentUser() {
-		return (U) getState().user;
+	public HttpServletRequest getCurrentRequest() {
+		return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+				.getRequest();
+		
 	}
 	
 	@Before("allControllers()")
 	public Object validateUser(JoinPoint joinPoint) {
 		System.out.println("In: " + MDC.get(REQUEST_ID));
 		
-		HttpServletRequest curRequest = 
-				((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-				.getRequest();
+		HttpServletRequest curRequest = getCurrentRequest();
 		
-		String password = curRequest.getHeader(Password);
+		String password = curRequest.getHeader(PASSWORD);
 		String token = curRequest.getHeader(TOKEN);
-		String email = curRequest.getHeader(Email);
+		String email = curRequest.getHeader(EMAIL);
 	
 		U user = (U) appContext.getBean("UUser");
 		user.setEmail(email);
-		user.setPassword(password);
 		user.setUserToken(token);
 		
 		try {
-			getState().user = getUserSrvc().authinticateUser(user);
-		} catch (RestResponseException e) {
+			getState().user = getUserSrvc().authinticate(user);
+		} catch (Exception e) {
 			log.warn("Unable to Authinticate User.");
+			getState().user = user;
 		}
+		user.setPassword(password);
 		
 		System.out.println("State: " + PROCESSING);
 		return null;
@@ -109,15 +131,38 @@ public abstract class  AopAuth <U extends UUserAbs> {
 	
 	@AfterReturning("allControllers()")
 	public Object returning(JoinPoint joinPoint) {
-		System.out.println("State: " + RETURNING);
-		System.out.println("Out: " + MDC.get(REQUEST_ID));
 		userInfoMap.get(MDC.get(REQUEST_ID)).state = RETURNING;
 		
-		RequestState<U> rs = userInfoMap.get(MDC.get(REQUEST_ID));
+		RequestState rs = userInfoMap.get(MDC.get(REQUEST_ID));
+		Set<Long> userIds = new HashSet<Long>();
+		List<U> users = new ArrayList<U>();
+		for (int i = 0; i < rs.objects.size(); i += 1) {
+			Object obj = rs.objects.get(i);
+			if (obj instanceof UUserAbs) {
+				userIds.add(((UUserAbs) obj).getId());
+				users.add((U) obj);
+			}
+		}
+		
+		try {
+			List<U> dbUsers = getUserSrvc().get(userIds);
+			UUserAbs.merg(users, dbUsers);
+		} catch (Exception e) {
+			log.warn("Unable to merge users: " + e.getMessage());
+		}
+
 		for (int i = 0; i < rs.objects.size(); i += 1) {
 			rs.objects.get(i).lockdown();
 		}
 				
+		return uponExit(joinPoint);
+	}
+
+	public Object uponExit(JoinPoint joinPoint) {
 		return null;
+	}
+	
+	public HttpHeaders getHeaders() {
+		return UserSrvc.getHeaders(getCurrentUser());
 	}
 }

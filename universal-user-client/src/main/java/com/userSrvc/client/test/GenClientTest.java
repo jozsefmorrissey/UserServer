@@ -9,10 +9,10 @@ import com.userSrvc.client.entities.GenUser;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.services.SrvcProps;
 import com.userSrvc.client.services.UserSrvcExt;
-import com.userSrvc.client.services.impl.UserSrvcExtImpl;
+import com.userSrvc.client.services.abs.UserSrvcExtAbs;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { UserSrvcExtImpl.class, SrvcProps.class })
+@SpringBootTest(classes = { UserSrvcExtAbs.class, SrvcProps.class })
 public class GenClientTest extends ClientTest {
 	@Autowired
 	private UserSrvcExt userSrvcExt;

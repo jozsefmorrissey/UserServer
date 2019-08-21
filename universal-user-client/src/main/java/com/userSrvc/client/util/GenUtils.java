@@ -16,7 +16,7 @@ public class GenUtils {
 		SecureRandom random = new SecureRandom();
 		byte bytes[] = new byte[length];
 		random.nextBytes(bytes);
-		String token = bytes.toString();
+		String token = new String(bytes);
 		return token;
 	}
 

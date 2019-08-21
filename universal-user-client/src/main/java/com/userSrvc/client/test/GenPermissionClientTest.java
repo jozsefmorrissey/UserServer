@@ -11,11 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.services.SrvcProps;
+import com.userSrvc.client.services.abs.UserSrvcExtAbs;
 import com.userSrvc.client.services.impl.GenPermissionSrvcExtImpl;
-import com.userSrvc.client.services.impl.UserSrvcExtImpl;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { UserSrvcExtImpl.class, SrvcProps.class, 
+@SpringBootTest(classes = { UserSrvcExtAbs.class, SrvcProps.class, 
 		GenClientTest.class, GenPermissionSrvcExtImpl.class })
 public class GenPermissionClientTest extends PermissionClientTest {
 

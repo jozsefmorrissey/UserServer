@@ -52,6 +52,16 @@ public class UUserAbs extends AopSecure implements Comparable {
 	public UUserAbs() {
 		super();
 	}
+	public UUserAbs(UUserAbs user) {
+		super(user);
+		this.setId(user.getId());
+		this.setFullName(user.getFullName());
+		this.setEmail(user.getEmail());
+		this.setUserToken(user.getUserToken());
+		this.setPassword(user.getPassword());
+		this.setImageUrls(user.getImageUrls());
+		this.setPermissionTypes(user.getPermissionTypes());
+	}
 	
 	public UUserAbs(long id, String name, String email, String password, byte[] photo) {
 		super();
@@ -65,6 +75,7 @@ public class UUserAbs extends AopSecure implements Comparable {
 		this.setId(dbUser.getId());
 		this.setFullName(dbUser.getFullName());
 		this.setUserToken(dbUser.getUserToken());
+		this.setPassword(dbUser.getPassword());
 		this.setEmail(dbUser.getEmail());
 		this.setPermissionTypes(dbUser.getPermissionTypes());
 		this.setImageUrls(dbUser.getImageUrls());
@@ -120,10 +131,18 @@ public class UUserAbs extends AopSecure implements Comparable {
 		}
 		
 		UUserAbs u = ((UUserAbs)o);
-		long uId = u.getId();
-		long id = this.id;
+		Long uId = u.getId();
+		Long id = this.id;
 		
-		return uId == id ? 0 : uId > id ? -1 : 1;
+		if (uId == null) {
+			return uId == id ? 0 : -1;
+		}
+		
+		if (id == null) {
+			return 1;
+		}
+		
+		return uId.equals(id) ? 0 : uId > id ? -1 : 1;
 	}
 
 	@Override

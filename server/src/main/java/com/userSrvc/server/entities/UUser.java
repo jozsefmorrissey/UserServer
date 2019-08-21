@@ -1,16 +1,11 @@
 package com.userSrvc.server.entities;
 
-import java.util.List;
-
 import javax.annotation.ManagedBean;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.web.context.annotation.ApplicationScope;
 
-import com.userSrvc.client.entities.Permission;
 import com.userSrvc.client.entities.UUserAbs;
 
 import lombok.Data;
@@ -30,6 +25,10 @@ public class UUser extends UUserAbs {
 
 	public UUser() {
 		super();
+	}
+
+	public UUser(UUserAbs user) {
+		super(user);
 	}
 
 	public UUser(long id, String name, String email, String password) {

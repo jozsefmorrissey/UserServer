@@ -105,6 +105,20 @@
 			<artifactId>javassist</artifactId>
 			<version>3.12.1.GA</version>
 		</dependency>
+		<!-- Pull in as a traditional dependency -->
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>2.3.15</version>
+		</dependency>
+
+		<!-- OR as a snazzy new standalone jar with shaded dependencies -->
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>2.3.15</version>
+			<classifier>standalone</classifier>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
