@@ -37,7 +37,7 @@ public class AopAuthMock extends AopAuth<UUserAbs> {
 	public static HttpServletRequest buildMockRequest() {
 		MockHttpServletRequest hsr = new MockHttpServletRequest();
 		hsr.addHeader(PASSWORD, currentUser.getPassword());
-		hsr.addHeader(TOKEN, currentUser.getUserToken());
+		hsr.addHeader(TOKEN, currentUser.getToken());
 		hsr.addHeader(EMAIL, currentUser.getEmail());
 		return hsr;
 	}

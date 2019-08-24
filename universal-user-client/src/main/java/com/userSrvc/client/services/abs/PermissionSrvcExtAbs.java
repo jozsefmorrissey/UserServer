@@ -46,7 +46,7 @@ public abstract class PermissionSrvcExtAbs <U extends UUserAbs> implements Permi
 		
 		MultiValueMap<String, String> headers = new HttpHeaders();
 		headers.add(AopAuth.EMAIL, aopAuth.getCurrentUser().getEmail());
-		headers.add(AopAuth.TOKEN, aopAuth.getCurrentUser().getUserToken());
+		headers.add(AopAuth.TOKEN, aopAuth.getCurrentUser().getToken());
 		headers.add(AopAuth.PASSWORD, aopAuth.getCurrentUser().getPassword());
 		
 		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD), pq, String.class, aopAuth.getHeaders());

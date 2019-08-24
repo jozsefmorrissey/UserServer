@@ -1,5 +1,6 @@
 package com.userSrvc.client.util;
 
+import java.net.URLEncoder;
 import java.security.SecureRandom;
 
 import com.goebl.david.Response;
@@ -17,7 +18,7 @@ public class GenUtils {
 		byte bytes[] = new byte[length];
 		random.nextBytes(bytes);
 		String token = new String(bytes);
-		return token;
+		return URLEncoder.encode(token);
 	}
 
 	public static String getPassword(String identifier, String token, String port) {

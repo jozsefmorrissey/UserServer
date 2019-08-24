@@ -122,7 +122,7 @@ public abstract class ClientTest
 		} catch (RestResponseException e) {
 			assertTrue(false);
 		}
-    	user.setUserToken(invalidToken);
+    	user.setToken(invalidToken);
     	try {
 			getUserSrvcExt().authinticate();
 			assertTrue(false);
@@ -167,10 +167,10 @@ public abstract class ClientTest
     }
     
     public void saveValidToken(UUserAbs user) {
-    	this.validTokens.put(user.getEmail(), user.getUserToken());
+    	this.validTokens.put(user.getEmail(), user.getToken());
     }
     
     public void setValidToken(UUserAbs user) {
-    	user.setUserToken(getValidToken(user));
+    	user.setToken(getValidToken(user));
     }
 }

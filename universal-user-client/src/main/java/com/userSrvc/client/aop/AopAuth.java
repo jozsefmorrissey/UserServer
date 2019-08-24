@@ -115,7 +115,7 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 	
 		U user = (U) appContext.getBean("UUser");
 		user.setEmail(email);
-		user.setUserToken(token);
+		user.setToken(token);
 		
 		try {
 			getState().user = getUserSrvc().authinticate(user);

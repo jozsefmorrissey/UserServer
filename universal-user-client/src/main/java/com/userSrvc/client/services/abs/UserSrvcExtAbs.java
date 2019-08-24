@@ -1,7 +1,6 @@
 package com.userSrvc.client.services.abs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +10,6 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.util.MultiValueMap;
 
 import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.constant.URI;
@@ -22,7 +18,6 @@ import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.repo.UserBaseRepository;
 import com.userSrvc.client.services.UserSrvc;
 import com.userSrvc.client.services.UserSrvcExt;
-import com.userSrvc.client.services.impl.UserSrvcExtImpl;
 import com.userSrvc.client.util.Util;
 
 public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<U> {
@@ -91,7 +86,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	}
 
 	public U authinticate(U user) throws RestResponseException {
-		return Util.restPostCall(Util.getUri(URI.USER_AUTH), user, clazz,
+		return Util.restGetCall(Util.getUri(URI.USER_AUTH), clazz,
 				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
 	}
 

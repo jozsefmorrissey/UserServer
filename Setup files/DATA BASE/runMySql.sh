@@ -11,7 +11,7 @@ unset flags[user]
 propFile=../../server/src/main/resources/application.properties
 host=$(getValue host $propFile)
 database=$(getValue database $propFile)
-rootPassword=$(confidentalInfo.sh value system systemDbPass)
+rootPassword=$(pst value system systemDbPass)
 
 if [ -z $user ]
 then

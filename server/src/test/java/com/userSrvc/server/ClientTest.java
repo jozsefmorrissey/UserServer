@@ -38,7 +38,7 @@ public class ClientTest extends Config
 	private UUserAbs buildValidUser() {
 		emailValid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
 		UUserAbs u = new GenUser(0, nameOriginal, emailValid, passwordValid);
-		u.setUserToken(validToken);
+		u.setToken(validToken);
 		return u;
 	}
 	
@@ -90,7 +90,7 @@ public class ClientTest extends Config
     		user.setPassword(passwordValid);
 			System.out.println("Password: " + user.getPassword());
 			UUserAbs tokenCarrier = userCtrl.login();
-			this.validToken = tokenCarrier.getUserToken();
+			this.validToken = tokenCarrier.getToken();
 			this.originalId = tokenCarrier.getId();
 			assertTrue(true);
 		} catch (Exception e) {
@@ -119,13 +119,13 @@ public class ClientTest extends Config
     
     public void authinticate() throws Exception {
     	try {
-    		user.setUserToken(null);
+    		user.setToken(null);
     		userCtrl.authinticate();
 			fail();
 		} catch (AccessDeniedException e) {
 			assertTrue(e.getMessage().equals(ERROR_MSGS.NO_TOKEN_PROVIDED));
 		}
-    	user.setUserToken(validToken);
+    	user.setToken(validToken);
     	try {
     		userCtrl.authinticate();
 			assertTrue(true);
@@ -133,7 +133,7 @@ public class ClientTest extends Config
 			e.printStackTrace();
 			fail();
 		}
-    	user.setUserToken(invalidToken);
+    	user.setToken(invalidToken);
     	try {
     		userCtrl.authinticate();
 			assertTrue(false);
@@ -144,7 +144,7 @@ public class ClientTest extends Config
     
     public void update() throws Exception {
     	user.setFullName(nameUpdated);
-    	user.setUserToken(validToken);
+    	user.setToken(validToken);
     	try {
     		userCtrl.update(user);
 			user = userCtrl.get(user.getEmail());
@@ -168,7 +168,7 @@ public class ClientTest extends Config
     public void updatePass() throws Exception {
     	try {
 			user.setPassword(passwordUpdated);
-	    	user.setUserToken(validToken);
+	    	user.setToken(validToken);
 	    	userCtrl.updatePassword();
 			assertTrue(true);
 			user = userCtrl.login();

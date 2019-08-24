@@ -27,7 +27,7 @@ public interface UserSrvc <U extends UUserAbs> extends Service<U> {
 	    if (user != null) {
 		    httpHeaders.add(AopAuth.EMAIL, "" + user.getEmail());
 		    httpHeaders.add(AopAuth.PASSWORD, user.getPassword());
-		    httpHeaders.add(AopAuth.TOKEN, user.getUserToken());
+		    httpHeaders.add(AopAuth.TOKEN, user.getToken());
 //		    httpHeaders.add("Content-Type", MediaType.APPLICATION_JSON.toString());
 //		    httpHeaders.add("Accept", MediaType.APPLICATION_JSON.toString());
 	    }

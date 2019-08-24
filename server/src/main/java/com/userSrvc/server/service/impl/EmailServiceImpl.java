@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.userSrvc.server.entities.UUser;
+import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.server.utils.HtmlString;
 
 
 @Service
 public class EmailServiceImpl {
 	
-	static String API_KEY = "ab11bed99dbeb5d901aba1155cbbec71-898ca80e-918e6511";
+	static String API_KEY = "eef24e14b77c3560b0031605fdf6f01c";
 	static String DOMAIN_NAME = "mg." + "clockit.org";
 	static String ADMIN = "UUser clockit.org <passwordReset@clockit.org>";
 	static String PASSWORD_RESET = "Password Reset";
@@ -32,12 +32,14 @@ public class EmailServiceImpl {
 			.queryString("html", content)
 			.asString();
 		
-		return request.getBody();
+		String res = request.getBody();
+		System.out.println(res);
+		return res;
 	}
 	
-	public static String resetPassword(UUser user, String url) throws UnirestException {
+	public static String resetPassword(UUserAbs user, String url) throws UnirestException {
 		HashMap<String, Object> scope = new HashMap<String, Object>();
-		String token = user.getUserToken();
+		String token = user.getToken();
 		String email = user.getEmail();
 		scope.put("name", user.getFullName());
 		url += (url.endsWith("/") ? "" : "/") + URLEncoder.encode(user.getEmail()) + "/" + URLEncoder.encode(token);

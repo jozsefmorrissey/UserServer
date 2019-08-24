@@ -1,16 +1,16 @@
 package com.userSrvc.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.entities.UUserAbs;
-import com.userSrvc.client.entities.UserUrl;
-import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.services.UserSrvcExt;
 
+@CrossOrigin(origins = "http://192.168.254.10:7002")
 public class UserCtrl <U extends UUserAbs>{
 	@Autowired
 	UserSrvcExt<U> userSrvc;
@@ -46,7 +46,7 @@ public class UserCtrl <U extends UUserAbs>{
 	}
 
 
-	@PostMapping("/login")
+	@GetMapping("/login")
 	public U login() throws Exception {
 		return userSrvc.login();
 	}

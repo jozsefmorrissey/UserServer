@@ -23,6 +23,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.ERROR_MSGS;
@@ -82,8 +83,8 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	
 	private String setToken(UUserAbs user) {
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
-		String token = GenUtils.randStringSecure(32);
-		dbUser.setUserToken(token);
+		String token = GenUtils.randStringSecure(9);
+		dbUser.setToken(token);
 		userRepo.save(dbUser);
 		return token;
 	}
@@ -105,20 +106,20 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		}
 		
 		user.merge(dbUser);
-		user.setUserToken(setToken(dbUser));
+		user.setToken(setToken(dbUser));
 		user.setPassword(null);
 		dbUser.merge(user);
 		return dbUser;
 	}
 
 	private UUserAbs authinticate(UUserAbs user, boolean external) throws AccessDeniedException {
-		if (user.getUserToken() == null) {
+		if (user.getToken() == null) {
 			try { user = login(); } catch (Exception e) {}
 			throw new AccessDeniedException(ERROR_MSGS.NO_TOKEN_PROVIDED);
 		}
 		validateEmail(user);
 		UUserAbs u = (UUserAbs) userRepo.getByEmail(user.getEmail());
-		if (u != null && user != null && user.getUserToken().equals(u.getUserToken())) {
+		if (u != null && user != null && user.getToken().equals(u.getToken())) {
 			if (external) {
 				u.setPassword(null);
 			}
@@ -202,7 +203,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 
 	private void setLists(UUserAbs dbUser) {
 		dbUser.setPassword(null);
-		dbUser.setUserToken(null);
+		dbUser.setToken(null);
 		// TODO: add generalize for all apps.
 		dbUser.setImageUrls(userPhotoSrvc.getUris(dbUser.getId(), 1l));
 		dbUser.setPermissionTypes(permSrvc.getTypes(dbUser.getId(), 1l));
@@ -228,7 +229,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	}
 
 	@Override
-	public void resetPassword(String url) throws PropertyValueException {
+	public void resetPassword(String url) throws PropertyValueException, UnirestException {
 		UUserAbs user = aopAuth.getCurrentUser();
 		validateEmail(user);
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
@@ -243,7 +244,8 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		scope.put("url", url + email + "/" + token);
 		scope.put("token", token);
 		HtmlString htmlString = new HtmlString(scope, "./src/main/resources/static/emailTemplates/password-reset.html");
-		sendEmail(email, "Password Reset", htmlString.toString());
+		EmailServiceImpl.resetPassword(dbUser, url);
+//		sendEmail(email, "Password Reset", htmlString.toString());
 	}
 	
 	private boolean validateEmail(UUserAbs user) throws PropertyValueException {
@@ -291,7 +293,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	public List<UUserAbs> clean(List<UUserAbs> users) {
 		for(UUserAbs user : users) {
 			user.setPassword(null);
-			user.setUserToken(null);
+			user.setToken(null);
 		}
 		return users;
 	}

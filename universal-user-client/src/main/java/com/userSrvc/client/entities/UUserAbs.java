@@ -38,7 +38,7 @@ public class UUserAbs extends AopSecure implements Comparable {
 	private String email;
 	
 	@Column
-	private String userToken;
+	private String token;
 
 	@Column
 	private String password;
@@ -57,7 +57,7 @@ public class UUserAbs extends AopSecure implements Comparable {
 		this.setId(user.getId());
 		this.setFullName(user.getFullName());
 		this.setEmail(user.getEmail());
-		this.setUserToken(user.getUserToken());
+		this.setToken(user.getToken());
 		this.setPassword(user.getPassword());
 		this.setImageUrls(user.getImageUrls());
 		this.setPermissionTypes(user.getPermissionTypes());
@@ -74,7 +74,7 @@ public class UUserAbs extends AopSecure implements Comparable {
 	public void merge(UUserAbs dbUser) {
 		this.setId(dbUser.getId());
 		this.setFullName(dbUser.getFullName());
-		this.setUserToken(dbUser.getUserToken());
+		this.setToken(dbUser.getToken());
 		this.setPassword(dbUser.getPassword());
 		this.setEmail(dbUser.getEmail());
 		this.setPermissionTypes(dbUser.getPermissionTypes());

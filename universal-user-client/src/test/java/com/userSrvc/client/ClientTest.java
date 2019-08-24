@@ -39,7 +39,7 @@ public class ClientTest
 	private UUserAbs buildValidUser() {
 		emailValid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
 		UUserAbs u = new GenUser(0, nameOriginal, emailValid, passwordValid);
-		u.setUserToken(validToken);
+		u.setToken(validToken);
 		return u;
 	}
 	
@@ -88,7 +88,7 @@ public class ClientTest
     public void login() throws Exception {
     	try {
 			UUserAbs tokenCarrier = userSrvcExt.login();
-			this.validToken = tokenCarrier.getUserToken();
+			this.validToken = tokenCarrier.getToken();
 			this.originalId = tokenCarrier.getId();
 			assertTrue(true);
 		} catch (RestResponseException e) {
@@ -122,14 +122,14 @@ public class ClientTest
 			assertTrue(Util.responseExceptContains(e, 
 					ERROR_MSGS.NO_TOKEN_PROVIDED));
 		}
-    	user.setUserToken(validToken);
+    	user.setToken(validToken);
     	try {
 			userSrvcExt.authinticate();
 			assertTrue(true);
 		} catch (RestResponseException e) {
 			assertTrue(false);
 		}
-    	user.setUserToken(invalidToken);
+    	user.setToken(invalidToken);
     	try {
 			userSrvcExt.authinticate();
 			assertTrue(false);
@@ -141,7 +141,7 @@ public class ClientTest
     
     public void update() throws Exception {
     	user.setFullName(nameUpdated);
-    	user.setUserToken(validToken);
+    	user.setToken(validToken);
     	try {
 			userSrvcExt.update(user);
 			user = userSrvcExt.get(user.getEmail());
@@ -155,7 +155,7 @@ public class ClientTest
     public void updatePass() throws Exception {
     	try {
 			user.setPassword(passwordUpdated);
-	    	user.setUserToken(validToken);
+	    	user.setToken(validToken);
 			userSrvcExt.updatePassword();
 			assertTrue(true);
 			user = userSrvcExt.login();
