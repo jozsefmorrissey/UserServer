@@ -71,7 +71,6 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 			if (user.getId() != null) {
 				try {
 					UUserAbs u = userRepo.save(user);
-					u.setPassword(null);
 					return u;
 				} catch (Exception e) {
 					System.out.println(e);
@@ -99,16 +98,15 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		if (dbUser == null) {
 			throw new DataException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, null);
 		}
+		if (dbUser.getToken() == null) {
+			setToken(dbUser);
+		}
 		System.out.println("P:" + user.getPassword());
 		System.out.println("DBP:" + dbUser.getPassword());
 		if (!BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
 			throw new PropertyValueException(ERROR_MSGS.INVALID_PASSWORD, "user", "password");
 		}
 		
-		user.merge(dbUser);
-		user.setToken(setToken(dbUser));
-		user.setPassword(null);
-		dbUser.merge(user);
 		return dbUser;
 	}
 
@@ -120,9 +118,6 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		validateEmail(user);
 		UUserAbs u = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (u != null && user != null && user.getToken().equals(u.getToken())) {
-			if (external) {
-				u.setPassword(null);
-			}
 			return u;
 		}
 		
@@ -202,9 +197,6 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	}
 
 	private void setLists(UUserAbs dbUser) {
-		dbUser.setPassword(null);
-		dbUser.setToken(null);
-		// TODO: add generalize for all apps.
 		dbUser.setImageUrls(userPhotoSrvc.getUris(dbUser.getId(), 1l));
 		dbUser.setPermissionTypes(permSrvc.getTypes(dbUser.getId(), 1l));
 	}
@@ -275,10 +267,14 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 
 	@Override
 	public UUserAbs update(UUserAbs user) throws AccessDeniedException {
-		UUserAbs dbUser = aopAuth.requriredUser();
-		user.setId(dbUser.getId());
-		user.setPassword(dbUser.getPassword());
+		aopAuth.requriredUser();
+		UUserAbs dbUser = userRepo.getByEmail(user.getEmail());
+		String password = dbUser.getPassword();
+		long id = user.getId();
+
 		dbUser.merge(user);
+		dbUser.setId(id);
+		dbUser.setPassword(password);
 		return userRepo.save(dbUser);
 	}
 
@@ -291,10 +287,6 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	
 	@Override
 	public List<UUserAbs> clean(List<UUserAbs> users) {
-		for(UUserAbs user : users) {
-			user.setPassword(null);
-			user.setToken(null);
-		}
 		return users;
 	}
 

@@ -5,4 +5,8 @@ import com.userSrvc.client.services.abs.UserSrvcExtAbs;
 
 public class UserSrvcExtImpl extends UserSrvcExtAbs<UUserAbs> {
 
+	@Override
+	public UUserAbs create(UUserAbs user) {
+		return new UUserAbs(user);
+	}
 }

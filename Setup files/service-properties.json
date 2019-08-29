@@ -1,4 +1,4 @@
 {
-  "serviceRootUrl": "http://206.189.233.20:7001/usvc",
+  "serviceRootUrl": "http://206.189.233.20:7001",
   "contentHost": "http://206.189.233.20:7001"
 }

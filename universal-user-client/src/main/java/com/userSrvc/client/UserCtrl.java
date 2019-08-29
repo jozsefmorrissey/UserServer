@@ -31,8 +31,8 @@ public class UserCtrl <U extends UUserAbs>{
 	}
 
 	@PostMapping("/authinticate")
-	public void authinticate() throws Exception {
-		userSrvc.authinticate();
+	public U authinticate() throws Exception {
+		return userSrvc.authinticate();
 	}
 
 	@PostMapping("/update/password")

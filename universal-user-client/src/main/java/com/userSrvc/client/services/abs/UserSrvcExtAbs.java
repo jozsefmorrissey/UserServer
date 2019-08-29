@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
@@ -22,6 +23,8 @@ import com.userSrvc.client.util.Util;
 
 public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<U> {
 
+	Random rand = new Random();
+	
 	@Autowired
 	ApplicationContext appContext;
 	
@@ -30,21 +33,23 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	@Autowired
 	AopAuth<U> aopAuth;
 	
+	public abstract U create(U user);
+	
 	UserBaseRepository<U> localRepo;
 	Class<U> clazz;
 	
 	private U updateLocal(U remote) {
 		if (localRepo != null) {
 			U local = localRepo.getByEmail(remote.getEmail());
+			long id = local.getId();
 			try {
-				local = localRepo.getOne(remote.getId());
 				local.merge(remote);
-
-				return localRepo.saveAndFlush(local);
-			} catch (EntityNotFoundException e) {
-				// TODO: change to a logger
-				System.out.println("Warning no local data");
+				local.setId(id);
+				localRepo.saveAndFlush(local);
+			} catch(Exception e2) {
+				local = localRepo.saveAndFlush(create(remote));
 			}
+			return local;
 		}
 		return remote;
 	}
@@ -82,12 +87,17 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_ADD), user, clazz,
 				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
 
-		return updateLocal(srvcUser);
+		user.setId(srvcUser.getId());
+		localRepo.saveAndFlush(user);
+		
+		user.merge(srvcUser);
+		return updateLocal(user);
 	}
 
 	public U authinticate(U user) throws RestResponseException {
-		return Util.restGetCall(Util.getUri(URI.USER_AUTH), clazz,
-				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+		U srvcUser = Util.restGetCall(Util.getUri(URI.USER_AUTH), clazz,
+					UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+		return updateLocal(srvcUser);
 	}
 
 	public U authinticate() throws RestResponseException {
