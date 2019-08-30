@@ -9,17 +9,22 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.userSrvc.client.entities.UUserAbs;
+import com.userSrvc.client.util.Pssst;
 import com.userSrvc.server.utils.HtmlString;
 
 
 @Service
 public class EmailServiceImpl {
 	
-	static String API_KEY = "eef24e14b77c3560b0031605fdf6f01c";
+	static String API_KEY = Pssst.get("usvc", "mailgun-api-key");
 	static String DOMAIN_NAME = "mg." + "clockit.org";
 	static String ADMIN = "UUser clockit.org <passwordReset@clockit.org>";
 	static String PASSWORD_RESET = "Password Reset";
 	static String HTML = "text/html";
+	
+	public static void main(String...args) throws UnirestException {
+		send(HTML, ADMIN, "TEST", new HtmlString("<h1>Hello World</h1>"), "jozsef.morrissey@gmail.com");
+	}
 	
 	
 	public static String send(String contentType, String from, String subject, HtmlString content, String...to) throws UnirestException {
