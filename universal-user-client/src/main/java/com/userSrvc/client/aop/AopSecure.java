@@ -71,7 +71,8 @@ public abstract class AopSecure implements HasType {
 
 	@PostConstruct
 	public void init() {
-		if(!AopAuth.getBean().isReturning()) {
+		if(AopAuth.getBean() != null
+				&& !AopAuth.getBean().isReturning()) {
 			AopAuth.getBean().addObject(this);
 		}
 	}
