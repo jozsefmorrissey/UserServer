@@ -11,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpHeaders;
 
 import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.constant.URI;
@@ -19,6 +20,7 @@ import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.repo.UserBaseRepository;
 import com.userSrvc.client.services.UserSrvc;
 import com.userSrvc.client.services.UserSrvcExt;
+import com.userSrvc.client.util.DebugGui;
 import com.userSrvc.client.util.Util;
 
 public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<U> {
@@ -41,6 +43,9 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	private U updateLocal(U remote) {
 		if (localRepo != null) {
 			U local = localRepo.getByEmail(remote.getEmail());
+			if (local == null) {
+				local = localRepo.saveAndFlush(remote);
+			}
 			long id = local.getId();
 			try {
 				local.merge(remote);
@@ -56,7 +61,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	
 	public U login() throws RestResponseException {
 		U srvcUser = Util.restGetCall(Util.getUri(URI.USER_LOGIN), clazz,
-				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+				getHeaders(aopAuth.getCurrentUser()));
 		return updateLocal(srvcUser);
 	}
 	
@@ -71,21 +76,21 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	@SuppressWarnings("unchecked")
 	public U get(String emailOid) throws RestResponseException {
 		U uu = Util.restGetCall(Util.getUri("/user/" + emailOid), clazz,
-				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+				getHeaders(aopAuth.getCurrentUser()));
 		
 		return updateLocal(uu);
 	}
 
 	public U updateSrvc(U user) throws RestResponseException {
 		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_UPDATE), user, clazz,
-				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+				getHeaders(aopAuth.getCurrentUser()));
 
 		return updateLocal(srvcUser);
 	}
 
 	public U add(U user) throws RestResponseException {
 		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_ADD), user, clazz,
-				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+				getHeaders(aopAuth.getCurrentUser()));
 
 		user.setId(srvcUser.getId());
 		localRepo.saveAndFlush(user);
@@ -96,7 +101,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 
 	public U authinticate(U user) throws RestResponseException {
 		U srvcUser = Util.restGetCall(Util.getUri(URI.USER_AUTH), clazz,
-					UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+					getHeaders(aopAuth.getCurrentUser()));
 		return updateLocal(srvcUser);
 	}
 
@@ -106,18 +111,18 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 
 	public void updatePassword() throws RestResponseException {
 		Util.restPostCall(Util.getUri(URI.USER_UPDATE_PASSWORD), user, String.class,
-				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+				getHeaders(aopAuth.getCurrentUser()));
 	}
 
 	public void resetPassword(String url) throws RestResponseException {
 		Util.restPostCall(Util.getUri(URI.USER_RESET_PASSWORD), url, 
-				String.class, UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+				String.class, getHeaders(aopAuth.getCurrentUser()));
 	}
 
 
 	public List<U> get(Collection<Long> ids) throws RestResponseException {
 		List<Map> maps = Util.restPostCall(Util.getUri(URI.USER_ALL), ids, ArrayList.class,
-				UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+				getHeaders(aopAuth.getCurrentUser()));
 		List<U> srvcUsers = Util.convertMapListToObjects(maps, clazz);
 		
 		return srvcUsers;
@@ -145,7 +150,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	@Override
 	public void updateEmail(String newEmail) throws Exception {
 		Util.restPostCall(Util.getUri(URI.USER_UPDATE_EMAIL), newEmail, 
-				String.class, UserSrvc.getHeaders(aopAuth.getCurrentUser()));
+				String.class, getHeaders(aopAuth.getCurrentUser()));
 		U user = aopAuth.getCurrentUser();
 		user.setEmail(newEmail);
 		localRepo.saveAndFlush(user);
@@ -157,5 +162,17 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 		return null;
 	}
 
+	public HttpHeaders getHeaders(U user) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+	    if (user != null) {
+		    httpHeaders.add(AopAuth.EMAIL, "" + user.getEmail());
+		    httpHeaders.add(AopAuth.PASSWORD, user.getPassword());
+		    httpHeaders.add(AopAuth.TOKEN, user.getToken());
+		    aopAuth.getCurrentDebugGui().addHeader(httpHeaders);
+//		    httpHeaders.add("Content-Type", MediaType.APPLICATION_JSON.toString());
+//		    httpHeaders.add("Accept", MediaType.APPLICATION_JSON.toString());
+	    }
+	    return httpHeaders;
+	}
 
 }

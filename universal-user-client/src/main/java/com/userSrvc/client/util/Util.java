@@ -23,6 +23,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.services.SrvcProps;
 
@@ -61,6 +62,11 @@ public class Util {
 	
 	public static <R> R restGetCall(String uri, Class<R> returnedClass,
 			MultiValueMap<String, String> headers) throws RestResponseException {
+		AopAuth.getBean().getCurrentDebugGui()
+		.value("utils.restPostCall." + callId, "uri", uri)
+		.value("utils.restPostCall." + callId, "returnedClass", returnedClass)
+		.value("utils.restPostCall." + callId, "headers", headers);
+
 		RestTemplate rt= new RestTemplate();
 	     
 	    HttpHeaders httpHeaders = new HttpHeaders();
@@ -76,9 +82,16 @@ public class Util {
 	    }
 	}
 	
+	private static int callId = 0;
 	public static <R> R restPostCall(String uri, Object obj, Class<R> returnedClass,
 			MultiValueMap<String, String> headers) throws RestResponseException {
-	     
+
+		AopAuth.getBean().getCurrentDebugGui()
+			.value("utils.restPostCall." + callId, "uri", uri)
+			.value("utils.restPostCall." + callId, "obj", obj)
+			.value("utils.restPostCall." + callId, "returnedClass", returnedClass)
+			.value("utils.restPostCall." + callId, "headers", headers);
+		
 	    RestTemplate restTemplate = new RestTemplate();
 	    restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 	    

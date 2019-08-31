@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.marker.Service;
+import com.userSrvc.client.util.DebugGui;
 
 public interface UserSrvc <U extends UUserAbs> extends Service<U> {
 	public U login() throws Exception;
@@ -19,18 +20,7 @@ public interface UserSrvc <U extends UUserAbs> extends Service<U> {
 	public void updatePassword() throws Exception;
 	public void resetPassword(String url)throws Exception;
 	public U add(U user) throws Exception;
-
-	List<U> clean(List<U> users);
+	public HttpHeaders getHeaders(U user);
 	
-	public static HttpHeaders getHeaders(UUserAbs user) {
-		HttpHeaders httpHeaders = new HttpHeaders();
-	    if (user != null) {
-		    httpHeaders.add(AopAuth.EMAIL, "" + user.getEmail());
-		    httpHeaders.add(AopAuth.PASSWORD, user.getPassword());
-		    httpHeaders.add(AopAuth.TOKEN, user.getToken());
-//		    httpHeaders.add("Content-Type", MediaType.APPLICATION_JSON.toString());
-//		    httpHeaders.add("Accept", MediaType.APPLICATION_JSON.toString());
-	    }
-	    return httpHeaders;
-	}
+	List<U> clean(List<U> users);
 }

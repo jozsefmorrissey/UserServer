@@ -18,7 +18,7 @@ import com.userSrvc.client.services.SrvcProps;
 import com.userSrvc.client.util.AES;
 import com.userSrvc.server.service.impl.UserSrvcImpl;
 
-@CrossOrigin("http://192.168.254.10:7002")
+@CrossOrigin
 @RestController
 @RequestMapping
 public class UserCtrl {

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,6 +28,7 @@ import com.userSrvc.client.constant.ToJson;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.ERROR_MSGS;
 import com.userSrvc.client.services.UserSrvc;
+import com.userSrvc.client.util.DebugGui;
 
 @Aspect
 public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
@@ -35,6 +37,14 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 	
 	@Autowired
 	ApplicationContext appContext;
+	
+	@Autowired 
+	private HttpServletResponse response;
+	
+	{
+		DebugGui.setHost("https://www.jozsefmorrissey.com/debug-gui");
+		DebugGui.setRoot("UUsvc");
+	}
 		
 	protected abstract UserSrvc<U> getUserSrvc();
 	
@@ -56,8 +66,9 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 	public static final String PASSWORD = "Password";
 	public static final String EMAIL = "Email";
 	
-	private class RequestState {
+	private static class RequestState <U extends UUserAbs> {
 		private U user;
+		private DebugGui debugGui;
 		private String state = NOT_STARTED;
 		private List<AopSecure> objects = new ArrayList<AopSecure>();
 	}
@@ -65,7 +76,7 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 	Logger log = LogManager.getLogger();
 
 	private Long threadCount = 0l;
-	private HashMap<String, RequestState> userInfoMap = new HashMap<String, RequestState>();
+	private static HashMap<String, RequestState> userInfoMap = new HashMap<String, RequestState>();
 		
 	private RequestState getState() {
 		if (userInfoMap.get(MDC.get(REQUEST_ID)) == null)  {
@@ -94,13 +105,20 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 	}
 	
 	public U getCurrentUser() {
-		return getState().user;
+		return (U) getState().user;
+	}
+
+	public DebugGui getCurrentDebugGui() {
+		return getState().debugGui;
 	}
 
 	public HttpServletRequest getCurrentRequest() {
 		return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 				.getRequest();
-		
+	}
+
+	public HttpServletResponse getCurrentResponse() {
+		return response;
 	}
 	
 	@Before("allControllers()")
@@ -112,19 +130,23 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 		String password = curRequest.getHeader(PASSWORD);
 		String token = curRequest.getHeader(TOKEN);
 		String email = curRequest.getHeader(EMAIL);
-	
+
 		U user = (U) appContext.getBean("UUser");
 		user.setEmail(email);
 		user.setToken(token);
 		getState().user = user;
+		DebugGui debugGui = new DebugGui(getCurrentRequest());
+		getState().debugGui = debugGui;
 		
 		try {
 			user = getUserSrvc().authinticate(user);
 		} catch (Exception e) {
-			log.warn("Unable to Authinticate User.");
+			debugGui.exception("AopAuth", "Authinticate User", e);
 		}
 		user.setPassword(password);
 		getState().user = user;
+		debugGui.value("AopAuth", "user", user);
+		
 		
 		System.out.println("State: " + PROCESSING);
 		return null;
@@ -153,7 +175,7 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 		}
 
 		for (int i = 0; i < rs.objects.size(); i += 1) {
-			rs.objects.get(i).lockdown();
+			((AopSecure) rs.objects.get(i)).lockdown();
 		}
 				
 		return uponExit(joinPoint);
@@ -164,6 +186,6 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 	}
 	
 	public HttpHeaders getHeaders() {
-		return UserSrvc.getHeaders(getCurrentUser());
+		return getUserSrvc().getHeaders(getCurrentUser());
 	}
 }

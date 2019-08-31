@@ -21,6 +21,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -294,5 +295,15 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	@Override
 	public UUserAbs updateSrvc(UUserAbs user) throws Exception {
 		return update(user);
+	}
+	
+	public HttpHeaders getHeaders(UUserAbs user) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+	    if (user != null) {
+		    httpHeaders.add(AopAuth.EMAIL, "" + user.getEmail());
+		    httpHeaders.add(AopAuth.PASSWORD, user.getPassword());
+		    httpHeaders.add(AopAuth.TOKEN, user.getToken());
+	    }
+	    return httpHeaders;
 	}
 }
