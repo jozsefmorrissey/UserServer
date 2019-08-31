@@ -28,7 +28,10 @@ public class Pssst {
 			objects.put(id, fetch(id));
 		}
 		try {
-			return objects.get(id).get(key).toString();
+			if (objects.get(id) != null) {
+				return objects.get(id).get(key).toString();				
+			}
+			return null;
 		} catch (JSONException e) {}
 		return null;
 	}
