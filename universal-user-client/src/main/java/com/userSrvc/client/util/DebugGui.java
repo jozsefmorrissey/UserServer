@@ -203,9 +203,12 @@ public class DebugGui {
 	}
 	
     public static void addCookie(HttpServletResponse response) {
-        Cookie cookie = new Cookie(DEBUG_ID, "true");
-        cookie.setMaxAge(60 * 60);
-        response.addCookie(cookie);
+    	if (response != null) {
+		    Cookie cookie = new Cookie(DEBUG_ID, "true");
+		    cookie.setMaxAge(60 * 60);
+		    response.addCookie(cookie);
+    	}
+
     }
 
 	public void addHeader(HttpHeaders httpHeaders) {

@@ -41,9 +41,7 @@ public class UserCtrl {
 
 	@GetMapping(URI.USER_LOGIN)
 	public UUserAbs login() throws Exception {
-//		return new UUser();
 		UUserAbs user = userSrvc.login();
-//		return new UUser(user);
 		return user;
 	}
 

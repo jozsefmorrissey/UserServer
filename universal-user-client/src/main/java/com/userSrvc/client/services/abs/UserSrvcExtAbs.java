@@ -110,7 +110,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	}
 
 	public void updatePassword() throws RestResponseException {
-		Util.restPostCall(Util.getUri(URI.USER_UPDATE_PASSWORD), user, String.class,
+		Util.restGetCall(Util.getUri(URI.USER_UPDATE_PASSWORD), String.class,
 				getHeaders(aopAuth.getCurrentUser()));
 	}
 

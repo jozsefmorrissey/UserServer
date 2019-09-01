@@ -123,7 +123,6 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 	
 	@Before("allControllers()")
 	public Object validateUser(JoinPoint joinPoint) {
-		System.out.println("In: " + MDC.get(REQUEST_ID));
 		
 		HttpServletRequest curRequest = getCurrentRequest();
 		
@@ -147,8 +146,6 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 		getState().user = user;
 		debugGui.value("AopAuth", "user", user);
 		
-		
-		System.out.println("State: " + PROCESSING);
 		return null;
 	}
 	

@@ -31,7 +31,6 @@ public class Pssst {
 			if (objects.get(id) != null) {
 				return objects.get(id).get(key).toString();				
 			}
-			return null;
 		} catch (JSONException e) {}
 		return null;
 	}
@@ -39,7 +38,8 @@ public class Pssst {
 	private static JSONObject fetch(String id) {
 		try {
 
-			Process process = Runtime.getRuntime().exec("pst remote -config " + id);
+			String[] cmd = new String[] {"pst", "remote", "-config", id, "2>/dev/null"};
+			Process process = Runtime.getRuntime().exec(cmd);
 
 			StringBuilder output = new StringBuilder();
 			BufferedReader reader = new BufferedReader(
@@ -54,10 +54,25 @@ public class Pssst {
 			if (exitVal == 0) {
 				return new JSONObject(output.toString());
 			}
-
+			throw new PssstFetchFailedException(id);
 		} catch (Exception e) {
-			e.printStackTrace();
+			new DebugGui(true).exception("Pssst.fetch", id, new PssstFetchFailedException(id));
+			return null;
 		}
-		return null;
+	}
+	
+	public static class PssstFetchFailedException extends Exception {
+		private static final long serialVersionUID = 7749383507428066033L;
+		private String id;
+		
+		public PssstFetchFailedException(String id) {
+			this.id = id;
+		}
+
+		@Override
+		public String getMessage() {
+			return "You should ensure your configuration for '" + id + "' is correct.\n\t" + 
+					"pst remote -config '" + id + "'\n\tShould return a valid json string.";
+		}
 	}
 }
