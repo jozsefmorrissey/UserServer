@@ -40,7 +40,7 @@ public class Pssst {
 		System.out.println("fetching: " + id );
 		try {
 			
-			String[] cmd = new String[] {"pst", "remote", "-config", id, "2>/dev/null"};
+			String[] cmd = new String[] {"pst", "remote", "-config", id};
 			Process process = Runtime.getRuntime().exec(cmd);
 
 			StringBuilder output = new StringBuilder();
