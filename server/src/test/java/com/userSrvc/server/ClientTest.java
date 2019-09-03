@@ -143,12 +143,12 @@ public class ClientTest extends Config
     }
     
     public void update() throws Exception {
-    	user.setFullName(nameUpdated);
+    	user.setFullname(nameUpdated);
     	user.setToken(validToken);
     	try {
     		userCtrl.update(user);
 			user = userCtrl.get(user.getEmail());
-			assertTrue(nameUpdated.equals(user.getFullName()));
+			assertTrue(nameUpdated.equals(user.getFullname()));
 			assertTrue(user.getId().equals(originalId));
 		} catch (Exception e) {
 			fail();

@@ -75,6 +75,9 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 
 	@SuppressWarnings("unchecked")
 	public U get(String emailOid) throws RestResponseException {
+		if (emailOid.matches("^[0-9]*$") && getRepo() != null) {
+			return getRepo().getOne(Long.parseLong(emailOid));
+		}
 		U uu = Util.restGetCall(Util.getUri("/user/" + emailOid), clazz,
 				getHeaders(aopAuth.getCurrentUser()));
 		

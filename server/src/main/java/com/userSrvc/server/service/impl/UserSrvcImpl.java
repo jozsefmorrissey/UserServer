@@ -233,7 +233,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		HashMap<String, Object> scope = new HashMap<String, Object>();
 		String token = setToken(dbUser);
 		String email = dbUser.getEmail();
-		scope.put("name", dbUser.getFullName());
+		scope.put("name", dbUser.getFullname());
 		scope.put("url", url + email + "/" + token);
 		scope.put("token", token);
 		HtmlString htmlString = new HtmlString(scope, "./src/main/resources/static/emailTemplates/password-reset.html");
@@ -259,7 +259,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	}
 	
 	private boolean validateUsername(UUserAbs user) throws PropertyValueException {
-		String name = user.getFullName();
+		String name = user.getFullname();
 //		if (name == null || name.equals("")) {
 //			throw new PropertyValueException (ERROR_MSGS.USERNAME_NOT_DEFINED, "user", "username");
 //		}

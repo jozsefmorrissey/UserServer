@@ -32,7 +32,7 @@ public class UUserAbs extends AopSecure implements Comparable {
 	private Long id;
 	
 	@Column
-	private String fullName;
+	private String fullname;
 
 	@Column
 	private String email;
@@ -55,7 +55,7 @@ public class UUserAbs extends AopSecure implements Comparable {
 	public UUserAbs(UUserAbs user) {
 		super(user);
 		this.setId(user.getId());
-		this.setFullName(user.getFullName());
+		this.setFullname(user.getFullname());
 		this.setEmail(user.getEmail());
 		this.setToken(user.getToken());
 		this.setPassword(user.getPassword());
@@ -66,14 +66,14 @@ public class UUserAbs extends AopSecure implements Comparable {
 	public UUserAbs(long id, String name, String email, String password, byte[] photo) {
 		super();
 		this.setId(id);
-		this.setFullName(name);
+		this.setFullname(name);
 		this.setEmail(email);
 		this.setPassword(password);
 	}
 
 	public void merge(UUserAbs dbUser) {
 		this.setId(dbUser.getId());
-		this.setFullName(dbUser.getFullName());
+		this.setFullname(dbUser.getFullname());
 		this.setToken(dbUser.getToken());
 		this.setPassword(dbUser.getPassword());
 		this.setEmail(dbUser.getEmail());
@@ -103,10 +103,10 @@ public class UUserAbs extends AopSecure implements Comparable {
 	}
 	
 	public String getName(int i) {
-		if (fullName == null) {
+		if (fullname == null) {
 			return null;
 		}
-		String[] names = fullName.split(" ");
+		String[] names = fullname.split(" ");
 		if (i >= names.length - 1) {
 			return names[names.length - 1];
 		}

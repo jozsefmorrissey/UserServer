@@ -15,7 +15,7 @@ public class GenUser extends UUserAbs {
 
 	public GenUser(long id, String name, String email, String password, byte[] photo) {
 		super();
-		this.setFullName(name);
+		this.setFullname(name);
 		this.setEmail(email);
 		this.setPassword(password);
 //		this.setPhoto(photo);//ImageUtils.convertToBytes("src/main/resources/static/images/default-image.jpg");

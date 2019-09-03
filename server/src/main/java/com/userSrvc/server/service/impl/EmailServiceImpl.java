@@ -46,7 +46,7 @@ public class EmailServiceImpl {
 		HashMap<String, Object> scope = new HashMap<String, Object>();
 		String token = user.getToken();
 		String email = user.getEmail();
-		scope.put("name", user.getFullName());
+		scope.put("name", user.getFullname());
 		url += (url.endsWith("/") ? "" : "/") + URLEncoder.encode(user.getEmail()) + "/" + URLEncoder.encode(token);
 		scope.put("url", url);
 		scope.put("token", token);
