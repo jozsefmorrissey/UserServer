@@ -41,7 +41,7 @@ public class Pssst {
 		try {
 			
 			String[] cmd = new String[] {"pst", "remote", "-config", id};
-			Process process = Runtime.getRuntime().exec(cmd);
+			Process process = Runtime.getRuntime().exec("pst remote -config " + id);
 
 			StringBuilder output = new StringBuilder();
 			BufferedReader reader = new BufferedReader(
