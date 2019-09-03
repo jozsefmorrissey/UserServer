@@ -45,7 +45,7 @@ public class Pssst {
 
 			StringBuilder output = new StringBuilder();
 			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(process.getInputStream()));
+					new InputStreamReader(process.getErrorStream()));
 
 			String line;
 			while ((line = reader.readLine()) != null) {
