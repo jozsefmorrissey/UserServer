@@ -24,6 +24,7 @@ public class Pssst {
 	}
 	
 	public static String get(String id, String key) {
+		System.out.println("getting: " + id + "/" + key);
 		if (objects.get(id) == null) {
 			objects.put(id, fetch(id));
 		}
@@ -36,8 +37,9 @@ public class Pssst {
 	}
 	
 	private static JSONObject fetch(String id) {
+		System.out.println("fetching: " + id );
 		try {
-
+			
 			String[] cmd = new String[] {"pst", "remote", "-config", id, "2>/dev/null"};
 			Process process = Runtime.getRuntime().exec(cmd);
 
@@ -59,6 +61,7 @@ public class Pssst {
 			}
 			throw new PssstFetchFailedException(id);
 		} catch (Exception e) {
+			System.out.println("Pssst.fetch - exception: " + e.getMessage());
 			new DebugGui(true).exception("Pssst.fetch", id, new PssstFetchFailedException(id));
 			return null;
 		}
