@@ -52,6 +52,9 @@ public class Pssst {
 
 			int exitVal = process.waitFor();
 			if (exitVal == 0) {
+				System.out.println(output.toString());
+				System.out.println("<-out|json->");
+				System.out.println(new JSONObject(output.toString()));
 				return new JSONObject(output.toString());
 			}
 			throw new PssstFetchFailedException(id);
