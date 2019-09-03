@@ -38,6 +38,7 @@ public class EmailServiceImpl {
 			.asString();
 		
 		String res = request.getBody();
+		System.out.println("'" + API_KEY + "'");
 		System.out.println(res);
 		return res;
 	}
