@@ -138,4 +138,7 @@ public abstract class AopSecure implements HasType {
 		return this.associate;
 	}
 	
+	public String getObjectType() {
+		return "AOP_SECURE";
+	}
 }

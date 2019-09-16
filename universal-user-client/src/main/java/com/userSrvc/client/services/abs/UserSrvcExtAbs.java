@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -18,9 +17,7 @@ import com.userSrvc.client.constant.URI;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.repo.UserBaseRepository;
-import com.userSrvc.client.services.UserSrvc;
 import com.userSrvc.client.services.UserSrvcExt;
-import com.userSrvc.client.util.DebugGui;
 import com.userSrvc.client.util.Util;
 
 public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<U> {
@@ -40,16 +37,20 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	UserBaseRepository<U> localRepo;
 	Class<U> clazz;
 	
+	private void mergeUsers(U local, U remote) {
+		long id = local.getId();
+		local.merge(remote);
+		local.setId(id);
+	}
+	
 	private U updateLocal(U remote) {
 		if (localRepo != null) {
 			U local = localRepo.getByEmail(remote.getEmail());
 			if (local == null) {
 				local = localRepo.saveAndFlush(remote);
 			}
-			long id = local.getId();
+			mergeUsers(local, remote);
 			try {
-				local.merge(remote);
-				local.setId(id);
 				localRepo.saveAndFlush(local);
 			} catch(Exception e2) {
 				local = localRepo.saveAndFlush(create(remote));
@@ -128,7 +129,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 				getHeaders(aopAuth.getCurrentUser()));
 		List<U> srvcUsers = Util.convertMapListToObjects(maps, clazz);
 		
-		return srvcUsers;
+		return mergeWithLocal(ids, srvcUsers);
 	}
 
 	public U get(long id) throws Exception {
@@ -176,6 +177,26 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 //		    httpHeaders.add("Accept", MediaType.APPLICATION_JSON.toString());
 	    }
 	    return httpHeaders;
+	}
+	
+	private List<U> mergeWithLocal(Collection<Long> ids, List<U> srvcUsers) {
+		if (localRepo == null) {
+			return srvcUsers;
+		}
+		List<U> localUsers = localRepo.findAllById(ids);
+		for (U srvcUser : srvcUsers) {
+			boolean found = false;
+			for (U localUser : localUsers) {
+				if (srvcUser.getId().equals(localUser.getId())) {
+					mergeUsers(localUser, srvcUser);
+					found = true;
+				}
+			}
+			if (!found) {
+				localUsers.add(updateLocal(srvcUser));
+			}
+		}
+		return localUsers;
 	}
 
 }

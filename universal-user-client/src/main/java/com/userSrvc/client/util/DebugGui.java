@@ -17,10 +17,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DebugGui {
-	
+
 	public static void main(String...args) {
 		DebugGui.setHost("https://www.jozsefmorrissey.com/debug-gui");
-		
+
 		DebugGui debugGui = new DebugGui(true);
 		debugGui.link("beta", "mylabel", "http://www.google.com");
 		debugGui.link("delta.foxtrot", "my2ndlabel", "http://www.google.com");
@@ -31,20 +31,20 @@ public class DebugGui {
 		debugGui.log("beta.charlie", "mylog4: http://www.google.com");
 		debugGui.exception("beta.charlie.echo", "myException", new Error("my message"));
 	}
-	
+
 	private static String DEBUG_ID = "DebugGui.debug";
-	
-	private static String host = "http://localhost:3333/";
+
+	private static String host = "http://www.jozsefmorrissey.com/";
 	private static String root = "DebugGui";
 	private static String id = "Default";
 
 	private boolean debug = false;
-	
+
 
 	public DebugGui(boolean debug) {
 		this.debug = debug;
 	}
-	
+
     public DebugGui(HttpServletRequest req) {
     	if (req.getHeader(DEBUG_ID) != null) {
     		debug = true;
@@ -59,7 +59,7 @@ public class DebugGui {
 	        }
     	}
     }
-	
+
 	public static void setHost(String host) {
 		DebugGui.host = host;
 	}
@@ -71,7 +71,7 @@ public class DebugGui {
 	public static void setId(String id) {
 		DebugGui.id = id;
 	}
-	
+
 	private String toJson(Object obj) {
 	      ObjectMapper mapper = new ObjectMapper();
 	      try
@@ -89,17 +89,17 @@ public class DebugGui {
 	      }
 	      return "{}";
 	}
-	
-	
-	
+
+
+
 	private String getUrl(String ext, String id, String group) {
 		return getUrl(ext, id) + "/" + group;
 	}
-	
+
 	private String getUrl(String ext, String id) {
 		return host + (host.endsWith("/") ? "" : "/") + ext + "/" + id;
 	}
-	
+
 	private class Link {
 		public String label;
 		public String url;
@@ -108,10 +108,10 @@ public class DebugGui {
 			this.url = url;
 		}
 		public String toString() {
-			return toJson(this); 
+			return toJson(this);
 		}
 	}
-	
+
 	private class Value {
 		public String key;
 		public String value;
@@ -120,12 +120,12 @@ public class DebugGui {
 			this.value = value;
 		}
 		public String toString() {
-			return toJson(this); 
+			return toJson(this);
 		}
 	}
-	
+
 	private class Exception {
-		public String id; 
+		public String id;
 		public String msg;
 		public String stacktrace;
 		public Exception(String id, String msg, String stacktrace) {
@@ -134,7 +134,7 @@ public class DebugGui {
 			this.stacktrace = stacktrace;
 		}
 		public String toString() {
-			return toJson(this); 
+			return toJson(this);
 		}
 	}
 
@@ -144,31 +144,31 @@ public class DebugGui {
 			this.log = log;
 		}
 		public String toString() {
-			return toJson(this); 
+			return toJson(this);
 		}
 	}
-	
+
 	private static void restPostCall(String uri, Object obj) {
 		try {
 			URL url = new URL(uri);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("POST");
 			con.setDoOutput(true);
-			con.setRequestProperty("Content-Type","application/json");  
-			
+			con.setRequestProperty("Content-Type","application/json");
+
 			byte[] outputInBytes = obj.toString().getBytes("UTF-8");
 			con.setRequestProperty("Content-Length", "" + Integer.toString(outputInBytes.length));
 			OutputStream os = con.getOutputStream();
-			os.write( outputInBytes );    
+			os.write( outputInBytes );
 			os.close();
-		
+
 			con.getResponseCode();
 			con.disconnect();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public DebugGui link(String group, String label, String url) {
 		if (!shouldDebug()) return this;
 		restPostCall(getUrl("link", getId(), getGroup(group)), new Link(label, url));
@@ -189,7 +189,7 @@ public class DebugGui {
 		restPostCall(getUrl("log", getId()), new Log(log));
 		return this;
 	}
-	
+
 	private String getId() {
 		return id;
 	}
@@ -201,7 +201,7 @@ public class DebugGui {
 	private boolean shouldDebug() {
 		return debug;
 	}
-	
+
     public static void addCookie(HttpServletResponse response) {
     	if (response != null) {
 		    Cookie cookie = new Cookie(DEBUG_ID, "true");
