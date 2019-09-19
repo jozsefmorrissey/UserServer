@@ -20,6 +20,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -104,7 +105,12 @@ public class Util {
 	   		R result = restTemplate.postForObject(uri, request, returnedClass);	    	
 		    return result;
 	    } catch (HttpStatusCodeException e) {
-	    	throw new RestResponseException(e.getResponseBodyAsString());
+	    	throw new RestClientResponseException(e.getMessage(), 
+	    				e.getRawStatusCode(), 
+	    				e.getStatusText(), 
+	    				e.getResponseHeaders(), 
+	    				e.getResponseBodyAsByteArray(), 
+	    				Charset.defaultCharset());
 	    }
 	}
 	

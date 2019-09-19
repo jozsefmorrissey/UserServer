@@ -18,7 +18,6 @@ import javax.mail.internet.MimeMessage;
 
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.exception.DataException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +27,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.ERROR_MSGS;
+import com.userSrvc.client.error.UUserUnauthAccessException;
 import com.userSrvc.client.services.PermissionSrvc;
 import com.userSrvc.client.services.UserSrvc;
 import com.userSrvc.client.util.GenUtils;
@@ -97,7 +97,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		}
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (dbUser == null) {
-			throw new DataException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, null);
+			throw new UUserUnauthAccessException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST);
 		}
 		if (dbUser.getToken() == null) {
 			setToken(dbUser);
@@ -105,7 +105,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		System.out.println("P:" + user.getPassword());
 		System.out.println("DBP:" + dbUser.getPassword());
 		if (!BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
-			throw new PropertyValueException(ERROR_MSGS.INVALID_PASSWORD, "user", "password");
+			throw new UUserUnauthAccessException(ERROR_MSGS.INVALID_PASSWORD);
 		}
 		
 		return dbUser;
