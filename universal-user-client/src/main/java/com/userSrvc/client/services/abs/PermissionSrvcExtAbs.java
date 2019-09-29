@@ -55,7 +55,7 @@ public abstract class PermissionSrvcExtAbs <U extends UUserAbs> implements Permi
 	@Override
 	public void grant(U to, List<Permission> permissions) throws Exception {
 		U from = getUserSrvc().authinticate();
-		U dbUser = getUserSrvc().get(from.getId());
+		U dbUser = getUserSrvc().get(from.getEmail());
 		Collection<ApplicationPermissionRequest<U>> permReqs = grantPermissions(dbUser, permissions, to);
 		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), permReqs, String.class, aopAuth.getHeaders());
 	}
@@ -69,7 +69,7 @@ public abstract class PermissionSrvcExtAbs <U extends UUserAbs> implements Permi
 
 	@Override
 	public void transfer(U from, U to, List<Permission> permissions) throws Exception {
-		U dbUser = getUserSrvc().get(from.getId());
+		U dbUser = getUserSrvc().get(from.getEmail());
 		Collection<ApplicationPermissionRequest<U>> transReqs = transferPermissions(dbUser, permissions, to);
 		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), transReqs, String.class, aopAuth.getHeaders());
 	}
@@ -77,7 +77,7 @@ public abstract class PermissionSrvcExtAbs <U extends UUserAbs> implements Permi
 	@Override
 	public void clone(U from, U to) throws Exception {
 		U admin = getUserSrvc().authinticate();
-		U dbUser = getUserSrvc().get(from.getId());
+		U dbUser = getUserSrvc().get(from.getEmail());
 		Collection<ApplicationPermissionRequest<U>> permReqs = clonePermissions(admin, get(dbUser), to);
 		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD_ALL), permReqs, String.class, aopAuth.getHeaders());
 	}

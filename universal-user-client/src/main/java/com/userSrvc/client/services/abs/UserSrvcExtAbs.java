@@ -124,12 +124,13 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	}
 
 
-	public List<U> get(Collection<Long> ids) throws RestResponseException {
-		List<Map> maps = Util.restPostCall(Util.getUri(URI.USER_ALL), ids, ArrayList.class,
+	public List<U> get(Collection<String> emails) throws RestResponseException {
+		List<Map> maps = Util.restPostCall(Util.getUri(URI.USER_ALL), emails, ArrayList.class,
 				getHeaders(aopAuth.getCurrentUser()));
 		List<U> srvcUsers = Util.convertMapListToObjects(maps, clazz);
 		
-		return mergeWithLocal(ids, srvcUsers);
+		
+		return mergeWithLocal(emails, srvcUsers);
 	}
 
 	public U get(long id) throws Exception {
@@ -179,11 +180,11 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	    return httpHeaders;
 	}
 	
-	private List<U> mergeWithLocal(Collection<Long> ids, List<U> srvcUsers) {
+	private List<U> mergeWithLocal(Collection<String> emails, List<U> srvcUsers) {
 		if (localRepo == null) {
 			return srvcUsers;
 		}
-		List<U> localUsers = localRepo.findAllById(ids);
+		List<U> localUsers = localRepo.findByEmailIn(emails);
 		for (U srvcUser : srvcUsers) {
 			boolean found = false;
 			for (U localUser : localUsers) {

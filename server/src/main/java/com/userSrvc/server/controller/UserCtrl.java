@@ -52,8 +52,8 @@ public class UserCtrl {
 	}
 
 	@PostMapping(URI.USER_ALL)
-	public List<UUserAbs> get(@RequestBody List<Long> ids) throws Exception {
-		return userSrvc.get(ids);
+	public List<UUserAbs> get(@RequestBody List<String> emails) throws Exception {
+		return userSrvc.get(emails);
 	}
 
 	@PostMapping(URI.USER_UPDATE)

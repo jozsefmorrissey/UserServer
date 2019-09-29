@@ -169,18 +169,6 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	}
 
 	@Override
-	public UUserAbs get(long id) throws PropertyValueException {
-		UUserAbs dbUser;
-		dbUser = (UUserAbs) userRepo.getOne(id);
-		if (dbUser == null) {
-			throw new PropertyValueException(ERROR_MSGS.INVALID_ID, "user", "email");
-		}
-		
-		setLists(dbUser);
-		return dbUser;
-	}
-	
-	@Override
 	public UUserAbs get(String email) throws PropertyValueException {
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(email);
 		if (dbUser == null) {
@@ -280,8 +268,8 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	}
 
 	@Override
-	public List<UUserAbs> get(Collection<Long> ids) {
-		List<UUserAbs> list = userRepo.findAllById(ids);
+	public List<UUserAbs> get(Collection<String> emails) {
+		List<UUserAbs> list = userRepo.findByEmailIn(emails);
 		setLists(list);
 		return list;
 	}

@@ -4,12 +4,10 @@ import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 
-import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.marker.Service;
-import com.userSrvc.client.util.DebugGui;
 
-public interface UserSrvc <U extends UUserAbs> extends Service<U> {
+public interface UserSrvc <U extends UUserAbs> extends Service<U, String> {
 	public U login() throws Exception;
 	public U get(String emailOid) throws Exception;
 	public U update(U user) throws Exception;

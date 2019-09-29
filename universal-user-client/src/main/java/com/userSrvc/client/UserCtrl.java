@@ -15,7 +15,7 @@ public class UserCtrl <U extends UUserAbs>{
 	@Autowired
 	UserSrvcExt<U> userSrvc;
 
-	@PostMapping("/get/{emailOid}")
+	@GetMapping("/get/{emailOid}")
 	public U get(@PathVariable String emailOid) throws Exception {
 		return userSrvc.get(emailOid);
 	}

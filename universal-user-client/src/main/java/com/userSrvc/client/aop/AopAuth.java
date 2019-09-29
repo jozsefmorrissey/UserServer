@@ -154,12 +154,12 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 		userInfoMap.get(MDC.get(REQUEST_ID)).state = RETURNING;
 		
 		RequestState rs = userInfoMap.get(MDC.get(REQUEST_ID));
-		Set<Long> userIds = new HashSet<Long>();
+		Set<String> userIds = new HashSet<String>();
 		List<U> users = new ArrayList<U>();
 		for (int i = 0; i < rs.objects.size(); i += 1) {
 			Object obj = rs.objects.get(i);
 			if (obj instanceof UUserAbs) {
-				userIds.add(((UUserAbs) obj).getId());
+				userIds.add(((UUserAbs) obj).getEmail());
 				users.add((U) obj);
 			}
 		}
