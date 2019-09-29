@@ -78,7 +78,7 @@ public abstract class AopSecure implements HasType {
 	}
 	
 	public boolean lockdown() {
-		clean();
+//		clean();
 		return true;
 	}
 	

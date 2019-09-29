@@ -36,7 +36,8 @@ public class UserCtrl {
 
 	@PostMapping(URI.USER_ADD)
 	public UUserAbs add(@RequestBody UUserAbs user) throws Exception {
-		return userSrvc.add(user);
+		user = userSrvc.add(user);
+		return user;
 	}
 
 	@GetMapping(URI.USER_LOGIN)
@@ -53,26 +54,31 @@ public class UserCtrl {
 
 	@PostMapping(URI.USER_ALL)
 	public List<UUserAbs> get(@RequestBody List<String> emails) throws Exception {
-		return userSrvc.get(emails);
+		List<UUserAbs> users = userSrvc.get(emails);
+		return users;
 	}
 
 	@PostMapping(URI.USER_UPDATE)
 	public void update(@RequestBody UUserAbs user) throws Exception {
 		userSrvc.update(user);
+		return;
 	}
 	
 	@GetMapping(URI.USER_AUTH)
 	public UUserAbs authinticate() throws Exception {
-		return userSrvc.authinticate();
+		UUserAbs user = userSrvc.authinticate();
+		return user;
 	}
 	
 	@GetMapping(URI.USER_UPDATE_PASSWORD)
 	public void updatePassword() throws Exception {
 		userSrvc.updatePassword();
+		return;
 	}
 
 	@PostMapping(URI.USER_RESET_PASSWORD)
 	public void resetPassword(@RequestBody String url) throws Exception {
 		userSrvc.resetPassword(url);
+		return;
 	}
 }

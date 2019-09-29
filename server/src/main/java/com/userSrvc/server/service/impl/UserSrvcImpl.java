@@ -2,6 +2,7 @@ package com.userSrvc.server.service.impl;
 
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ import com.userSrvc.client.services.PermissionSrvc;
 import com.userSrvc.client.services.UserSrvc;
 import com.userSrvc.client.util.GenUtils;
 import com.userSrvc.exceptions.StatisticallyImpossible;
+import com.userSrvc.server.entities.UUser;
 import com.userSrvc.server.repo.UserRepo;
 import com.userSrvc.server.service.UserPhotoSrvc;
 import com.userSrvc.server.utils.HtmlString;
@@ -99,6 +101,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		if (dbUser == null) {
 			throw new UUserUnauthAccessException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST);
 		}
+		dbUser = new UUser(dbUser);
 		if (dbUser.getToken() == null) {
 			setToken(dbUser);
 		}
@@ -119,7 +122,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		validateEmail(user);
 		UUserAbs u = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (u != null && user != null && user.getToken().equals(u.getToken())) {
-			return u;
+			return new UUser(u);
 		}
 		
 		throw new AccessDeniedException(ERROR_MSGS.INCORRECT_CREDENTIALS);
@@ -174,6 +177,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		if (dbUser == null) {
 			throw new PropertyValueException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST, "user", "email");
 		}
+		dbUser = new UUser(dbUser);
 
 		setLists(dbUser);
 		return dbUser;
@@ -217,6 +221,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		if(dbUser == null) {
 			throw new PropertyValueException(ERROR_MSGS.EMAIL_NOT_REGISTERED, "user", "email");
 		}
+		dbUser = new UUser(dbUser);
 
 		HashMap<String, Object> scope = new HashMap<String, Object>();
 		String token = setToken(dbUser);
@@ -264,14 +269,18 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		dbUser.merge(user);
 		dbUser.setId(id);
 		dbUser.setPassword(password);
-		return userRepo.save(dbUser);
+		return new UUser(userRepo.save(dbUser));
 	}
 
 	@Override
 	public List<UUserAbs> get(Collection<String> emails) {
-		List<UUserAbs> list = userRepo.findByEmailIn(emails);
-		setLists(list);
-		return list;
+		List<UUserAbs> dbList = userRepo.findByEmailIn(emails);
+		List<UUserAbs> safeList = new ArrayList<UUserAbs>();
+		for (UUserAbs user : dbList) {
+			safeList.add(new UUser(user));
+		}
+		setLists(safeList);
+		return safeList;
 	}
 	
 	@Override
