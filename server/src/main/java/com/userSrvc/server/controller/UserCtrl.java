@@ -59,9 +59,8 @@ public class UserCtrl {
 	}
 
 	@PostMapping(URI.USER_UPDATE)
-	public void update(@RequestBody UUserAbs user) throws Exception {
-		userSrvc.update(user);
-		return;
+	public UUserAbs update(@RequestBody UUserAbs user) throws Exception {
+		return userSrvc.update(user);
 	}
 	
 	@GetMapping(URI.USER_AUTH)

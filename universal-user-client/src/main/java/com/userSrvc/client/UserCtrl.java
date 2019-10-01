@@ -22,7 +22,7 @@ public class UserCtrl <U extends UUserAbs>{
 
 	@PostMapping("/update")
 	public void update(@RequestBody U user) throws Exception {
-		userSrvc.update(user);
+		userSrvc.updateSrvc(user);
 	}
 
 	@PostMapping("/add")

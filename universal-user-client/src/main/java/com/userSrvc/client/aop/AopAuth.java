@@ -125,26 +125,30 @@ public abstract class  AopAuth <U extends UUserAbs> extends ToJson {
 	public Object validateUser(JoinPoint joinPoint) {
 		
 		HttpServletRequest curRequest = getCurrentRequest();
+		DebugGui debugGui = new DebugGui(getCurrentRequest());
 		
 		String password = curRequest.getHeader(PASSWORD);
 		String token = curRequest.getHeader(TOKEN);
 		String email = curRequest.getHeader(EMAIL);
-
-		U user = (U) appContext.getBean("UUser");
-		user.setEmail(email);
-		user.setToken(token);
-		getState().user = user;
-		DebugGui debugGui = new DebugGui(getCurrentRequest());
-		getState().debugGui = debugGui;
-		
-		try {
-			user = getUserSrvc().authinticate(user);
-		} catch (Exception e) {
-			debugGui.exception("AopAuth", "Authinticate User", e);
+		if (email == null || email.equals("null")) {
+			System.out.println("UNKOWN USER!: " + curRequest.getRequestURL());
+			getState().user = null;
+		} else {
+			U user = (U) appContext.getBean("UUser");
+			user.setEmail(email);
+			user.setToken(token);
+			getState().user = user;
+			getState().debugGui = debugGui;
+			
+			try {
+				user = getUserSrvc().authinticate(user);
+			} catch (Exception e) {
+				debugGui.exception("AopAuth", "Authinticate User", e);
+			}
+			user.setPassword(password);
+			getState().user = user;
+			debugGui.value("AopAuth", "user", user);
 		}
-		user.setPassword(password);
-		getState().user = user;
-		debugGui.value("AopAuth", "user", user);
 		
 		return null;
 	}

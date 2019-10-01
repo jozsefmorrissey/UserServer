@@ -241,7 +241,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	private boolean validateEmail(String email) throws PropertyValueException {
 		if (!email.matches(".{1,}@.{1,}\\..{1,}")) {
 			throw new PropertyValueException(
-					ERROR_MSGS.EMAIL_INVALID_FORMAT, "user", "email");
+					ERROR_MSGS.EMAIL_INVALID_FORMAT + "(" + email + ")", "user", "email");
 		}
 		return true;
 	}
