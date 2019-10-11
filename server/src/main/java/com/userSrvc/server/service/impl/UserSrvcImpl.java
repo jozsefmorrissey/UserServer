@@ -69,18 +69,18 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashed);
 		System.out.println("H:" + hashed);
-		for (int i = 0; i < ADD_ATTEMPTS; i ++) {
-			user.setId(new Random().nextLong());
-			if (user.getId() != null) {
-				try {
+//		for (int i = 0; i < ADD_ATTEMPTS; i ++) {
+//			user.setId(new Random().nextLong());
+//			if (user.getId() != null) {
+//				try {
 					UUserAbs u = userRepo.save(user);
 					return u;
-				} catch (Exception e) {
-					System.out.println(e);
-				}
-			}
-		}
-		throw new StatisticallyImpossible("If you see this error there are far to many users on this system. Try again, sorry for the inconvienance.");
+//				} catch (Exception e) {
+//					System.out.println(e);
+//				}
+//			}
+//		}
+//		throw new StatisticallyImpossible("If you see this error there are far to many users on this system. Try again, sorry for the inconvienance.");
 	}
 	
 	private String setToken(UUserAbs user) {

@@ -8,9 +8,10 @@ import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.userSrvc.client.marker.Relation;
+import com.userSrvc.client.entities.Relation;
+import com.userSrvc.client.marker.RelationSrvc;
 
-public abstract class RelationAbs <T, I> implements Relation<Long, Long> {
+public abstract class RelationSrvcAbs <T, I> implements RelationSrvc<Long, Long> {
 	
 	public abstract JpaRepository<T, I> getRepo();
 	public abstract T create(Long primary, Long secondary);
@@ -58,13 +59,13 @@ public abstract class RelationAbs <T, I> implements Relation<Long, Long> {
 	}
 
 	@Override
-	public void deleteAll(Map<Long, Long> mappedIds) {
+	public void deleteAll(Collection<Relation<Long, Long>> mappedIds) {
 		List<T> compEmps = buildList(mappedIds);
 		getRepo().deleteAll(compEmps);
 	}
 
 	@Override
-	public void addAll(Map<Long, Long> mappedIds) {
+	public void addAll(Collection<Relation<Long, Long>> mappedIds) {
 		List<T> compEmps = buildList(mappedIds);
 		getRepo().saveAll(compEmps);
 	}
@@ -76,7 +77,15 @@ public abstract class RelationAbs <T, I> implements Relation<Long, Long> {
 		}
 		return companyFacilities;
 	}
-	
+
+	protected List<T> buildList(Collection<Relation<Long, Long>> mappedIds) {
+		List<T> companyFacilities = new ArrayList<T>();
+		for (Relation<Long, Long> rel : mappedIds) {
+			companyFacilities.add(create(rel.getPrimary(), rel.getSecondary()));
+		}
+		return companyFacilities;
+	}
+
 	protected List<T> buildCrosList(Collection<Long> primaryIds, Collection<Long> secondaryIds) {
 		List<T> companyFacilities = new ArrayList<T>();
 		for (Long secondaryId : secondaryIds) {

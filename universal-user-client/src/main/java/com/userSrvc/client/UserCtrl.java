@@ -21,13 +21,13 @@ public class UserCtrl <U extends UUserAbs>{
 	}
 
 	@PostMapping("/update")
-	public void update(@RequestBody U user) throws Exception {
-		userSrvc.updateSrvc(user);
+	public U update(@RequestBody U user) throws Exception {
+		return userSrvc.updateSrvc(user);
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody U user) throws Exception {
-		userSrvc.add(user);
+	public U add(@RequestBody U user) throws Exception {
+		return userSrvc.add(user);
 	}
 
 	@PostMapping("/authinticate")

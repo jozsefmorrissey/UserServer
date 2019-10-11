@@ -61,13 +61,17 @@ public class Util {
 		return e.getMessage().indexOf(text) > -1;
 	}
 	
+	public static <R> R restGetCall(String uri, Class<R> returnedClass) throws RestResponseException {
+		return restGetCall(uri, returnedClass, new HttpHeaders());
+	}
+	
 	public static <R> R restGetCall(String uri, Class<R> returnedClass,
 			MultiValueMap<String, String> headers) throws RestResponseException {
-		AopAuth.getBean().getCurrentDebugGui()
+/*		AopAuth.getBean().getCurrentDebugGui()
 		.value("utils.restPostCall." + callId, "uri", uri)
 		.value("utils.restPostCall." + callId, "returnedClass", returnedClass)
 		.value("utils.restPostCall." + callId, "headers", headers);
-
+*/
 		RestTemplate rt= new RestTemplate();
 	     
 	    HttpHeaders httpHeaders = new HttpHeaders();
@@ -83,16 +87,20 @@ public class Util {
 	    }
 	}
 	
+	public static <R> R restPostCall(String uri, Object obj, Class<R> returnedClass) throws RestResponseException {
+		return restPostCall(uri, obj, returnedClass, new HttpHeaders());
+	}
+	
 	private static int callId = 0;
 	public static <R> R restPostCall(String uri, Object obj, Class<R> returnedClass,
 			MultiValueMap<String, String> headers) throws RestResponseException {
 
-		AopAuth.getBean().getCurrentDebugGui()
+/*		AopAuth.getBean().getCurrentDebugGui()
 			.value("utils.restPostCall." + callId, "uri", uri)
 			.value("utils.restPostCall." + callId, "obj", obj)
 			.value("utils.restPostCall." + callId, "returnedClass", returnedClass)
 			.value("utils.restPostCall." + callId, "headers", headers);
-		
+*/		
 	    RestTemplate restTemplate = new RestTemplate();
 	    restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 	    

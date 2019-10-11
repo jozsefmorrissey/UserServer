@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
@@ -22,8 +21,6 @@ import com.userSrvc.client.util.Util;
 
 public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<U> {
 
-	Random rand = new Random();
-	
 	@Autowired
 	ApplicationContext appContext;
 	
@@ -76,7 +73,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 
 	@SuppressWarnings("unchecked")
 	public U get(String emailOid) throws RestResponseException {
-		if (emailOid.matches("^[0-9]*$") && getRepo() != null) {
+		if (emailOid.matches("^(-|)[0-9]*$") && getRepo() != null) {
 			return getRepo().getOne(Long.parseLong(emailOid));
 		}
 		U uu = Util.restGetCall(Util.getUri("/user/" + emailOid), clazz,

@@ -984,3 +984,7 @@ insert into UUSER_ABS (ID, FULLNAME, EMAIL) values (997, 'Carlyle Castangia', 'c
 insert into UUSER_ABS (ID, FULLNAME, EMAIL) values (998, 'Ricardo Waddilow', 'rwaddilowrp@wsj.com');
 insert into UUSER_ABS (ID, FULLNAME, EMAIL) values (999, 'Miner Bridgwater', 'mbridgwaterrq@phoca.cz');
 insert into UUSER_ABS (ID, FULLNAME, EMAIL) values (1000, 'Netty Alfonsetti', 'nalfonsettirr@networksolutions.com');
+
+insert into UUSER_ABS (ID, FULLNAME, EMAIL) values (1001, 'Gill Bates', 'macrohard@made.up');
+insert into UUSER_ABS (ID, FULLNAME, EMAIL) values (1002, 'Martha Homemaker', 'mom&pop@made.up');
+insert into UUSER_ABS (ID, FULLNAME, EMAIL) values (1003, 'Phoenix Hunter', 'bcb&g@made.up');
