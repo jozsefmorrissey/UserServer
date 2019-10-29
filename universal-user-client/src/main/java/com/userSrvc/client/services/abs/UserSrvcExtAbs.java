@@ -34,10 +34,16 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	UserBaseRepository<U> localRepo;
 	Class<U> clazz;
 	
-	private void mergeUsers(U local, U remote) {
-		long id = local.getId();
+	private void mergeLocal(U local, U remote) {
+		Long id = local.getId();
 		local.merge(remote);
 		local.setId(id);
+	}
+
+	private void mergeRemote(U remote, U local) {
+		Long id = local.getId();
+		remote.merge(local);
+		remote.setId(id);
 	}
 	
 	private U updateLocal(U remote) {
@@ -46,7 +52,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 			if (local == null) {
 				local = localRepo.saveAndFlush(remote);
 			}
-			mergeUsers(local, remote);
+			mergeLocal(local, remote);
 			try {
 				localRepo.saveAndFlush(local);
 			} catch(Exception e2) {
@@ -74,7 +80,12 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	@SuppressWarnings("unchecked")
 	public U get(String emailOid) throws RestResponseException {
 		if (emailOid.matches("^(-|)[0-9]*$") && getRepo() != null) {
-			return getRepo().getOne(Long.parseLong(emailOid));
+			U localUser = getRepo().getOne(Long.parseLong(emailOid));
+			if (localUser != null) {
+				emailOid = localUser.getEmail();
+			} else {
+				return null;
+			}
 		}
 		U uu = Util.restGetCall(Util.getUri("/user/" + emailOid), clazz,
 				getHeaders(aopAuth.getCurrentUser()));
@@ -85,7 +96,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	public U updateSrvc(U user) throws RestResponseException {
 		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_UPDATE), user, clazz,
 				getHeaders(aopAuth.getCurrentUser()));
-
+		mergeRemote(srvcUser, user);
 		return updateLocal(srvcUser);
 	}
 
@@ -93,11 +104,8 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_ADD), user, clazz,
 				getHeaders(aopAuth.getCurrentUser()));
 
-		user.setId(srvcUser.getId());
-		localRepo.saveAndFlush(user);
-		
-		user.merge(srvcUser);
-		return updateLocal(user);
+		mergeLocal(user, srvcUser);
+		return localRepo.saveAndFlush(user);
 	}
 
 	public U authinticate(U user) throws RestResponseException {
@@ -185,8 +193,8 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 		for (U srvcUser : srvcUsers) {
 			boolean found = false;
 			for (U localUser : localUsers) {
-				if (srvcUser.getId().equals(localUser.getId())) {
-					mergeUsers(localUser, srvcUser);
+				if (srvcUser.getEmail().equals(localUser.getEmail())) {
+					mergeLocal(localUser, srvcUser);
 					found = true;
 				}
 			}

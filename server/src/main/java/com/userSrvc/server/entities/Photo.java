@@ -24,10 +24,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class Photo implements Comparable {
 	@Id
-	private long id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
-	@Column(name = "USER_ID")
-	private Long objectId;
+	@Column
+	private Long userId;
 
 	@Column
 	private Long appUserId;

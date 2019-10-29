@@ -4,10 +4,8 @@ import java.nio.file.AccessDeniedException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
-import java.util.Random;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -31,12 +29,10 @@ import com.userSrvc.client.error.ERROR_MSGS;
 import com.userSrvc.client.error.UUserUnauthAccessException;
 import com.userSrvc.client.services.PermissionSrvc;
 import com.userSrvc.client.services.UserSrvc;
-import com.userSrvc.client.util.GenUtils;
-import com.userSrvc.exceptions.StatisticallyImpossible;
+import com.userSrvc.client.util.Util;
 import com.userSrvc.server.entities.UUser;
 import com.userSrvc.server.repo.UserRepo;
 import com.userSrvc.server.service.UserPhotoSrvc;
-import com.userSrvc.server.utils.HtmlString;
 
 @Service
 public class UserSrvcImpl implements UserSrvc<UUserAbs> {
@@ -69,24 +65,17 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashed);
 		System.out.println("H:" + hashed);
-//		for (int i = 0; i < ADD_ATTEMPTS; i ++) {
-//			user.setId(new Random().nextLong());
-//			if (user.getId() != null) {
-//				try {
-					UUserAbs u = userRepo.save(user);
-					return u;
-//				} catch (Exception e) {
-//					System.out.println(e);
-//				}
-//			}
-//		}
-//		throw new StatisticallyImpossible("If you see this error there are far to many users on this system. Try again, sorry for the inconvienance.");
+		UUserAbs u = userRepo.save(user);
+
+		userPhotoSrvc.updateAll(user.getImageUrls(), u.getId(), 1l);
+		return u;
 	}
 	
 	private String setToken(UUserAbs user) {
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
-		String token = GenUtils.randStringSecure(9);
+		String token = Util.randomString(9, "[a-zA-Z0-9]", ".*");
 		dbUser.setToken(token);
+		user.setToken(token);
 		userRepo.save(dbUser);
 		return token;
 	}
@@ -111,6 +100,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 			throw new UUserUnauthAccessException(ERROR_MSGS.INVALID_PASSWORD);
 		}
 		
+		setLists(dbUser);
 		return dbUser;
 	}
 
@@ -122,7 +112,9 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		validateEmail(user);
 		UUserAbs u = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (u != null && user != null && user.getToken().equals(u.getToken())) {
-			return new UUser(u);
+			UUserAbs retUser = new UUser(u);
+			setLists(retUser);
+			return retUser;
 		}
 		
 		throw new AccessDeniedException(ERROR_MSGS.INCORRECT_CREDENTIALS);
@@ -223,15 +215,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		}
 		dbUser = new UUser(dbUser);
 
-		HashMap<String, Object> scope = new HashMap<String, Object>();
-		String token = setToken(dbUser);
-		String email = dbUser.getEmail();
-		scope.put("name", dbUser.getFullname());
-		scope.put("url", url + email + "/" + token);
-		scope.put("token", token);
-		HtmlString htmlString = new HtmlString(scope, "./src/main/resources/static/emailTemplates/password-reset.html");
 		EmailServiceImpl.resetPassword(dbUser, url);
-//		sendEmail(email, "Password Reset", htmlString.toString());
 	}
 	
 	private boolean validateEmail(UUserAbs user) throws PropertyValueException {
@@ -264,12 +248,16 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		aopAuth.requriredUser();
 		UUserAbs dbUser = userRepo.getByEmail(user.getEmail());
 		String password = dbUser.getPassword();
-		long id = user.getId();
+		long id = dbUser.getId();
 
 		dbUser.merge(user);
 		dbUser.setId(id);
 		dbUser.setPassword(password);
-		return new UUser(userRepo.save(dbUser));
+		userPhotoSrvc.updateAll(user.getImageUrls(), dbUser.getId(), 1l);
+		
+		UUserAbs retUser = new UUser(userRepo.saveAndFlush(dbUser));
+		setLists(dbUser);
+		return retUser;
 	}
 
 	@Override

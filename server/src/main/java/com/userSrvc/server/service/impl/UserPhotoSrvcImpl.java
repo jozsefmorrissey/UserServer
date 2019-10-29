@@ -3,6 +3,8 @@ package com.userSrvc.server.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class UserPhotoSrvcImpl implements UserPhotoSrvc {
 	UserPhotoRepo userPhotoRepo;
 
 	public List<Photo> getPhotos(Long userId, Long appId) {
-		List<Photo> photos =  userPhotoRepo.getByObjectIdAndAppUserIdOrderByPosition(userId, appId);
+		List<Photo> photos =  userPhotoRepo.getByUserIdAndAppUserIdOrderByPosition(userId, appId);
 		return photos;
 	}
 
@@ -48,5 +50,17 @@ public class UserPhotoSrvcImpl implements UserPhotoSrvc {
 	@Override
 	public void update(List<Photo> userPhoto) {
 		userPhotoRepo.saveAll(userPhoto);
+	}
+
+	@Override
+	@Transactional
+	public void updateAll(List<String> photoUrls, long userId, long appUserId) {
+		
+		List<Photo> photos = new ArrayList<Photo>();
+		for (short index = 0; index < photoUrls.size(); index += 1) {
+			photos.add(new Photo(null, userId, appUserId, index, photoUrls.get(index)));
+		}
+		userPhotoRepo.deleteByUserIdAndAppUserId(userId, appUserId);
+		update(photos);
 	}
 }

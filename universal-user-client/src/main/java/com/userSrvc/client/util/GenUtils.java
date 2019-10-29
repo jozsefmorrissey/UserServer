@@ -18,7 +18,7 @@ public class GenUtils {
 		byte bytes[] = new byte[length];
 		random.nextBytes(bytes);
 		String token = new String(bytes);
-		return URLEncoder.encode(token);
+		return token;
 	}
 
 	public static String getPassword(String identifier, String token, String port) {

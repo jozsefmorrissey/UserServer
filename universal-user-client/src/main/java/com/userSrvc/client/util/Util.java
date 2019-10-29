@@ -34,7 +34,15 @@ public class Util {
 
 	public static void main(String...args) throws IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 	}
-		
+	
+	public static <T> T notNull(T...objects) {
+		for (T obj : objects) {
+			if (obj != null) {
+				return obj;
+			}
+		}
+		return null;
+	}
 	
 	public static final String getUri(String endpoint) {
 		return SrvcProps.getJsonMap().get("serviceRootUrl") + endpoint;

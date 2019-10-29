@@ -1,6 +1,5 @@
 package com.userSrvc.server.service;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.userSrvc.server.entities.Photo;
@@ -12,4 +11,5 @@ public interface UserPhotoSrvc {
 	
 	public void update(Photo userPhoto);
 	public void update(List<Photo> userPhoto);
+	public void updateAll(List<String> photoUrls, long userId, long appUserId);
 }
