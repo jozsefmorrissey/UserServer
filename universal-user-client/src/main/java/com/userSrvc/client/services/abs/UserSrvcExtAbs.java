@@ -47,8 +47,18 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	}
 	
 	private U updateLocal(U remote) {
+		return updateLocal(remote, false);
+	}
+	
+	private U updateLocal(U remote, boolean isUpdate) {
 		if (localRepo != null) {
-			U local = localRepo.getByEmail(remote.getEmail());
+			U local;
+			if (isUpdate) {
+				U loggedInUser = aopAuth.getCurrentUser();
+				local = localRepo.getByEmail(loggedInUser.getEmail());
+			} else {
+				local = localRepo.getByEmail(remote.getEmail());
+			}
 			if (local == null) {
 				local = localRepo.saveAndFlush(remote);
 			}
@@ -97,7 +107,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 		U srvcUser = Util.restPostCall(Util.getUri(URI.USER_UPDATE), user, clazz,
 				getHeaders(aopAuth.getCurrentUser()));
 		mergeRemote(srvcUser, user);
-		return updateLocal(srvcUser);
+		return updateLocal(srvcUser, true);
 	}
 
 	public U add(U user) throws RestResponseException {

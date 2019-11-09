@@ -244,9 +244,9 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	}
 
 	@Override
-	public UUserAbs update(UUserAbs user) throws AccessDeniedException {
-		aopAuth.requriredUser();
-		UUserAbs dbUser = userRepo.getByEmail(user.getEmail());
+	public UUserAbs update(UUserAbs user) throws Exception {
+		UUserAbs loggedInUser = login();
+		UUserAbs dbUser = userRepo.getByEmail(loggedInUser.getEmail());
 		String password = dbUser.getPassword();
 		long id = dbUser.getId();
 
