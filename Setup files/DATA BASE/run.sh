@@ -22,6 +22,7 @@ array[user]=${flags[user]}
 array[password]=${flags[password]}
 array[host]=${flags[host]}
 array[database]=${flags[database]}
+array[appPassword]=${flags[appPassword]}
 
 mkdir -p ./sql 2</dev/null
 cat ./${flags[type]}/*.sql | replace -array array > ./sql/temp.sql

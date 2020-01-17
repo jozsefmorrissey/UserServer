@@ -1,0 +1,28 @@
+
+.remove-btn {
+    border-radius: 50pt;
+    font-weight: bolder;
+    color: black;
+    background-color: red;
+    padding: .5pt 4pt;
+    float: left;
+}
+
+.new-key-btn {
+    float: left;
+    margin-right: 20pt;
+}
+
+.col-5 {
+	padding: 1pt;
+}
+
+#raw-json {
+	height: 80vh;
+}
+
+.number-input {
+    max-width: 100px;
+    margin: 0;
+    display: inline-block;
+}

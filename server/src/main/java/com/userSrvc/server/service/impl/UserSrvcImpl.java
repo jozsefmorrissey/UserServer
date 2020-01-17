@@ -24,25 +24,28 @@ import org.springframework.stereotype.Service;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.userSrvc.client.aop.AopAuth;
+import com.userSrvc.client.entities.ConnectionState;
 import com.userSrvc.client.entities.UUserAbs;
+import com.userSrvc.client.entities.UserAccessToken;
 import com.userSrvc.client.error.ERROR_MSGS;
 import com.userSrvc.client.error.UUserUnauthAccessException;
 import com.userSrvc.client.services.PermissionSrvc;
+import com.userSrvc.client.services.TokenSrvc;
 import com.userSrvc.client.services.UserSrvc;
-import com.userSrvc.client.util.Util;
 import com.userSrvc.server.entities.UUser;
 import com.userSrvc.server.repo.UserRepo;
 import com.userSrvc.server.service.UserPhotoSrvc;
 
 @Service
 public class UserSrvcImpl implements UserSrvc<UUserAbs> {
-	private static final short ADD_ATTEMPTS = 3;
-
 	@Autowired
-	AopAuth<UUserAbs> aopAuth;
+	AopAuth<UUserAbs, ?> aopAuth;
 	
 	@Autowired
 	UserPhotoSrvc userPhotoSrvc;
+	
+	@Autowired
+	TokenSrvc tokenSrvc;
 
 	@Autowired
 	UserRepo userRepo;
@@ -70,54 +73,49 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		userPhotoSrvc.updateAll(user.getImageUrls(), u.getId(), 1l);
 		return u;
 	}
-	
-	private String setToken(UUserAbs user) {
-		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
-		String token = Util.randomString(9, "[a-zA-Z0-9]", ".*");
-		dbUser.setToken(token);
-		user.setToken(token);
-		userRepo.save(dbUser);
-		return token;
-	}
 
 	@Override
 	public UUserAbs login() throws Exception {
-		UUserAbs user = aopAuth.getCurrentUser();
+		return login(aopAuth.getCurrentUser());
+	}
+
+	@Override
+	public UUserAbs login(UUserAbs user) throws Exception {
 		if (user == null) {
-			throw new PropertyValueException(ERROR_MSGS.INCORRECT_CREDENTIALS, "user", "password");
+			throw new PropertyValueException(ERROR_MSGS.INCORRECT_APP_CREDENTIALS, "user", "password");
 		}
+		validateEmail(user);
 		UUserAbs dbUser = (UUserAbs) userRepo.getByEmail(user.getEmail());
 		if (dbUser == null) {
 			throw new UUserUnauthAccessException(ERROR_MSGS.EMAIL_DOES_NOT_EXIST);
 		}
-		dbUser = new UUser(dbUser);
-		if (dbUser.getToken() == null) {
-			setToken(dbUser);
-		}
-		System.out.println("P:" + user.getPassword());
-		System.out.println("DBP:" + dbUser.getPassword());
+
 		if (!BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
 			throw new UUserUnauthAccessException(ERROR_MSGS.INVALID_PASSWORD);
 		}
-		
-		setLists(dbUser);
-		return dbUser;
+
+		UUserAbs retUser = new UUser(dbUser);
+		tokenSrvc.generateToken(retUser);
+		setLists(retUser);
+		aopAuth.setCurrentUser(retUser);
+		return retUser;
 	}
 
 	private UUserAbs authinticate(UUserAbs user, boolean external) throws AccessDeniedException {
 		if (user.getToken() == null) {
-			try { user = login(); } catch (Exception e) {}
-			throw new AccessDeniedException(ERROR_MSGS.NO_TOKEN_PROVIDED);
-		}
-		validateEmail(user);
-		UUserAbs u = (UUserAbs) userRepo.getByEmail(user.getEmail());
-		if (u != null && user != null && user.getToken().equals(u.getToken())) {
-			UUserAbs retUser = new UUser(u);
-			setLists(retUser);
-			return retUser;
+			try { 
+				user = login(); 
+			} catch (Exception e) {
+				throw new AccessDeniedException(ERROR_MSGS.NO_TOKEN_PROVIDED);
+			}
 		}
 		
-		throw new AccessDeniedException(ERROR_MSGS.INCORRECT_CREDENTIALS);
+		UUserAbs u = (UUserAbs) userRepo.getOne(user.getId());
+		
+		tokenSrvc.validateToken(u);
+		UUserAbs retUser = new UUser(u);
+		setLists(retUser);
+		return retUser;
 	}
 
 	public UUserAbs authinticate(UUserAbs user) throws AccessDeniedException {
@@ -193,7 +191,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 		validatePassword(user);
 		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		dbUser.setPassword(hashed);
-		setToken(dbUser);
+		tokenSrvc.generateToken(dbUser);
 		userRepo.save(dbUser);
 	}
 
@@ -236,7 +234,7 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	}
 	
 	private boolean validateUsername(UUserAbs user) throws PropertyValueException {
-		String name = user.getFullname();
+//		String name = user.getFullname();
 //		if (name == null || name.equals("")) {
 //			throw new PropertyValueException (ERROR_MSGS.USERNAME_NOT_DEFINED, "user", "username");
 //		}
@@ -285,9 +283,10 @@ public class UserSrvcImpl implements UserSrvc<UUserAbs> {
 	public HttpHeaders getHeaders(UUserAbs user) {
 		HttpHeaders httpHeaders = new HttpHeaders();
 	    if (user != null) {
-		    httpHeaders.add(AopAuth.EMAIL, "" + user.getEmail());
-		    httpHeaders.add(AopAuth.PASSWORD, user.getPassword());
-		    httpHeaders.add(AopAuth.TOKEN, user.getToken());
+		    httpHeaders.add(ConnectionState.EMAIL, "" + user.getEmail());
+		    httpHeaders.add(ConnectionState.PASSWORD, user.getPassword());
+		    httpHeaders.add(ConnectionState.TOKEN, user.getToken().getToken());
+		    httpHeaders.add(ConnectionState.DEVICE_IDENTIFIER, user.getToken().getDeviceIdentifier());
 	    }
 	    return httpHeaders;
 	}

@@ -1,0 +1,31 @@
+.center {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+}
+
+.auto-margin {
+	margin:auto;
+}
+
+html { font-size: 1rem; }
+
+@media(min-width: 767) {
+	.radio-label {
+		font-size: .80rem;
+	}
+}
+
+@media (min-width: 992px) {
+    html, a, b, label { font-size: 1.25rem; }
+	.radio-label {
+		font-size: .90rem;
+	}
+}
+@media (min-width: 1200px) {
+    html, a, b, label { font-size: 1.25rem; }
+
+	.radio-label {
+		font-size: 1.1rem;
+	}
+}

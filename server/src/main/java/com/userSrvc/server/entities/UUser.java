@@ -9,6 +9,7 @@ import org.springframework.web.context.annotation.ApplicationScope;
 import com.userSrvc.client.entities.UUserAbs;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -20,6 +21,7 @@ import lombok.Data;
 @Table
 @ManagedBean
 @ApplicationScope
+@EqualsAndHashCode(callSuper=true)
 @Data
 public class UUser extends UUserAbs {
 

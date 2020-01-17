@@ -12,6 +12,7 @@ propFile=../../server/src/main/resources/application.properties
 host=$(getValue host $propFile)
 database=$(getValue database $propFile)
 rootPassword=$(pst value system mysql)
+appPassword=$(pst remote -config usvc -key app-access-key)
 
 if [ -z $user ]
 then
@@ -22,4 +23,5 @@ fi
 
 echo -e "user $user\npassword $password"
 ./run.sh -type mySql -host $host -database $database -user $user \
-          -password $password -rootPassword $rootPassword  $(boolStr) $(flagStr)
+          -password $password -rootPassword $rootPassword \
+          -appPassword $appPassword $(boolStr) $(flagStr)

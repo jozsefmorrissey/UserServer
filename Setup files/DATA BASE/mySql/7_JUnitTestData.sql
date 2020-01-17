@@ -2,6 +2,12 @@
 -- ==========================  JUnit Test Data  =====================--
 INSERT INTO UUSER_ABS (ID,FULLNAME,EMAIL,TOKEN) VALUES (-1,'ADMIN','jozsef.morrissey@yahoo.com','[B@d077e31');
 
+INSERT INTO APP (ID, ACCESS_KEY, NAME) VALUES (1, '${appPassword}', 'USVC_SERVER');
+INSERT INTO APP (ID, ACCESS_KEY, NAME) VALUES (-1, 'password', 'Defult_App');
+INSERT INTO AUTHORIZED_APP_USER (APP_ID, USER_ID) VALUES (1, -1);
+
+INSERT INTO RULE (ID, APP_ID, ENDPOINT_REG_EXP) VALUES (1, 1, ".*");
+
 INSERT INTO UUSER_ABS (ID,FULLNAME,EMAIL,TOKEN) VALUES (1,'Jozsef Morrissey','jozsef.morrissey@gmail.com','[B@d077e31');
 INSERT INTO UUSER_ABS (ID,FULLNAME,EMAIL,TOKEN) VALUES (2,'Jerad Morrissey','red3091@gmail.com','[B@d077e31');
 INSERT INTO UUSER_ABS (ID,FULLNAME,EMAIL,TOKEN) VALUES (3,'Victor You Cant Handle This Quintanilla','vict.qp@gmail.com','[B@d077e31');

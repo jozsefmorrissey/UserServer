@@ -1,4 +1,4 @@
-package com.userSrvc.server.converter;
+package com.userSrvc.client.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

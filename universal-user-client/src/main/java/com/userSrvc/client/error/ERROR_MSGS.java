@@ -10,7 +10,17 @@ public interface ERROR_MSGS {
 	
 	String INVALID_PASSWORD = "Invalid password";
 	String NO_TOKEN_PROVIDED = "No user token provided";
-	String INCORRECT_CREDENTIALS = "Incorrect user credentials";
+	String INCORRECT_USER_CREDENTIALS = "Incorrect user credentials";
+	String INCORRECT_APP_CREDENTIALS = "Incorrect app credentials";
 	
 	String USERNAME_NOT_DEFINED = "Username must be defined";
+	
+	String BYPASS_CREDENTIAL_ERROR = "This error can be bypassed by setting "
+			+ "uu.failon.invalid.credentials to false. Only do so for debugging"
+			+ "and testing purposes.";
+	
+	public default String multiMessage(String...msgs) {
+		return String.join(": ", msgs);
+	}
+	
 }

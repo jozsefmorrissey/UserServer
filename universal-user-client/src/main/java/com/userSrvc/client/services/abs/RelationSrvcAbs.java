@@ -71,28 +71,28 @@ public abstract class RelationSrvcAbs <T, I> implements RelationSrvc<Long, Long>
 	}
 
 	protected List<T> buildList(Map<Long, Long> mappedIds) {
-		List<T> companyFacilities = new ArrayList<T>();
+		List<T> relations = new ArrayList<T>();
 		for (Long primaryId : mappedIds.keySet()) {
-			companyFacilities.add(create(primaryId, mappedIds.get(primaryId)));
+			relations.add(create(primaryId, mappedIds.get(primaryId)));
 		}
-		return companyFacilities;
+		return relations;
 	}
 
 	protected List<T> buildList(Collection<Relation<Long, Long>> mappedIds) {
-		List<T> companyFacilities = new ArrayList<T>();
+		List<T> relations = new ArrayList<T>();
 		for (Relation<Long, Long> rel : mappedIds) {
-			companyFacilities.add(create(rel.getPrimary(), rel.getSecondary()));
+			relations.add(create(rel.getPrimary(), rel.getSecondary()));
 		}
-		return companyFacilities;
+		return relations;
 	}
 
 	protected List<T> buildCrosList(Collection<Long> primaryIds, Collection<Long> secondaryIds) {
-		List<T> companyFacilities = new ArrayList<T>();
+		List<T> relations = new ArrayList<T>();
 		for (Long secondaryId : secondaryIds) {
 			for (Long primaryId : primaryIds) {
-				companyFacilities.add(create(primaryId, secondaryId));
+				relations.add(create(primaryId, secondaryId));
 			}
 		}
-		return companyFacilities;
+		return relations;
 	}
 }

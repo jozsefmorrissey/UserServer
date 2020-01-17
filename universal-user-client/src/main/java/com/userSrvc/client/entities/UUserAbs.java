@@ -15,8 +15,10 @@ import javax.persistence.Transient;
 import org.springframework.web.context.annotation.ApplicationScope;
 
 import com.userSrvc.client.aop.AopSecure;
+import com.userSrvc.client.marker.HasToken;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * TODO: Implement a description(About Me) field
@@ -27,9 +29,10 @@ import lombok.Data;
 @Entity
 @ManagedBean
 @ApplicationScope
+@EqualsAndHashCode(callSuper=false)
 @Data
 @Inheritance
-public class UUserAbs extends AopSecure implements Comparable {
+public class UUserAbs extends AopSecure implements Comparable<UUserAbs>, HasToken<UserAccessToken> {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -41,10 +44,10 @@ public class UUserAbs extends AopSecure implements Comparable {
 	private String email;
 	
 	@Column
-	private String token;
-
-	@Column
 	private String password;
+
+	@Transient
+	private UserAccessToken token;
 	
 	@Transient
 	private List<String> imageUrls;
@@ -90,9 +93,7 @@ public class UUserAbs extends AopSecure implements Comparable {
 		int size = localUsers.size();
 		int srvcIndex = 0;
 		for (int index = 0; index < size; index += 1) {
-			int next = index > size - 1 ? index : size - 1;
 			UUserAbs local = localUsers.get(index);
-			UUserAbs nextLocal = localUsers.get(next);
 			UUserAbs srvc = srvcUsers.get(srvcIndex);
 			while (!srvc.getId().equals(local.getId()) && local.getId() < srvc.getId()) {
 				srvcIndex += 1;
@@ -128,7 +129,7 @@ public class UUserAbs extends AopSecure implements Comparable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(UUserAbs o) {
 		if (!(o instanceof UUserAbs)) {
 			return -1;
 		}
@@ -151,6 +152,10 @@ public class UUserAbs extends AopSecure implements Comparable {
 	@Override
 	public String getObjectType() {
 		return "User";
+	}
+	@Override
+	public UserAccessToken emptyToken() {
+		return new UserAccessToken();
 	}
 	
 }

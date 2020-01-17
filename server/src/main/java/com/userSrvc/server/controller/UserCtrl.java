@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +33,7 @@ public class UserCtrl {
 	AES aes;
 
 	@Autowired
-	AopAuth<?> aopAuth;
+	AopAuth<?, ?> aopAuth;
 
 	@PostMapping(URI.USER_ADD)
 	public UUserAbs add(@RequestBody UUserAbs user) throws Exception {
@@ -42,13 +43,17 @@ public class UserCtrl {
 
 	@GetMapping(URI.USER_LOGIN)
 	public UUserAbs login() throws Exception {
-		UUserAbs user = userSrvc.login();
-		return user;
+		return aopAuth.getCurrentUser();
 	}
 
-	@GetMapping(URI.USER_EMAIL)
-	public UUserAbs get(@PathVariable String email) throws NumberFormatException, Exception {
-		UUserAbs user = userSrvc.get(email);
+	@PostMapping(URI.USER_LOGIN)
+	public UUserAbs login(@ModelAttribute("user") UUserAbs user) throws Exception {
+		return userSrvc.login(user);
+	}
+
+	@GetMapping(URI.USER_EMAIL_OR_ID)
+	public UUserAbs get(@PathVariable String emailORid) throws NumberFormatException, Exception {
+		UUserAbs user = userSrvc.get(emailORid);
 		return user;
 	}
 
@@ -63,10 +68,9 @@ public class UserCtrl {
 		return userSrvc.update(user);
 	}
 	
-	@GetMapping(URI.USER_AUTH)
+	@GetMapping(URI.USER_AUTHINTICATE)
 	public UUserAbs authinticate() throws Exception {
-		UUserAbs user = userSrvc.authinticate();
-		return user;
+		return aopAuth.getCurrentUser();
 	}
 	
 	@GetMapping(URI.USER_UPDATE_PASSWORD)

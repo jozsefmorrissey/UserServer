@@ -1,4 +1,4 @@
-package com.userSrvc.server.converter;
+package com.userSrvc.client.converter;
 
 import java.util.Arrays;
 

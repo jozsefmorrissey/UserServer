@@ -1,0 +1,49 @@
+.col-sm-1 {
+	padding: 0;
+}
+
+@media (min-width: 824px) {
+  .disapear-on-mobile {
+  	display: block;
+  }
+}
+
+
+@media (min-width: 420px) {
+  .disapear-on-mobile {
+	display:none;
+  }
+
+  .row {
+  	padding-bottom: 25pt;
+  }
+  
+  .form-control {
+	width: 20%;
+    margin: 0;
+    display: inline-block;
+  }
+}
+
+@media (max-width: 767px) {
+  .field-ctn {
+    margin: auto;
+	width: fit-content;
+  }
+}
+
+.input-ctn {
+    text-align: left;
+}
+
+.field-ctn {
+	font-size: .8rem;
+}
+
+.field-ctn > div {
+    height: 10pt;
+}
+
+.scope-radio {
+	height: auto;
+}

@@ -45,7 +45,7 @@ public class EmailServiceImpl {
 	
 	public static String resetPassword(UUserAbs user, String url) throws UnirestException {
 		HashMap<String, Object> scope = new HashMap<String, Object>();
-		String token = user.getToken();
+		String token = user.getToken().getToken();
 		String email = user.getEmail();
 		scope.put("name", user.getFullname());
 		url += (url.endsWith("/") ? "" : "/") + URLEncoder.encode(user.getEmail()) + "/" + URLEncoder.encode(token);

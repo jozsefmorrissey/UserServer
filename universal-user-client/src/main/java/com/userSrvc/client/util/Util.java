@@ -1,5 +1,6 @@
 package com.userSrvc.client.util;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.Random;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,14 +26,20 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.userSrvc.client.aop.AopAuth;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.services.SrvcProps;
 
 @Component
 public class Util {
 	private final static ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+	private final static Gson gson = new Gson();
 
 	public static void main(String...args) throws IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 	}
@@ -99,7 +108,6 @@ public class Util {
 		return restPostCall(uri, obj, returnedClass, new HttpHeaders());
 	}
 	
-	private static int callId = 0;
 	public static <R> R restPostCall(String uri, Object obj, Class<R> returnedClass,
 			MultiValueMap<String, String> headers) throws RestResponseException {
 
@@ -134,12 +142,54 @@ public class Util {
 		return (obj1 != null && obj1.equals(obj2)) || (obj1 == null && obj2 == null);
 	}
 	
-	public static <U> List<U> convertMapListToObjects(List<Map> maps, Class<U> clazz) {
+	public static <U> List<U> convertMapListToObjects(List<Map<?,?>> maps, Class<U> clazz) {
 		List<U> list = new ArrayList<U>();
-		for (Map map : maps) {
+		for (Map<?,?> map : maps) {
 			list.add(mapper.convertValue(map, clazz));
 		}
 		return list;
 	}
 
+	public static String toJson(Object obj) {
+	      ObjectMapper mapper = new ObjectMapper();
+	      try
+	      {
+	         return mapper.writeValueAsString(obj);
+	      } catch (JsonGenerationException e)
+	      {
+	         e.printStackTrace();
+	      } catch (JsonMappingException e)
+	      {
+	         e.printStackTrace();
+	      } catch (IOException e)
+	      {
+	         e.printStackTrace();
+	      }
+	      return "{}";
+	}
+	
+	public static JsonObject toJsonObj(String jsonStr) {
+		return gson.fromJson(jsonStr, JsonObject.class);
+	}
+	
+	public static Cookie getCookie(String name, HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals(name)) {
+					return cookie;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static Boolean strExists(String needle, JsonArray jsonArray) {
+		for (JsonElement jsonElement : jsonArray) {
+			if (notNullAndEqualOrBothNull(jsonElement.getAsString(), needle)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

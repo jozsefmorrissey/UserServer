@@ -122,13 +122,13 @@ public abstract class ClientTest
 		} catch (RestResponseException e) {
 			assertTrue(false);
 		}
-    	user.setToken(invalidToken);
+//    	user.setToken(invalidToken);
     	try {
 			getUserSrvcExt().authinticate();
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
-					ERROR_MSGS.INCORRECT_CREDENTIALS));
+					ERROR_MSGS.INCORRECT_APP_CREDENTIALS));
 		}
     }
     
@@ -167,10 +167,10 @@ public abstract class ClientTest
     }
     
     public void saveValidToken(UUserAbs user) {
-    	this.validTokens.put(user.getEmail(), user.getToken());
+//    	this.validTokens.put(user.getEmail(), user.getToken());
     }
     
     public void setValidToken(UUserAbs user) {
-    	user.setToken(getValidToken(user));
+//    	user.setToken(getValidToken(user));
     }
 }

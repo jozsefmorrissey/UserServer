@@ -1,6 +1,5 @@
 package com.userSrvc.client.util;
 
-import java.net.URLEncoder;
 import java.security.SecureRandom;
 
 import com.goebl.david.Response;

@@ -11,8 +11,6 @@ import org.hibernate.exception.DataException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.userSrvc.client.aop.AopAuthMock;
-import com.userSrvc.client.entities.GenUser;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.ERROR_MSGS;
 import com.userSrvc.client.util.Util;
@@ -37,15 +35,15 @@ public class ClientTest extends Config
 
 	private UUserAbs buildValidUser() {
 		emailValid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
-		UUserAbs u = new GenUser(0, nameOriginal, emailValid, passwordValid);
-		u.setToken(validToken);
+		UUserAbs u = null;// = new GenUser(0, nameOriginal, emailValid, passwordValid);
+//		u.setToken(validToken);
 		return u;
 	}
 	
 	@Test
     public void testApp() throws Exception
     {
-		AopAuthMock.setCurrentUser(user);
+//		AopAuthMock.setCurrentUser(user);
 		System.out.println("P:" + user.getPassword());
     	add();
     	login();
@@ -90,7 +88,7 @@ public class ClientTest extends Config
     		user.setPassword(passwordValid);
 			System.out.println("Password: " + user.getPassword());
 			UUserAbs tokenCarrier = userCtrl.login();
-			this.validToken = tokenCarrier.getToken();
+			this.validToken = tokenCarrier.getToken().getToken();
 			this.originalId = tokenCarrier.getId();
 			assertTrue(true);
 		} catch (Exception e) {
@@ -125,7 +123,7 @@ public class ClientTest extends Config
 		} catch (AccessDeniedException e) {
 			assertTrue(e.getMessage().equals(ERROR_MSGS.NO_TOKEN_PROVIDED));
 		}
-    	user.setToken(validToken);
+//    	user.setToken(validToken);
     	try {
     		userCtrl.authinticate();
 			assertTrue(true);
@@ -133,18 +131,18 @@ public class ClientTest extends Config
 			e.printStackTrace();
 			fail();
 		}
-    	user.setToken(invalidToken);
+//    	user.setToken(invalidToken);
     	try {
     		userCtrl.authinticate();
 			assertTrue(false);
 		} catch (AccessDeniedException e) {
-			assertTrue(e.getMessage().equals(ERROR_MSGS.INCORRECT_CREDENTIALS));
+			assertTrue(e.getMessage().equals(ERROR_MSGS.INCORRECT_APP_CREDENTIALS));
 		}
     }
     
     public void update() throws Exception {
     	user.setFullname(nameUpdated);
-    	user.setToken(validToken);
+//    	user.setToken(validToken);
     	try {
     		userCtrl.update(user);
 			user = userCtrl.get(user.getEmail());
@@ -168,7 +166,7 @@ public class ClientTest extends Config
     public void updatePass() throws Exception {
     	try {
 			user.setPassword(passwordUpdated);
-	    	user.setToken(validToken);
+//	    	user.setToken(validToken);
 	    	userCtrl.updatePassword();
 			assertTrue(true);
 			user = userCtrl.login();

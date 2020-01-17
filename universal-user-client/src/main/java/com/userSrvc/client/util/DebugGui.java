@@ -12,137 +12,175 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.http.HttpHeaders;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DebugGui {
 
-	public static void main(String...args) {
-		DebugGui.setHost("https://www.jozsefmorrissey.com/debug-gui");
+	private static Boolean defaultShouldDebug = false;
 
-		DebugGui debugGui = new DebugGui(true);
-		debugGui.link("beta", "mylabel", "http://www.google.com");
-		debugGui.link("delta.foxtrot", "my2ndlabel", "http://www.google.com");
-		debugGui.value("beta.charlie", "mylabel", "http://www.google.com");
-		debugGui.log("beta.charlie", "mylog1: http://www.google.com");
-		debugGui.log("beta.charlie", "mylog2: http://www.google.com");
-		debugGui.log("beta.charlie", "mylog3: http://www.google.com");
-		debugGui.log("beta.charlie", "mylog4: http://www.google.com");
-		debugGui.exception("beta.charlie.echo", "myException", new Error("my message"));
-	}
+	private static InheritableThreadLocal<Boolean> debug = new InheritableThreadLocal<Boolean>();
+	private static InheritableThreadLocal<String> id = new InheritableThreadLocal<String>();
+
+	private static DebugGui instance = new DebugGui();
 
 	private static String DEBUG_ID = "DebugGui.debug";
 
-	private static String host = "http://www.jozsefmorrissey.com/";
+	private static String host = "https://www.jozsefmorrissey.com/";
 	private static String root = "DebugGui";
-	private static String id = "Default";
+	private static String defaultId = "Default";
 
-	private boolean debug = false;
-
-
-	public DebugGui(boolean debug) {
-		this.debug = debug;
+	public static void init() {
+		debug.set(defaultShouldDebug);
+		id.set(defaultId);
 	}
 
-    public DebugGui(HttpServletRequest req) {
-    	if (req.getHeader(DEBUG_ID) != null) {
-    		debug = true;
-    	} else {
-	        Cookie[] cookies = req.getCookies();
-	        if (cookies != null) {
-			    for (Cookie cookie : cookies) {
-			    	if (cookie.getName().equals(DEBUG_ID)) {
-			    		debug = true;
-			    	}
-			    }
-	        }
+	public static void init(boolean d, String i) {
+		debug.set(d);
+		id.set(i);
+	}
+
+	public static void init(boolean d) {
+		debug.set(d);
+		id.set(defaultId);
+	}
+
+    public static void init(HttpServletRequest req) {
+    	Boolean d = false;
+    	String identifier = null;
+    	String header = req.getHeader(DEBUG_ID);
+    	String cookie = getCookie("DebugGui", req);
+    	String param =  req.getParameter(DEBUG_ID);
+    	if (cookie != null && !cookie.trim().equals("")){
+    		d = true;
+    		identifier = getCookieValue(cookie, "id");
+    		String httpHost = getCookieValue(cookie, "httpHost");
+    		if (!httpHost.equals(cookie)) {
+    			setHost(httpHost);
+    		}
+    		String httpsHost = getCookieValue(cookie, "httpsHost");
+    		if (!httpsHost.equals(cookie)) {
+    			setHost(httpsHost);
+    		}
+		} else if (param != null && !param.trim().equals("")){
+			d = true;
+			identifier = param;
+		} else if (header != null && header.trim().equals("")) {
+    		d = true;
+    		identifier = header;
     	}
+    	debug.set(d);
+		id.set(identifier);
     }
 
+	private static String getCookie(String name, HttpServletRequest req) {
+		Cookie[] co = req.getCookies();
+		if (co != null) {
+			for (int i = 0; i < co.length; i++) {
+				if (name.equals(co[i].getName())) {
+					return co[i].getValue();
+				}
+			}
+		}
+		return null;
+	}
+
+	private static String getCookieValue(String cookieStr, String name) {
+		return cookieStr.replaceAll("(^|^.*\\|)" + name + "=([^|]*?)(\\|.*$|$)", "$2");
+	}
+
+	private static String toJson(Object obj) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(obj);
+		} catch (java.lang.Exception e) {
+			e.printStackTrace();
+		}
+		return "{}";
+	}
+
 	public static void setHost(String host) {
-		DebugGui.host = host;
+		if (host.lastIndexOf("/") == host.length() - 1) {
+			DebugGui.host = host;
+		} else {
+			DebugGui.host = host + "/";
+		}
+	}
+	
+	public static String getHost() {
+		return host;
 	}
 
 	public static void setRoot(String root) {
 		DebugGui.root = root;
 	}
 
-	public static void setId(String id) {
-		DebugGui.id = id;
-	}
-
-	private String toJson(Object obj) {
-	      ObjectMapper mapper = new ObjectMapper();
-	      try
-	      {
-	         return mapper.writeValueAsString(obj);
-	      } catch (JsonGenerationException e)
-	      {
-	         e.printStackTrace();
-	      } catch (JsonMappingException e)
-	      {
-	         e.printStackTrace();
-	      } catch (IOException e)
-	      {
-	         e.printStackTrace();
-	      }
-	      return "{}";
-	}
-
-
-
-	private String getUrl(String ext, String id, String group) {
+	private static String getUrl(String ext, String id, String group) {
 		return getUrl(ext, id) + "/" + group;
 	}
 
-	private String getUrl(String ext, String id) {
-		return host + (host.endsWith("/") ? "" : "/") + ext + "/" + id;
+	private static String getUrl(String ext, String id) {
+		return host + ext + "/" + id;
 	}
 
-	private class Link {
+	private static class Link {
+		@SuppressWarnings("unused")
 		public String label;
+		@SuppressWarnings("unused")
 		public String url;
+
 		public Link(String label, String url) {
 			this.label = label;
 			this.url = url;
 		}
+
 		public String toString() {
 			return toJson(this);
 		}
 	}
 
-	private class Value {
+	private static class Value {
+		@SuppressWarnings("unused")
 		public String key;
+		@SuppressWarnings("unused")
 		public String value;
+
 		public Value(String key, String value) {
 			this.key = key;
 			this.value = value;
 		}
+
 		public String toString() {
 			return toJson(this);
 		}
 	}
 
-	private class Exception {
+	private static class Exception {
+		@SuppressWarnings("unused")
 		public String id;
+		@SuppressWarnings("unused")
 		public String msg;
+		@SuppressWarnings("unused")
 		public String stacktrace;
+
 		public Exception(String id, String msg, String stacktrace) {
 			this.id = id;
 			this.msg = msg;
 			this.stacktrace = stacktrace;
 		}
+
 		public String toString() {
 			return toJson(this);
 		}
 	}
 
-	private class Log {
+	private static class Log {
+		@SuppressWarnings("unused")
 		public String log;
+
 		public Log(String log) {
 			this.log = log;
 		}
+
 		public String toString() {
 			return toJson(this);
 		}
@@ -154,12 +192,13 @@ public class DebugGui {
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("POST");
 			con.setDoOutput(true);
-			con.setRequestProperty("Content-Type","application/json");
+			con.setRequestProperty("Content-Type", "application/json");
+			con.setConnectTimeout(20000);
 
 			byte[] outputInBytes = obj.toString().getBytes("UTF-8");
 			con.setRequestProperty("Content-Length", "" + Integer.toString(outputInBytes.length));
 			OutputStream os = con.getOutputStream();
-			os.write( outputInBytes );
+			os.write(outputInBytes);
 			os.close();
 
 			con.getResponseCode();
@@ -169,51 +208,62 @@ public class DebugGui {
 		}
 	}
 
-	public DebugGui link(String group, String label, String url) {
-		if (!shouldDebug()) return this;
+	public static DebugGui link(String group, String label, String url) {
+		if (!debugging()) return instance;
 		restPostCall(getUrl("link", getId(), getGroup(group)), new Link(label, url));
-		return this;
+		return instance;
 	}
-	public DebugGui value(String group, String key, Object value) {
-		if (!shouldDebug()) return this;
+
+	public static DebugGui value(String group, String key, Object value) {
+		if (!debugging()) return instance;
 		restPostCall(getUrl("value", getId(), getGroup(group)), new Value(key, toJson(value)));
-		return this;
+		return instance;
 	}
-	public DebugGui exception(String group, String errorId, Throwable error) {
-		if (!shouldDebug()) return this;
+
+	public static DebugGui exception(String group, String errorId, Throwable error) {
+		if (!debugging()) return instance;
 		restPostCall(getUrl("exception", getId(), getGroup(group)), new Exception(errorId, error.getMessage(), ExceptionUtils.getStackTrace(error)));
-		return this;
+		return instance;
 	}
-	public DebugGui log(String group, String log) {
-		if (!shouldDebug()) return this;
+
+	public static DebugGui log(String log) {
+		if (!debugging()) return instance;
 		restPostCall(getUrl("log", getId()), new Log(log));
-		return this;
+		return instance;
 	}
 
-	private String getId() {
-		return id;
+	public static String getId() {
+		return id.get();
 	}
 
-	private String getGroup(String minor) {
+	private static String getGroup(String minor) {
 		return root + "." + minor;
 	}
 
-	private boolean shouldDebug() {
-		return debug;
+	public static String toHtml() {
+		if (!debugging()) {
+			return "";
+		}
+		return "<script type='text/javascript' src='" + host
+				+ "gui'></script>" + "<debug-gui-data url='"
+				+ host + "' " + "dg-id='" + id + "' "
+				+ "style='display: none;'>" + "</debug-gui-data>";
+	}
+	public static Boolean debugging() {
+		return Boolean.TRUE.equals(debug.get());
 	}
 
-    public static void addCookie(HttpServletResponse response) {
-    	if (response != null) {
-		    Cookie cookie = new Cookie(DEBUG_ID, "true");
-		    cookie.setMaxAge(60 * 60);
-		    response.addCookie(cookie);
-    	}
+	public static void addCookie(HttpServletResponse response) {
+		if (response != null) {
+			Cookie cookie = new Cookie(DEBUG_ID, "true");
+			cookie.setMaxAge(60 * 60);
+			response.addCookie(cookie);
+		}
+	}
 
-    }
-
-	public void addHeader(HttpHeaders httpHeaders) {
-	    if (debug) {
-	    	httpHeaders.add(DEBUG_ID, "true");
-	    }
+	public static void addHeader(HttpHeaders httpHeaders) {
+	    if (debugging()) {
+			httpHeaders.add(DEBUG_ID, "true");
+		}
 	}
 }

@@ -41,7 +41,7 @@ public class Permission {
 	// no granting of privilages
 	public static final String VALIDATION = "validation";
 
-	// Cannot grant access
+	// Cannot grant access or modify
 	public static final String NO = "NO";
 
 	public static final Permission ROOT = new Permission(-1l, 0l, -1l, "__admin__", null, OAO, null, null);

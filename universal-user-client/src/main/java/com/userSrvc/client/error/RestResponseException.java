@@ -7,14 +7,13 @@ import org.json.JSONObject;
 import org.springframework.web.context.annotation.ApplicationScope;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @ManagedBean
 @ApplicationScope
+@EqualsAndHashCode(callSuper=false)
 @Data
 public class RestResponseException extends Exception {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7217711572643816415L;
 	String timestamp;
 	String status;

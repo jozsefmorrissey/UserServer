@@ -2,16 +2,8 @@ package com.userSrvc.server.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.userSrvc.server.entities.Photo;
-import com.userSrvc.server.service.UserPhotoSrvc;
 
 public class ImageUtils {
 	

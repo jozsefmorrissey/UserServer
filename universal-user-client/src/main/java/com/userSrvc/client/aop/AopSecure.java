@@ -11,8 +11,6 @@ import javax.annotation.PostConstruct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.userSrvc.client.error.TryingToProtectRequiredFieldError;
 import com.userSrvc.client.marker.HasType;
 
 import lombok.Data;
@@ -22,12 +20,8 @@ public abstract class AopSecure implements HasType {
 	
 	private static Logger log = LogManager.getLogger();
 
-	@JsonIgnore 
-	private List<String> requiredFields = new ArrayList<String>();
-	@JsonIgnore 
 	private List<String> privateFields = new ArrayList<String>();
-	@JsonIgnore 
-	private List<String> protectedFields = new ArrayList<String>();
+	private List<String> publicFields = new ArrayList<String>();
 	
 	private boolean associate = false;
 	
@@ -63,9 +57,8 @@ public abstract class AopSecure implements HasType {
 	public AopSecure() {}
 	
 	public AopSecure(AopSecure aopSecure) {
-		this.setRequiredFields(aopSecure.getRequiredFields());
 		this.setPrivateFields(aopSecure.getPrivateFields());
-		this.setProtectedFields(aopSecure.getProtectedFields());
+		this.setPublicFields(aopSecure.getPublicFields());
 		this.associate = aopSecure.isAssociate();
 	}
 
@@ -82,50 +75,11 @@ public abstract class AopSecure implements HasType {
 		return true;
 	}
 	
-	public void setRequiredFields(String name) {
-		this.requiredFields = Arrays.asList(name.split(","));
-		requiredConflict();
-	}
-
-	public void setPrivateFields(String name) {
-		this.privateFields = Arrays.asList(name.split(","));
-		requiredConflict();
-	}
-	
-	public void setProtectedFields(String name) {
-		this.protectedFields = Arrays.asList(name.split(","));
-		requiredConflict();
-	}
-
-	public String getPrivateFields() {
-		return String.join(",", privateFields);
-	}
-	
-	public String getProtectedFields() {
-		return String.join(",", protectedFields);
-	}
-	
-	public String getRequiredFields() {
-		return String.join(",", protectedFields);
-	}
-	
-	
-	private void requiredConflict() {
-		List<String> targetList = new ArrayList<String>();
-		targetList.addAll(this.privateFields);
-		targetList.addAll(this.protectedFields);
-		for (String target : targetList) {
-			if (!target.equals("") && this.requiredFields.contains(target)) {
-				throw new TryingToProtectRequiredFieldError("Field '" + target + "' is required.");
-			}
-		}
-	}
-	
 	public void clean() {
 		List<String> targetList = new ArrayList<String>();
 		targetList.addAll(this.privateFields);
 		if (!this.associate) {
-			targetList.addAll(this.protectedFields);
+			targetList.addAll(this.publicFields);
 		}
 		clean(targetList);
 	}

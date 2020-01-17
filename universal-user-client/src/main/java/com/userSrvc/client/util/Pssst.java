@@ -12,19 +12,9 @@ import org.json.JSONObject;
 
 public class Pssst {
 	private static Map<String, JSONObject> objects = new HashMap<String, JSONObject>();
-
-	public static void main(String...args) throws JSONException {
-		String id = "usvc";
-		System.out.println(get(id, "mailgun-api-key"));
-		System.out.println(get(id, "mailgun-api-key"));
-		System.out.println(get(id, "mailgun-api-key"));
-		System.out.println(get(id, "mailgun-api-key"));
-		System.out.println(get(id, "mailgun-api-key"));
-		System.out.println(get(id, "token"));
-	}
 	
 	public static String get(String id, String key) {
-		System.out.println("getting: " + id + "/" + key);
+		DebugGui.log("getting: " + id + "/" + key);
 		if (objects.get(id) == null) {
 			objects.put(id, fetch(id));
 		}
@@ -40,7 +30,7 @@ public class Pssst {
 		System.out.println("fetching: " + id );
 		try {
 			
-			String[] cmd = new String[] {"pst", "remote", "-config", id};
+//			String[] cmd = new String[] {"pst", "remote", "-config", id};
 			Process process = Runtime.getRuntime().exec("pst remote -config " + id);
 
 			StringBuilder output = new StringBuilder();
@@ -52,18 +42,16 @@ public class Pssst {
 				output.append(line + "\n");
 			}
 
-			System.out.println(output.toString());
-			System.out.println("<-out|json->");
 
 			int exitVal = process.waitFor();
 			if (exitVal == 0) {
-				System.out.println(new JSONObject(output.toString()));
 				return new JSONObject(output.toString());
 			}
-			throw new PssstFetchFailedException(id);
+
+			throw new PssstFetchFailedException(id, output.toString());
 		} catch (Exception e) {
-			System.out.println("Pssst.fetch - exception: " + e.getMessage());
-			new DebugGui(true).exception("Pssst.fetch", id, new PssstFetchFailedException(id));
+			DebugGui.log("Pssst.fetch - exception: " + e.getMessage());
+			DebugGui.exception("Pssst.fetch", id, e);
 			return null;
 		}
 	}
@@ -71,15 +59,18 @@ public class Pssst {
 	public static class PssstFetchFailedException extends Exception {
 		private static final long serialVersionUID = 7749383507428066033L;
 		private String id;
+		private String output;
 		
-		public PssstFetchFailedException(String id) {
+		public PssstFetchFailedException(String id, String output) {
 			this.id = id;
+			this.output = output;
 		}
 
 		@Override
 		public String getMessage() {
 			return "You should ensure your configuration for '" + id + "' is correct.\n\t" + 
-					"pst remote -config '" + id + "'\n\tShould return a valid json string.";
+					"pst remote -config '" + id + "'\n\tShould return a valid json string." + 
+					"\n\n\tOutupt Recieved:" + output;
 		}
 	}
 }

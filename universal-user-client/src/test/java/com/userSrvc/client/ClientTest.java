@@ -39,7 +39,7 @@ public class ClientTest
 	private UUserAbs buildValidUser() {
 		emailValid = Util.randomString(50, "[a-zA-Z0-9@\\.]", "[a-zA-Z0-9]{1,}@[a-zA-Z0-9]{1,}\\.[a-zA-Z0-9]{1,}");
 		UUserAbs u = new GenUser(0, nameOriginal, emailValid, passwordValid);
-		u.setToken(validToken);
+//		u.setToken(validToken);
 		return u;
 	}
 	
@@ -88,7 +88,7 @@ public class ClientTest
     public void login() throws Exception {
     	try {
 			UUserAbs tokenCarrier = userSrvcExt.login();
-			this.validToken = tokenCarrier.getToken();
+			this.validToken = tokenCarrier.getToken().getToken();
 			this.originalId = tokenCarrier.getId();
 			assertTrue(true);
 		} catch (RestResponseException e) {
@@ -122,26 +122,26 @@ public class ClientTest
 			assertTrue(Util.responseExceptContains(e, 
 					ERROR_MSGS.NO_TOKEN_PROVIDED));
 		}
-    	user.setToken(validToken);
+//    	user.setToken(validToken);
     	try {
 			userSrvcExt.authinticate();
 			assertTrue(true);
 		} catch (RestResponseException e) {
 			assertTrue(false);
 		}
-    	user.setToken(invalidToken);
+//    	user.setToken(invalidToken);
     	try {
 			userSrvcExt.authinticate();
 			assertTrue(false);
 		} catch (RestResponseException e) {
 			assertTrue(Util.responseExceptContains(e, 
-					ERROR_MSGS.INCORRECT_CREDENTIALS));
+					ERROR_MSGS.INCORRECT_APP_CREDENTIALS));
 		}
     }
     
     public void update() throws Exception {
     	user.setFullname(nameUpdated);
-    	user.setToken(validToken);
+//    	user.setToken(validToken);
     	try {
 			userSrvcExt.update(user);
 			user = userSrvcExt.get(user.getEmail());
@@ -155,7 +155,7 @@ public class ClientTest
     public void updatePass() throws Exception {
     	try {
 			user.setPassword(passwordUpdated);
-	    	user.setToken(validToken);
+//	    	user.setToken(validToken);
 			userSrvcExt.updatePassword();
 			assertTrue(true);
 			user = userSrvcExt.login();

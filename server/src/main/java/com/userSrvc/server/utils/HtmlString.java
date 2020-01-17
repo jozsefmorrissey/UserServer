@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+import com.userSrvc.client.util.StringUtils;
+
 public class HtmlString {
 	
 	public static void main(String...args) {

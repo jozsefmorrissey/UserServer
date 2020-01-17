@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.web.context.annotation.ApplicationScope;
@@ -22,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Photo implements Comparable {
+public class Photo implements Comparable<Photo> {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -40,12 +39,11 @@ public class Photo implements Comparable {
 	private String url;
 
 	@Override
-	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
+	public int compareTo(Photo o) {
 		if (!(o instanceof Photo)) {
 			return -1;
 		}
 		
-		return this.position - ((Photo)o).position;
+		return this.position - o.position;
 	}
 }

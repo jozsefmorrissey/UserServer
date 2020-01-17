@@ -15,7 +15,7 @@ import com.google.gson.JsonParser;
 public class ToJson {
 	
 	public boolean addField(String name) {
-		return name.matches("(TOKEN|PASSWORD|EMAIL)");
+		return true;
 	}
 	
 	public JSONObject toJson() {

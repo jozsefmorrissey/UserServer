@@ -1,4 +1,4 @@
-package com.userSrvc.server.utils;
+package com.userSrvc.client.util;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -21,5 +21,15 @@ public class StringUtils {
 	
 	public static String cleanHtml(String input) {
 		return input.replaceAll("<script>.*?</script>", "");
+	}
+	
+	public static String concat(String...objs) {
+		String retVal = "";
+		for (Object obj : objs) {
+			if (obj != null) {
+				retVal += obj.toString();
+			}
+		}
+		return retVal;
 	}
 }

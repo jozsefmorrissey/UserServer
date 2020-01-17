@@ -14,6 +14,7 @@ import org.springframework.util.MultiValueMap;
 import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.constant.URI;
 import com.userSrvc.client.entities.ApplicationPermissionRequest;
+import com.userSrvc.client.entities.ConnectionState;
 import com.userSrvc.client.entities.Permission;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.DatabaseIntegrityException;
@@ -26,7 +27,7 @@ import com.userSrvc.client.util.Util;
 public abstract class PermissionSrvcExtAbs <U extends UUserAbs> implements PermissionSrvcExt<U> {
 
 	@Autowired
-	AopAuth<U> aopAuth;
+	AopAuth<U, ?> aopAuth;
 	
 	public abstract UserSrvcExt<U> getUserSrvc();
 	
@@ -45,9 +46,9 @@ public abstract class PermissionSrvcExtAbs <U extends UUserAbs> implements Permi
 		pq.setParent(parent);
 		
 		MultiValueMap<String, String> headers = new HttpHeaders();
-		headers.add(AopAuth.EMAIL, aopAuth.getCurrentUser().getEmail());
-		headers.add(AopAuth.TOKEN, aopAuth.getCurrentUser().getToken());
-		headers.add(AopAuth.PASSWORD, aopAuth.getCurrentUser().getPassword());
+		headers.add(ConnectionState.EMAIL, aopAuth.getCurrentUser().getEmail());
+		headers.add(ConnectionState.TOKEN, aopAuth.getCurrentUser().getToken().getToken());
+		headers.add(ConnectionState.PASSWORD, aopAuth.getCurrentUser().getPassword());
 		
 		Util.restPostCall(Util.getUri(URI.PERMISSION_ADD), pq, String.class, aopAuth.getHeaders());
 	}
@@ -114,6 +115,7 @@ public abstract class PermissionSrvcExtAbs <U extends UUserAbs> implements Permi
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Permission> get(UUserAbs user) {
 		try {

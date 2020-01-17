@@ -1,0 +1,89 @@
+<html>
+    <head th:insert="imports :: default" th:with="filename='/rules/configure'"></head>
+	<body>
+		<div th:insert="nav/nav-bar :: default" th:with="state='rules'">...</div>
+		
+		<div class='container'>
+			<div class='row'>
+				<ul class="nav nav-pills" id='app-nav'>
+				  <li class="nav-item">
+				    <a class="nav-link active" data-toggle="pill" href="">Home</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" data-toggle="pill" href="">Menu 1</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" data-toggle="pill" href="">Menu 2</a>
+				  </li>
+				</ul>
+			</div>
+			<div class='row center'>
+				<div class='col-2'></div>
+				<div class='col-8'>
+					<br><br><br>
+					<h4 class='center'>Protected Application</h4>
+					<div class='row center'>
+						<div class='col-6'>
+							<input class='form-control' id='mainId' type='text' 
+								placeholder='name' maxlength='15';
+								onchange='config.mainApp.name = this.value; display();'>
+						</div>
+						<div class='col-6' 
+								onclick='this.children[0].disabled = !this.children[0].disabled; config.mainApp.newKey = !this.children[0].disabled; display();'>
+							<input class='btn btn-primary' id='mainAccessKeyBtn' value='Create New Key' disabled>
+						</div>
+					</div>
+				</div>
+				<div class='col-2'></div>
+			</div>
+			<div class='row center'>
+				<div class='col-12'>
+					<br>
+					<label>Token Expiration (minutes)</label>
+					<input type='number' class='form-control number-input' id='token-expiration' placeholder='Minutes' onchange='config.mainApp.tokenExpiration = Number.parseInt(this.value); updateRaw();'>
+				</div>
+			</div>
+	
+			<div class='row' id='child-ctn'>
+				<br><br><br>
+				<h4 class='center'>Client Applications</h4>
+			</div>
+			<div class='row center'>
+				<div class='row center'>
+			        <div class='col-2'></div>
+			        <div class='col-4'>
+			          Name
+			        </div>
+		   			<div class='col-2'>
+						Token Expiration
+					</div>
+			        <div class='col-4'>
+			        </div>
+			      </div>
+				<div id='children' class='center'></div>		
+			</div>
+			<div class='row center'>
+				<input type='button' value='add' onclick='config.childApps.push({}); display()'
+					class='btn btn-primary auto-margin'>
+			</div>
+	
+			<div class='row center'>
+				<br><br><br>
+				<h4 class='center'>Endpoint Rules</h4>
+			</div>
+			<div class='row center'>
+				<div id='rules' class='center'></div>
+			</div>
+			<div class='row center'>
+				<br><br>
+				<input type='button' value='add' onclick='config.rules.push({}); display()'
+					class='btn btn-primary auto-margin'>
+				<br><br>
+			</div>
+			
+			<br><br><br>
+			<textarea onchange='rawChange()' id='raw-json' class='form-control'></textarea>
+			<br><br><br>
+		</div>
+	</body>
+</html>

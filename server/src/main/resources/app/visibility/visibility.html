@@ -1,0 +1,47 @@
+<html>
+    <head th:insert="imports :: default" th:with="filename='/visibility/visibility'"></head>
+	<body>
+		<div th:insert="nav/nav-bar :: default" th:with="state='visibility'"></div>
+		<div class='container-fluid'>
+			<div class='row center'>
+				<div class='col-12'>
+					<br>
+					<h3>Property Visibility</h3>
+				</div>
+			</div>
+			<div class='row center'>
+				<div class='col-4'></div>
+				<div class='col-4'>
+					<b>Object: </b><z>Name</z>
+				</div>
+				<div class='col-4'></div>
+			</div>
+			<div class='row field-ctn' th:each='field : ${fields}'>
+				<div class='col-md-3'>
+					<label><b th:text='${field.key}'>field</b></label>
+				</div>
+				<div class='col-md-5'>
+					<div class='row'>
+						<div class='col-md-4'th:each='scope : ${SCOPES}'>
+							<input class='form-control scope-radio' type='radio' th:checked='${scope == field.value}' th:name="'radio-' + ${field.key}">
+							<label class='radio-label' th:text='${scope}'></label>
+						</div>
+					</div>
+				</div>
+				<div class='col-md-4'>
+					<div class='row'>
+						<div class='col-md-4'th:each='scope : ${SCOPES}'>
+							<input class='form-control scope-radio' type='radio' th:checked='${scope == field.value}' th:name="'radio-' + ${field.key}">
+							<label class='radio-label' th:text='${scope}'></label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='row center'>
+				<div class='col-12'>
+					<input type='button' value='Save' class='btn btn-primary'>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

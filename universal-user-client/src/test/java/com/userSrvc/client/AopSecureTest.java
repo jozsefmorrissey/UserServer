@@ -1,14 +1,5 @@
 package com.userSrvc.client;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Arrays;
-
-import org.junit.Test;
-
-import com.userSrvc.client.entities.UUserAbs;
-
 public class AopSecureTest {
 
 //	@Test

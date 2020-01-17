@@ -9,6 +9,7 @@ import com.userSrvc.client.marker.Service;
 
 public interface UserSrvc <U extends UUserAbs> extends Service<U, String> {
 	public U login() throws Exception;
+	public U login(U user) throws Exception;
 	public U get(String emailOid) throws Exception;
 	public U update(U user) throws Exception;
 	public U updateSrvc(U user) throws Exception;

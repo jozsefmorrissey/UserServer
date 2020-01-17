@@ -13,10 +13,12 @@ import org.springframework.http.HttpHeaders;
 
 import com.userSrvc.client.aop.AopAuth;
 import com.userSrvc.client.constant.URI;
+import com.userSrvc.client.entities.ConnectionState;
 import com.userSrvc.client.entities.UUserAbs;
 import com.userSrvc.client.error.RestResponseException;
 import com.userSrvc.client.repo.UserBaseRepository;
 import com.userSrvc.client.services.UserSrvcExt;
+import com.userSrvc.client.util.DebugGui;
 import com.userSrvc.client.util.Util;
 
 public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<U> {
@@ -27,7 +29,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	U user;
 	
 	@Autowired
-	AopAuth<U> aopAuth;
+	AopAuth<U, ?> aopAuth;
 	
 	public abstract U create(U user);
 	
@@ -74,11 +76,16 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	}
 	
 	public U login() throws RestResponseException {
+		return login(aopAuth.getCurrentUser());
+	}
+
+	public U login(U user) throws RestResponseException {
 		U srvcUser = Util.restGetCall(Util.getUri(URI.USER_LOGIN), clazz,
-				getHeaders(aopAuth.getCurrentUser()));
+				getHeaders(user));
 		return updateLocal(srvcUser);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init() throws ClassNotFoundException {
 		user = (U) appContext.getBean("UUser");
@@ -87,7 +94,6 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 		localRepo = getRepo();
 	}
 
-	@SuppressWarnings("unchecked")
 	public U get(String emailOid) throws RestResponseException {
 		if (emailOid.matches("^(-|)[0-9]*$") && getRepo() != null) {
 			U localUser = getRepo().getOne(Long.parseLong(emailOid));
@@ -119,7 +125,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 	}
 
 	public U authinticate(U user) throws RestResponseException {
-		U srvcUser = Util.restGetCall(Util.getUri(URI.USER_AUTH), clazz,
+		U srvcUser = Util.restGetCall(Util.getUri(URI.USER_AUTHINTICATE), clazz,
 					getHeaders(aopAuth.getCurrentUser()));
 		return updateLocal(srvcUser);
 	}
@@ -140,7 +146,7 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 
 
 	public List<U> get(Collection<String> emails) throws RestResponseException {
-		List<Map> maps = Util.restPostCall(Util.getUri(URI.USER_ALL), emails, ArrayList.class,
+		List<Map<?,?>> maps = Util.restPostCall(Util.getUri(URI.USER_ALL), emails, ArrayList.class,
 				getHeaders(aopAuth.getCurrentUser()));
 		List<U> srvcUsers = Util.convertMapListToObjects(maps, clazz);
 		
@@ -184,11 +190,13 @@ public abstract class UserSrvcExtAbs<U extends UUserAbs> implements UserSrvcExt<
 
 	public HttpHeaders getHeaders(U user) {
 		HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.add(ConnectionState.DEVICE_IDENTIFIER, aopAuth.getDeviceIdentifier());
 	    if (user != null) {
-		    httpHeaders.add(AopAuth.EMAIL, "" + user.getEmail());
-		    httpHeaders.add(AopAuth.PASSWORD, user.getPassword());
-		    httpHeaders.add(AopAuth.TOKEN, user.getToken());
-		    aopAuth.getCurrentDebugGui().addHeader(httpHeaders);
+		    httpHeaders.add(ConnectionState.EMAIL, "" + user.getEmail());
+		    httpHeaders.add(ConnectionState.PASSWORD, user.getPassword());
+		    httpHeaders.add(ConnectionState.TOKEN, user.getToken().getToken());
+		    httpHeaders.add(ConnectionState.DEVICE_IDENTIFIER, user.getToken().getDeviceIdentifier());
+		    DebugGui.addHeader(httpHeaders);
 //		    httpHeaders.add("Content-Type", MediaType.APPLICATION_JSON.toString());
 //		    httpHeaders.add("Accept", MediaType.APPLICATION_JSON.toString());
 	    }
