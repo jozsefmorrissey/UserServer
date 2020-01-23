@@ -1,4 +1,4 @@
-package com.userSrvc.client.services.impl;
+package com.userSrvc.client.services.abs;
 
 import java.rmi.AccessException;
 import java.util.Collection;

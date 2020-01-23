@@ -2,6 +2,7 @@ package com.userSrvc.client.util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -34,6 +37,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.userSrvc.client.error.RestResponseException;
+import com.userSrvc.client.marker.HasAddField;
 import com.userSrvc.client.services.SrvcProps;
 
 @Component
@@ -191,5 +195,45 @@ public class Util {
 			}
 		}
 		return false;
+	}
+	
+	public static JSONObject toJson(Enum<?> enumInst) {
+		Field[] fields = enumInst.getClass().getFields();
+		JSONObject jsonObj = null;
+		jsonObj = new JSONObject();
+		
+		boolean checkField = enumInst instanceof HasAddField;
+		HasAddField hasAddField = null;
+	
+		if (checkField) {
+			hasAddField = ((HasAddField) enumInst);
+		}
+		
+		for (Field field : fields) {
+			if (!checkField || 
+					hasAddField.addField(field.getName().toString())) {
+				String[] path = field.getName().split("_");
+				JSONObject curr = jsonObj;
+				try {
+					for (String id : path) {
+						if (!curr.has(id)) {
+							curr.putOpt(id, new JSONObject());
+						}
+						curr = (JSONObject) curr.get(id);
+					}
+					Object fieldValue = field.get(enumInst);
+					if (fieldValue == null) {
+						curr.accumulate("value", null);
+					} else if (fieldValue.getClass().isArray()) {
+						curr.accumulate("value", fieldValue);
+					} else {
+						curr.accumulate("value", fieldValue.toString());
+					}
+				} catch (IllegalArgumentException | IllegalAccessException | JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return jsonObj;
 	}
 }

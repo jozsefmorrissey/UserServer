@@ -31,6 +31,7 @@ public class URI extends ToJson {
 	public static final String CONST = "/const";
 	public static final String CONST_ENDPOINTS = CONST + "/endpoints";
 	public static final String CONST_AUTH = CONST + "/auth";
+	public static final String CONST_ACCESS = CONST + "/access";
 	
 	@Override
 	public boolean addField(String name) {

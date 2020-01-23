@@ -22,7 +22,7 @@
 				</div>
 				<div class='col-md-5'>
 					<div class='row'>
-						<div class='col-md-4'th:each='scope : ${SCOPES}'>
+						<div class='col-md-4'th:each='scope : ${USER_SCOPES}'>
 							<input class='form-control scope-radio' type='radio' th:checked='${scope == field.value}' th:name="'radio-' + ${field.key}">
 							<label class='radio-label' th:text='${scope}'></label>
 						</div>
@@ -30,8 +30,8 @@
 				</div>
 				<div class='col-md-4'>
 					<div class='row'>
-						<div class='col-md-4'th:each='scope : ${SCOPES}'>
-							<input class='form-control scope-radio' type='radio' th:checked='${scope == field.value}' th:name="'radio-' + ${field.key}">
+						<div class='col-md-4'th:each='list : ${APP_LISTS}'>
+							<input class='form-control scope-radio' type='radio' th:checked='${list == field.value}' th:name="'radio-' + ${field.key}">
 							<label class='radio-label' th:text='${scope}'></label>
 						</div>
 					</div>
